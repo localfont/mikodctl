@@ -1,9 +1,9 @@
 # Interactive debugging of Dockerfile (Experimental)
 
-nerdctl supports interactive debugging of Dockerfile as `nerdctl builder debug`.
+mikodctl supports interactive debugging of Dockerfile as `mikodctl builder debug`.
 
 ```
-$ nerdctl builder debug /path/to/context
+$ mikodctl builder debug /path/to/context
 ```
 
 This feature leverages [buildg](https://github.com/ktock/buildg), interactive debugger of Dockerfile.
@@ -25,7 +25,7 @@ RUN echo c > /c
 Example debugging:
 
 ```console
-$ nerdctl builder debug --image=ubuntu:22.04 /tmp/ctx/
+$ mikodctl builder debug --image=ubuntu:22.04 /tmp/ctx/
 WARN[2022-05-17T10:15:48Z] using host network as the default#1 [internal] load .dockerignore
 #1 transferring context: 2B done
 #1 DONE 0.1s

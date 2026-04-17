@@ -21,7 +21,7 @@ import (
 	"time"
 )
 
-// ContainerStartOptions specifies options for the `nerdctl (container) start`.
+// ContainerStartOptions specifies options for the `mikodctl (container) start`.
 type ContainerStartOptions struct {
 	Stdout io.Writer
 	// GOptions is the global options
@@ -36,13 +36,13 @@ type ContainerStartOptions struct {
 	Checkpoint string
 	// CheckpointDir is the directory to store checkpoints
 	CheckpointDir string
-	// NerdctlCmd is the command name of nerdctl
-	NerdctlCmd string
-	// NerdctlArgs is the arguments of nerdctl
-	NerdctlArgs []string
+	// MikodctlCmd is the command name of mikodctl
+	MikodctlCmd string
+	// MikodctlArgs is the arguments of mikodctl
+	MikodctlArgs []string
 }
 
-// ContainerKillOptions specifies options for `nerdctl (container) kill`.
+// ContainerKillOptions specifies options for `mikodctl (container) kill`.
 type ContainerKillOptions struct {
 	Stdout io.Writer
 	Stderr io.Writer
@@ -52,24 +52,24 @@ type ContainerKillOptions struct {
 	KillSignal string
 }
 
-// ContainerExportOptions specifies options for `nerdctl (container) export`.
+// ContainerExportOptions specifies options for `mikodctl (container) export`.
 type ContainerExportOptions struct {
 	Stdout io.Writer
 	// GOptions is the global options
 	GOptions GlobalCommandOptions
 }
 
-// ContainerCreateOptions specifies options for `nerdctl (container) create` and `nerdctl (container) run`.
+// ContainerCreateOptions specifies options for `mikodctl (container) create` and `mikodctl (container) run`.
 type ContainerCreateOptions struct {
 	Stdout io.Writer
 	Stderr io.Writer
 	// GOptions is the global options
 	GOptions GlobalCommandOptions
 
-	// NerdctlCmd is the command name of nerdctl
-	NerdctlCmd string
-	// NerdctlArgs is the arguments of nerdctl
-	NerdctlArgs []string
+	// MikodctlCmd is the command name of mikodctl
+	MikodctlCmd string
+	// MikodctlArgs is the arguments of mikodctl
+	MikodctlArgs []string
 
 	// InRun is true when it's generated in the `run` command
 	InRun bool
@@ -255,7 +255,7 @@ type ContainerCreateOptions struct {
 	// Name assign a name to the container
 	Name string
 	// Label set meta data on a container
-	// (not passed through to the OCI runtime since nerdctl v2.0, with an exception for "nerdctl/bypass4netns")
+	// (not passed through to the OCI runtime since mikodctl v2.0, with an exception for "mikodctl/bypass4netns")
 	Label []string
 	// LabelFile read in a line delimited file of labels
 	LabelFile []string
@@ -311,7 +311,7 @@ type ContainerCreateOptions struct {
 	UserNS string
 }
 
-// ContainerStopOptions specifies options for `nerdctl (container) stop`.
+// ContainerStopOptions specifies options for `mikodctl (container) stop`.
 type ContainerStopOptions struct {
 	Stdout io.Writer
 	Stderr io.Writer
@@ -325,7 +325,7 @@ type ContainerStopOptions struct {
 	Signal string
 }
 
-// ContainerRestartOptions specifies options for `nerdctl (container) restart`.
+// ContainerRestartOptions specifies options for `mikodctl (container) restart`.
 type ContainerRestartOptions struct {
 	Stdout  io.Writer
 	GOption GlobalCommandOptions
@@ -333,37 +333,37 @@ type ContainerRestartOptions struct {
 	Timeout *time.Duration
 	// Signal to send to stop the container, before sending SIGKILL
 	Signal string
-	// NerdctlCmd is the command name of nerdctl
-	NerdctlCmd string
-	// NerdctlArgs is the arguments of nerdctl
-	NerdctlArgs []string
+	// MikodctlCmd is the command name of mikodctl
+	MikodctlCmd string
+	// MikodctlArgs is the arguments of mikodctl
+	MikodctlArgs []string
 }
 
-// ContainerPauseOptions specifies options for `nerdctl (container) pause`.
+// ContainerPauseOptions specifies options for `mikodctl (container) pause`.
 type ContainerPauseOptions struct {
 	Stdout io.Writer
 	// GOptions is the global options
 	GOptions GlobalCommandOptions
 }
 
-// ContainerPruneOptions specifies options for `nerdctl (container) prune`.
+// ContainerPruneOptions specifies options for `mikodctl (container) prune`.
 type ContainerPruneOptions struct {
 	Stdout io.Writer
 	// GOptions is the global options
 	GOptions GlobalCommandOptions
 }
 
-// ContainerUnpauseOptions specifies options for `nerdctl (container) unpause`.
+// ContainerUnpauseOptions specifies options for `mikodctl (container) unpause`.
 type ContainerUnpauseOptions struct {
 	Stdout   io.Writer
 	GOptions GlobalCommandOptions
-	// NerdctlCmd is the command name of nerdctl
-	NerdctlCmd string
-	// NerdctlArgs is the arguments of nerdctl
-	NerdctlArgs []string
+	// MikodctlCmd is the command name of mikodctl
+	MikodctlCmd string
+	// MikodctlArgs is the arguments of mikodctl
+	MikodctlArgs []string
 }
 
-// ContainerRemoveOptions specifies options for `nerdctl (container) rm`.
+// ContainerRemoveOptions specifies options for `mikodctl (container) rm`.
 type ContainerRemoveOptions struct {
 	Stdout io.Writer
 	// GOptions is the global options
@@ -374,14 +374,14 @@ type ContainerRemoveOptions struct {
 	Volumes bool
 }
 
-// ContainerRenameOptions specifies options for `nerdctl (container) rename`.
+// ContainerRenameOptions specifies options for `mikodctl (container) rename`.
 type ContainerRenameOptions struct {
 	Stdout io.Writer
 	// GOptions is the global options
 	GOptions GlobalCommandOptions
 }
 
-// ContainerTopOptions specifies options for `nerdctl top`.
+// ContainerTopOptions specifies options for `mikodctl top`.
 type ContainerTopOptions struct {
 	Stdout io.Writer
 	// GOptions is the global options
@@ -391,7 +391,7 @@ type ContainerTopOptions struct {
 	PsArgs string
 }
 
-// ContainerInspectOptions specifies options for `nerdctl container inspect`
+// ContainerInspectOptions specifies options for `mikodctl container inspect`
 type ContainerInspectOptions struct {
 	Stdout io.Writer
 	// GOptions is the global options
@@ -404,12 +404,12 @@ type ContainerInspectOptions struct {
 	Mode string
 }
 
-// ContainerCommitOptions specifies options for `nerdctl (container) commit`.
+// ContainerCommitOptions specifies options for `mikodctl (container) commit`.
 type ContainerCommitOptions struct {
 	Stdout io.Writer
 	// GOptions is the global options
 	GOptions GlobalCommandOptions
-	// Author (e.g., "nerdctl contributor <nerdctl-dev@example.com>")
+	// Author (e.g., "mikodctl contributor <mikodctl-dev@example.com>")
 	Author string
 	// Commit message
 	Message string
@@ -443,14 +443,14 @@ const (
 	ImageFormatOCI ImageFormat = "oci"
 )
 
-// ContainerDiffOptions specifies options for `nerdctl (container) diff`.
+// ContainerDiffOptions specifies options for `mikodctl (container) diff`.
 type ContainerDiffOptions struct {
 	Stdout io.Writer
 	// GOptions is the global options
 	GOptions GlobalCommandOptions
 }
 
-// ContainerLogsOptions specifies options for `nerdctl (container) logs`.
+// ContainerLogsOptions specifies options for `mikodctl (container) logs`.
 type ContainerLogsOptions struct {
 	Stdout io.Writer
 	Stderr io.Writer
@@ -471,14 +471,14 @@ type ContainerLogsOptions struct {
 	Details bool
 }
 
-// ContainerWaitOptions specifies options for `nerdctl (container) wait`.
+// ContainerWaitOptions specifies options for `mikodctl (container) wait`.
 type ContainerWaitOptions struct {
 	Stdout io.Writer
 	// GOptions is the global options.
 	GOptions GlobalCommandOptions
 }
 
-// ContainerAttachOptions specifies options for `nerdctl (container) attach`.
+// ContainerAttachOptions specifies options for `mikodctl (container) attach`.
 type ContainerAttachOptions struct {
 	Stdin  io.Reader
 	Stdout io.Writer
@@ -490,7 +490,7 @@ type ContainerAttachOptions struct {
 	DetachKeys string
 }
 
-// ContainerExecOptions specifies options for `nerdctl (container) exec`
+// ContainerExecOptions specifies options for `mikodctl (container) exec`
 type ContainerExecOptions struct {
 	GOptions GlobalCommandOptions
 	// Allocate a pseudo-TTY
@@ -511,7 +511,7 @@ type ContainerExecOptions struct {
 	User string
 }
 
-// ContainerListOptions specifies options for `nerdctl (container) list`.
+// ContainerListOptions specifies options for `mikodctl (container) list`.
 type ContainerListOptions struct {
 	// GOptions is the global options.
 	GOptions GlobalCommandOptions
@@ -528,7 +528,7 @@ type ContainerListOptions struct {
 	Filters []string
 }
 
-// ContainerCpOptions specifies options for `nerdctl (container) cp`
+// ContainerCpOptions specifies options for `mikodctl (container) cp`
 type ContainerCpOptions struct {
 	// GOptions is the global options.
 	GOptions GlobalCommandOptions
@@ -547,7 +547,7 @@ type ContainerCpOptions struct {
 	ToStdout bool
 }
 
-// ContainerStatsOptions specifies options for `nerdctl stats`.
+// ContainerStatsOptions specifies options for `mikodctl stats`.
 type ContainerStatsOptions struct {
 	Stdout io.Writer
 	Stderr io.Writer

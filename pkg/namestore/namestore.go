@@ -27,8 +27,8 @@ import (
 
 	"github.com/containerd/log"
 
-	"github.com/containerd/nerdctl/v2/pkg/identifiers"
-	"github.com/containerd/nerdctl/v2/pkg/store"
+	"github.com/localfont/mikodctl/v2/pkg/identifiers"
+	"github.com/localfont/mikodctl/v2/pkg/store"
 )
 
 // ErrNameStore will wrap all errors here
@@ -102,7 +102,7 @@ func (x *nameStore) Acquire(name, id string) (err error) {
 		// Maybe containerd was bounced, so previously running containers that would get restarted will go again through
 		// onCreateRuntime (unlike in a "normal" stop/start flow), without ever had gone through onPostStop.
 		// As such, reacquiring by the same id is not a bug...
-		// See: https://github.com/containerd/nerdctl/issues/3354
+		// See: https://github.com/localfont/mikodctl/issues/3354
 		return x.safeStore.Set([]byte(id), name)
 	})
 }

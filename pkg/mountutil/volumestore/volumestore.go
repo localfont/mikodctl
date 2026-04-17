@@ -27,10 +27,10 @@ import (
 
 	"github.com/containerd/log"
 
-	"github.com/containerd/nerdctl/v2/pkg/identifiers"
-	"github.com/containerd/nerdctl/v2/pkg/inspecttypes/native"
-	"github.com/containerd/nerdctl/v2/pkg/store"
-	"github.com/containerd/nerdctl/v2/pkg/strutil"
+	"github.com/localfont/mikodctl/v2/pkg/identifiers"
+	"github.com/localfont/mikodctl/v2/pkg/inspecttypes/native"
+	"github.com/localfont/mikodctl/v2/pkg/store"
+	"github.com/localfont/mikodctl/v2/pkg/strutil"
 )
 
 const (

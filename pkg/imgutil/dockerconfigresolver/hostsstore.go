@@ -43,7 +43,7 @@ func validateDirectories(orig []string) []string {
 
 // hostDirsFromRoot will retrieve a host.toml file for the namespace host, possibly trying without port
 // if the requested port is standard.
-// https://github.com/containerd/nerdctl/issues/3047
+// https://github.com/localfont/mikodctl/issues/3047
 func hostDirsFromRoot(registryURL *RegistryURL, dirs []string) (string, error) {
 	hostsDirs := validateDirectories(dirs)
 

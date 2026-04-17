@@ -44,12 +44,12 @@ import (
 	"github.com/containerd/go-cni"
 	"github.com/containerd/log"
 
-	"github.com/containerd/nerdctl/v2/pkg/healthcheck"
-	"github.com/containerd/nerdctl/v2/pkg/imgutil"
-	"github.com/containerd/nerdctl/v2/pkg/inspecttypes/native"
-	"github.com/containerd/nerdctl/v2/pkg/ipcutil"
-	"github.com/containerd/nerdctl/v2/pkg/labels"
-	"github.com/containerd/nerdctl/v2/pkg/ocihook/state"
+	"github.com/localfont/mikodctl/v2/pkg/healthcheck"
+	"github.com/localfont/mikodctl/v2/pkg/imgutil"
+	"github.com/localfont/mikodctl/v2/pkg/inspecttypes/native"
+	"github.com/localfont/mikodctl/v2/pkg/ipcutil"
+	"github.com/localfont/mikodctl/v2/pkg/labels"
+	"github.com/localfont/mikodctl/v2/pkg/ocihook/state"
 )
 
 // From https://github.com/moby/moby/blob/v26.1.2/api/types/types.go#L34-L140
@@ -349,28 +349,28 @@ func ContainerFromNative(n *native.Container) (*Container, error) {
 		}
 		hostname = sp.Hostname
 	}
-	if nerdctlStateDir := n.Labels[labels.StateDir]; nerdctlStateDir != "" {
-		resolvConfPath := filepath.Join(nerdctlStateDir, "resolv.conf")
+	if mikodctlStateDir := n.Labels[labels.StateDir]; mikodctlStateDir != "" {
+		resolvConfPath := filepath.Join(mikodctlStateDir, "resolv.conf")
 		if _, err := os.Stat(resolvConfPath); err == nil {
 			c.ResolvConfPath = resolvConfPath
 		}
-		hostnamePath := filepath.Join(nerdctlStateDir, "hostname")
+		hostnamePath := filepath.Join(mikodctlStateDir, "hostname")
 		if _, err := os.Stat(hostnamePath); err == nil {
 			c.HostnamePath = hostnamePath
 		}
-		c.LogPath = filepath.Join(nerdctlStateDir, n.ID+"-json.log")
+		c.LogPath = filepath.Join(mikodctlStateDir, n.ID+"-json.log")
 		if _, err := os.Stat(c.LogPath); err != nil {
 			c.LogPath = ""
 		}
-		hostsPath := filepath.Join(nerdctlStateDir, "hosts")
+		hostsPath := filepath.Join(mikodctlStateDir, "hosts")
 		if _, err := os.Stat(hostsPath); err == nil {
 			c.HostsPath = hostsPath
 		}
 	}
 
 	c.HostConfig.Tmpfs = make(map[string]string)
-	if nerdctlMounts := n.Labels[labels.Mounts]; nerdctlMounts != "" {
-		mounts, err := parseMounts(nerdctlMounts)
+	if mikodctlMounts := n.Labels[labels.Mounts]; mikodctlMounts != "" {
+		mounts, err := parseMounts(mikodctlMounts)
 		if err != nil {
 			return nil, err
 		}
@@ -386,8 +386,8 @@ func ContainerFromNative(n *native.Container) (*Container, error) {
 		c.HostConfig.ExtraHosts = parseExtraHosts(nedctlExtraHosts)
 	}
 
-	if nerdctlLoguri := n.Labels[labels.LogURI]; nerdctlLoguri != "" {
-		c.HostConfig.LogConfig.LogURI = nerdctlLoguri
+	if mikodctlLoguri := n.Labels[labels.LogURI]; mikodctlLoguri != "" {
+		c.HostConfig.LogConfig.LogURI = mikodctlLoguri
 	}
 	if logConfigJSON, ok := n.Labels[labels.LogConfig]; ok {
 		var logConfig loggerLogConfig
@@ -919,7 +919,7 @@ type IPAM struct {
 // From https://github.com/moby/moby/blob/v20.10.7/api/types/types.go#L430-L448
 type Network struct {
 	Name       string                      `json:"Name"`
-	ID         string                      `json:"Id,omitempty"` // optional in nerdctl
+	ID         string                      `json:"Id,omitempty"` // optional in mikodctl
 	IPAM       IPAM                        `json:"IPAM,omitempty"`
 	Labels     map[string]string           `json:"Labels"`
 	Containers map[string]EndpointResource `json:"Containers"` // Containers contains endpoints belonging to the network
@@ -1051,12 +1051,12 @@ func NetworkFromNative(n *native.Network) (*Network, error) {
 		}
 	}
 
-	if n.NerdctlID != nil {
-		res.ID = *n.NerdctlID
+	if n.MikodctlID != nil {
+		res.ID = *n.MikodctlID
 	}
 
-	if n.NerdctlLabels != nil {
-		res.Labels = *n.NerdctlLabels
+	if n.MikodctlLabels != nil {
+		res.Labels = *n.MikodctlLabels
 	}
 
 	// Parse network subnets for interface matching
@@ -1078,9 +1078,9 @@ func NetworkFromNative(n *native.Network) (*Network, error) {
 	return &res, nil
 }
 
-func parseMounts(nerdctlMounts string) ([]MountPoint, error) {
+func parseMounts(mikodctlMounts string) ([]MountPoint, error) {
 	var mounts []MountPoint
-	err := json.Unmarshal([]byte(nerdctlMounts), &mounts)
+	err := json.Unmarshal([]byte(mikodctlMounts), &mounts)
 	if err != nil {
 		return nil, err
 	}

@@ -25,24 +25,24 @@ import (
 	"github.com/containerd/containerd/v2/plugins"
 	"github.com/containerd/go-cni"
 
-	"github.com/containerd/nerdctl/v2/pkg/rootlessutil"
+	"github.com/localfont/mikodctl/v2/pkg/rootlessutil"
 )
 
 const (
-	AppArmorProfileName = "nerdctl-default"
+	AppArmorProfileName = "mikodctl-default"
 	SeccompProfileName  = "builtin"
 	Runtime             = plugins.RuntimeRuncV2
 )
 
 func DataRoot() string {
 	if !rootlessutil.IsRootless() {
-		return "/var/lib/nerdctl"
+		return "/var/lib/mikodctl"
 	}
 	xdh, err := rootlessutil.XDGDataHome()
 	if err != nil {
 		panic(err)
 	}
-	return filepath.Join(xdh, "nerdctl")
+	return filepath.Join(xdh, "mikodctl")
 }
 
 func CNIPath() string {
@@ -102,15 +102,15 @@ func CNIRuntimeDir() (string, error) {
 	return filepath.Join(xdr, "cni"), nil
 }
 
-func NerdctlTOML() string {
+func MikodctlTOML() string {
 	if !rootlessutil.IsRootless() {
-		return "/etc/nerdctl/nerdctl.toml"
+		return "/etc/mikodctl/mikodctl.toml"
 	}
 	xch, err := rootlessutil.XDGConfigHome()
 	if err != nil {
 		panic(err)
 	}
-	return filepath.Join(xch, "nerdctl/nerdctl.toml")
+	return filepath.Join(xch, "mikodctl/mikodctl.toml")
 }
 
 func HostsDirs() []string {

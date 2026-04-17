@@ -41,11 +41,11 @@ import (
 	"github.com/containerd/log"
 	"github.com/containerd/platforms"
 
-	"github.com/containerd/nerdctl/v2/pkg/api/types"
-	"github.com/containerd/nerdctl/v2/pkg/containerdutil"
-	"github.com/containerd/nerdctl/v2/pkg/formatter"
-	"github.com/containerd/nerdctl/v2/pkg/imgutil"
-	"github.com/containerd/nerdctl/v2/pkg/referenceutil"
+	"github.com/localfont/mikodctl/v2/pkg/api/types"
+	"github.com/localfont/mikodctl/v2/pkg/containerdutil"
+	"github.com/localfont/mikodctl/v2/pkg/formatter"
+	"github.com/localfont/mikodctl/v2/pkg/imgutil"
+	"github.com/localfont/mikodctl/v2/pkg/referenceutil"
 )
 
 // ListCommandHandler `List` and print images matching filters in `options`.
@@ -123,9 +123,9 @@ type imagePrintable struct {
 	Tag          string // "<none>" or tag
 	Name         string // image name
 	Size         string // the size of the unpacked snapshots.
-	BlobSize     string // the size of the blobs in the content store (nerdctl extension)
+	BlobSize     string // the size of the blobs in the content store (mikodctl extension)
 	// TODO: "SharedSize", "UniqueSize"
-	Platform string // nerdctl extension
+	Platform string // mikodctl extension
 }
 
 func printImages(ctx context.Context, client *containerd.Client, imageList []images.Image, options *types.ImageListOptions) error {
@@ -135,13 +135,13 @@ func printImages(ctx context.Context, client *containerd.Client, imageList []ima
 		the same imageId under k8s.io is showing multiple results: repo:tag, repo:digest, configID.
 		We expect to display only repo:tag, consistent with other namespaces and CRI
 		e.g.
-		nerdctl -n k8s.io images
+		mikodctl -n k8s.io images
 		REPOSITORY    TAG       IMAGE ID        CREATED        PLATFORM       SIZE         BLOB SIZE
 		centos        7         be65f488b776    3 hours ago    linux/amd64    211.5 MiB    72.6 MiB
 		centos        <none>    be65f488b776    3 hours ago    linux/amd64    211.5 MiB    72.6 MiB
 		<none>        <none>    be65f488b776    3 hours ago    linux/amd64    211.5 MiB    72.6 MiB
 		expect:
-		nerdctl --kube-hide-dupe -n k8s.io images
+		mikodctl --kube-hide-dupe -n k8s.io images
 		REPOSITORY    TAG       IMAGE ID        CREATED        PLATFORM       SIZE         BLOB SIZE
 		centos        7         be65f488b776    3 hours ago    linux/amd64    211.5 MiB    72.6 MiB
 	*/

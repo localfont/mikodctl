@@ -22,9 +22,9 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/containerd/nerdctl/v2/pkg/manifesttypes"
-	"github.com/containerd/nerdctl/v2/pkg/referenceutil"
-	"github.com/containerd/nerdctl/v2/pkg/store"
+	"github.com/localfont/mikodctl/v2/pkg/manifesttypes"
+	"github.com/localfont/mikodctl/v2/pkg/referenceutil"
+	"github.com/localfont/mikodctl/v2/pkg/store"
 )
 
 type Store interface {

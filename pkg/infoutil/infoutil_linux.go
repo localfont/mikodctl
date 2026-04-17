@@ -26,10 +26,10 @@ import (
 
 	"github.com/containerd/cgroups/v3"
 
-	"github.com/containerd/nerdctl/v2/pkg/apparmorutil"
-	"github.com/containerd/nerdctl/v2/pkg/defaults"
-	"github.com/containerd/nerdctl/v2/pkg/inspecttypes/dockercompat"
-	"github.com/containerd/nerdctl/v2/pkg/rootlessutil"
+	"github.com/localfont/mikodctl/v2/pkg/apparmorutil"
+	"github.com/localfont/mikodctl/v2/pkg/defaults"
+	"github.com/localfont/mikodctl/v2/pkg/inspecttypes/dockercompat"
+	"github.com/localfont/mikodctl/v2/pkg/rootlessutil"
 )
 
 const UnameO = "GNU/Linux"
@@ -48,7 +48,7 @@ func fulfillSecurityOptions(info *dockercompat.Info) {
 		if rootlessutil.IsRootless() && !apparmorutil.CanApplySpecificExistingProfile(defaults.AppArmorProfileName) {
 			info.Warnings = append(info.Warnings, fmt.Sprintf(strings.TrimSpace(`
 WARNING: AppArmor profile %q is not loaded.
-         Use 'sudo nerdctl apparmor load' if you prefer to use AppArmor with rootless mode.
+         Use 'sudo mikodctl apparmor load' if you prefer to use AppArmor with rootless mode.
          This warning is negligible if you do not intend to use AppArmor.`), defaults.AppArmorProfileName))
 		}
 	}

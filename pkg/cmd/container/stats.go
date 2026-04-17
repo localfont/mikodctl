@@ -34,16 +34,16 @@ import (
 	"github.com/containerd/log"
 	"github.com/containerd/typeurl/v2"
 
-	"github.com/containerd/nerdctl/v2/pkg/api/types"
-	"github.com/containerd/nerdctl/v2/pkg/clientutil"
-	"github.com/containerd/nerdctl/v2/pkg/containerinspector"
-	"github.com/containerd/nerdctl/v2/pkg/containerutil"
-	"github.com/containerd/nerdctl/v2/pkg/eventutil"
-	"github.com/containerd/nerdctl/v2/pkg/formatter"
-	"github.com/containerd/nerdctl/v2/pkg/idutil/containerwalker"
-	"github.com/containerd/nerdctl/v2/pkg/infoutil"
-	"github.com/containerd/nerdctl/v2/pkg/rootlessutil"
-	"github.com/containerd/nerdctl/v2/pkg/statsutil"
+	"github.com/localfont/mikodctl/v2/pkg/api/types"
+	"github.com/localfont/mikodctl/v2/pkg/clientutil"
+	"github.com/localfont/mikodctl/v2/pkg/containerinspector"
+	"github.com/localfont/mikodctl/v2/pkg/containerutil"
+	"github.com/localfont/mikodctl/v2/pkg/eventutil"
+	"github.com/localfont/mikodctl/v2/pkg/formatter"
+	"github.com/localfont/mikodctl/v2/pkg/idutil/containerwalker"
+	"github.com/localfont/mikodctl/v2/pkg/infoutil"
+	"github.com/localfont/mikodctl/v2/pkg/rootlessutil"
+	"github.com/localfont/mikodctl/v2/pkg/statsutil"
 )
 
 type stats struct {
@@ -133,7 +133,7 @@ func Stats(ctx context.Context, client *containerd.Client, containerIDs []string
 		}
 	}
 
-	// getContainerList get all existing containers (only used when calling `nerdctl stats` without arguments).
+	// getContainerList get all existing containers (only used when calling `mikodctl stats` without arguments).
 	getContainerList := func() {
 		containers, err := client.Containers(ctx)
 		if err != nil {

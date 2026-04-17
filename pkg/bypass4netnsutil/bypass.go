@@ -30,7 +30,7 @@ import (
 	"github.com/containerd/errdefs"
 	"github.com/containerd/go-cni"
 
-	"github.com/containerd/nerdctl/v2/pkg/annotations"
+	"github.com/localfont/mikodctl/v2/pkg/annotations"
 )
 
 func NewBypass4netnsCNIBypassManager(client client.Client, rlkClient rlkclient.Client, annotationsMap map[string]string) (*Bypass4netnsCNIBypassManager, error) {

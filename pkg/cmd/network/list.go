@@ -26,13 +26,13 @@ import (
 	"text/tabwriter"
 	"text/template"
 
-	"github.com/containerd/nerdctl/v2/pkg/api/types"
-	"github.com/containerd/nerdctl/v2/pkg/formatter"
-	"github.com/containerd/nerdctl/v2/pkg/netutil"
+	"github.com/localfont/mikodctl/v2/pkg/api/types"
+	"github.com/localfont/mikodctl/v2/pkg/formatter"
+	"github.com/localfont/mikodctl/v2/pkg/netutil"
 )
 
 type networkPrintable struct {
-	ID     string // empty for non-nerdctl networks
+	ID     string // empty for non-mikodctl networks
 	Name   string
 	Labels string
 	// TODO: "CreatedAt", "Driver", "IPv6", "Internal", "Scope"
@@ -95,14 +95,14 @@ func List(ctx context.Context, options types.NetworkListOptions) error {
 			Name: n.Name,
 			file: n.File,
 		}
-		if n.NerdctlID != nil {
-			p.ID = *n.NerdctlID
+		if n.MikodctlID != nil {
+			p.ID = *n.MikodctlID
 			if len(p.ID) > 12 {
 				p.ID = p.ID[:12]
 			}
 		}
-		if n.NerdctlLabels != nil {
-			p.Labels = formatter.FormatLabels(*n.NerdctlLabels)
+		if n.MikodctlLabels != nil {
+			p.Labels = formatter.FormatLabels(*n.MikodctlLabels)
 		}
 		pp[i] = p
 	}
@@ -182,7 +182,7 @@ func getNetworkFilterFuncs(filters []string) ([]func(*map[string]string) bool, [
 
 func networkMatchesFilter(net *netutil.NetworkConfig, labelFilterFuncs []func(*map[string]string) bool, nameFilterFuncs []func(string) bool) bool {
 	for _, labelFilterFunc := range labelFilterFuncs {
-		if !labelFilterFunc(net.NerdctlLabels) {
+		if !labelFilterFunc(net.MikodctlLabels) {
 			return false
 		}
 	}

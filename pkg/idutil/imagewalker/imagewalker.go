@@ -27,7 +27,7 @@ import (
 	containerd "github.com/containerd/containerd/v2/client"
 	"github.com/containerd/containerd/v2/core/images"
 
-	"github.com/containerd/nerdctl/v2/pkg/referenceutil"
+	"github.com/localfont/mikodctl/v2/pkg/referenceutil"
 )
 
 type Found struct {
@@ -36,7 +36,7 @@ type Found struct {
 	MatchIndex     int    // Begins with 0, up to MatchCount - 1.
 	MatchCount     int    // 1 on exact match. > 1 on ambiguous match. Never be <= 0.
 	UniqueImages   int    // Number of unique images in all found images.
-	NameMatchIndex int    // Image index with a name matching the argument for `nerdctl rmi`.
+	NameMatchIndex int    // Image index with a name matching the argument for `mikodctl rmi`.
 }
 
 type OnFound func(ctx context.Context, found Found) error
@@ -47,7 +47,7 @@ k8s.io is showing multiple results: repo:tag, repo:digest, configID. We expect
 to display only repo:tag, consistent with other namespaces and CRI.
 e.g.
 
-	nerdctl -n k8s.io images
+	mikodctl -n k8s.io images
 	REPOSITORY    TAG       IMAGE ID        CREATED        PLATFORM       SIZE         BLOB SIZE
 	centos        7         be65f488b776    3 hours ago    linux/amd64    211.5 MiB    72.6 MiB
 	centos        <none>    be65f488b776    3 hours ago    linux/amd64    211.5 MiB    72.6 MiB
@@ -95,7 +95,7 @@ func (w *ImageWalker) Walk(ctx context.Context, req string) (int, error) {
 	nameMatchIndex := -1
 	for i, image := range images {
 		uniqueImages[image.Target.Digest] = true
-		// to get target image index for `nerdctl rmi <short digest ids of another images>`.
+		// to get target image index for `mikodctl rmi <short digest ids of another images>`.
 		if (parsedReferenceStr != "" && image.Name == parsedReferenceStr) || image.Name == req {
 			nameMatchIndex = i
 		}
@@ -166,7 +166,7 @@ func (w *ImageWalker) WalkCriRm(ctx context.Context, req string) (int, error) {
 			imageTag = append(imageTag, img)
 			tagNum++
 			uniqueImages[img.Target.Digest] = true
-			// to get target image index for `nerdctl rmi <short digest ids of another images>`.
+			// to get target image index for `mikodctl rmi <short digest ids of another images>`.
 			if (parsedReferenceStr != "" && img.Name == parsedReferenceStr) || img.Name == req {
 				nameMatchIndex = len(imageTag) - 1
 			}

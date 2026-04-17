@@ -149,9 +149,9 @@ func TestURLParsingAndID(t *testing.T) {
 		},
 		{
 			address:    "https://registry-host.com/subpath/something?bar=bar&ns=registry-namespace.com&foo=foo",
-			identifier: "nerdctl-experimental://registry-namespace.com:443/host/registry-host.com:443/subpath/something",
+			identifier: "mikodctl-experimental://registry-namespace.com:443/host/registry-host.com:443/subpath/something",
 			allIDs: []string{
-				"nerdctl-experimental://registry-namespace.com:443/host/registry-host.com:443/subpath/something",
+				"mikodctl-experimental://registry-namespace.com:443/host/registry-host.com:443/subpath/something",
 			},
 		},
 		{

@@ -82,7 +82,7 @@ jobs:
           # gomodjail
           - runner: ubuntu-24.04
             target: rootless
-            binary: "nerdctl.gomodjail"
+            binary: "mikodctl.gomodjail"
           ###### Rootful
           # amd64
           - runner: ubuntu-24.04
@@ -109,7 +109,7 @@ jobs:
       timeout: 80
       runner: ${{ matrix.runner }}
       target: ${{ matrix.target }}
-      binary: ${{ matrix.binary && matrix.binary || 'nerdctl' }}
+      binary: ${{ matrix.binary && matrix.binary || 'mikodctl' }}
       containerd-version: ${{ matrix.containerd-version }}
       rootlesskit-version: ${{ matrix.rootlesskit-version }}
       ipv6: ${{ matrix.ipv6 && true || false }}
@@ -131,17 +131,17 @@ jobs:
           - runner: ubuntu-24.04
             binary: docker
 
-          # FIXME: running nerdctl on the host is work in progress
+          # FIXME: running mikodctl on the host is work in progress
           # (we miss runc to be installed on the host - and obviously other deps)
           # Plan is to pause this for now and first consolidate dependencies management (wrt Dockerfile vs. host-testing CI)
-          # before we can really start testing linux nerdctl on the host.
+          # before we can really start testing linux mikodctl on the host.
           # - runner: ubuntu-24.04
           # - runner: ubuntu-24.04
           #  canary: true
     with:
       timeout: 45
       runner: ${{ matrix.runner }}
-      binary: ${{ matrix.binary != '' && matrix.binary || 'nerdctl' }}
+      binary: ${{ matrix.binary != '' && matrix.binary || 'mikodctl' }}
       canary: ${{ matrix.canary && true || false }}
       go-version: 1.26
       windows-cni-version: v0.3.1

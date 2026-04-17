@@ -26,7 +26,7 @@ import (
 
 	"github.com/containerd/go-cni"
 
-	"github.com/containerd/nerdctl/v2/pkg/rootlessutil"
+	"github.com/localfont/mikodctl/v2/pkg/rootlessutil"
 )
 
 func TestParseFlagPWithPlatformSpec(t *testing.T) {

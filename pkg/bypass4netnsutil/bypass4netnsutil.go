@@ -28,8 +28,8 @@ import (
 	"github.com/containerd/containerd/v2/core/containers"
 	"github.com/containerd/containerd/v2/pkg/oci"
 
-	"github.com/containerd/nerdctl/v2/pkg/annotations"
-	"github.com/containerd/nerdctl/v2/pkg/rootlessutil"
+	"github.com/localfont/mikodctl/v2/pkg/annotations"
+	"github.com/localfont/mikodctl/v2/pkg/rootlessutil"
 )
 
 func generateSecurityOpt(listenerPath string) (oci.SpecOpts, error) {

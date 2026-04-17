@@ -23,8 +23,8 @@ import (
 
 	containerd "github.com/containerd/containerd/v2/client"
 
-	"github.com/containerd/nerdctl/v2/pkg/healthcheck"
-	"github.com/containerd/nerdctl/v2/pkg/labels"
+	"github.com/localfont/mikodctl/v2/pkg/healthcheck"
+	"github.com/localfont/mikodctl/v2/pkg/labels"
 )
 
 // HealthCheck executes the health check command for a container

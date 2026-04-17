@@ -21,8 +21,8 @@ package mocks
 // FIXME: type asserts...
 
 import (
-	"github.com/containerd/nerdctl/mod/tigron/internal/mimicry"
-	"github.com/containerd/nerdctl/mod/tigron/tig"
+	"github.com/localfont/mikodctl/mod/tigron/internal/mimicry"
+	"github.com/localfont/mikodctl/mod/tigron/tig"
 )
 
 type T interface {

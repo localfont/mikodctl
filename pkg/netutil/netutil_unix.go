@@ -34,10 +34,10 @@ import (
 
 	"github.com/containerd/log"
 
-	"github.com/containerd/nerdctl/v2/pkg/defaults"
-	"github.com/containerd/nerdctl/v2/pkg/rootlessutil"
-	"github.com/containerd/nerdctl/v2/pkg/strutil"
-	"github.com/containerd/nerdctl/v2/pkg/systemutil"
+	"github.com/localfont/mikodctl/v2/pkg/defaults"
+	"github.com/localfont/mikodctl/v2/pkg/rootlessutil"
+	"github.com/localfont/mikodctl/v2/pkg/strutil"
+	"github.com/localfont/mikodctl/v2/pkg/systemutil"
 )
 
 const (
@@ -46,7 +46,7 @@ const (
 	DefaultIPAMDriver  = "host-local"
 
 	// When creating non-default network without passing in `--subnet` option,
-	// nerdctl assigns subnet address for the creation starting from `StartingCIDR`
+	// mikodctl assigns subnet address for the creation starting from `StartingCIDR`
 	// This prevents subnet address overlapping with `DefaultCIDR` used by the default network
 	StartingCIDR = "10.4.1.0/24"
 )
@@ -123,7 +123,7 @@ func (e *CNIEnv) generateCNIPlugins(driver string, name string, ipam map[string]
 		}
 		var bridge *bridgeConfig
 		if name == DefaultNetworkName {
-			bridge = newBridgePlugin("nerdctl0")
+			bridge = newBridgePlugin("mikodctl0")
 		} else {
 			bridge = newBridgePlugin("br-" + networkID(name)[:12])
 		}

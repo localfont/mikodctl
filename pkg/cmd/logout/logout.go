@@ -19,7 +19,7 @@ package logout
 import (
 	"context"
 
-	"github.com/containerd/nerdctl/v2/pkg/imgutil/dockerconfigresolver"
+	"github.com/localfont/mikodctl/v2/pkg/imgutil/dockerconfigresolver"
 )
 
 func Logout(ctx context.Context, logoutServer string) (map[string]error, error) {

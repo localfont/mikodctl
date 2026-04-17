@@ -19,7 +19,7 @@ package infoutil
 import (
 	"github.com/docker/docker/pkg/sysinfo"
 
-	"github.com/containerd/nerdctl/v2/pkg/inspecttypes/dockercompat"
+	"github.com/localfont/mikodctl/v2/pkg/inspecttypes/dockercompat"
 )
 
 const UnameO = "Darwin"

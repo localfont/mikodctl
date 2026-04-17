@@ -77,7 +77,7 @@ func (cs *CredentialsStore) Erase(registryURL *RegistryURL) (map[string]error, e
 // On error, ErrUnableToStore
 func (cs *CredentialsStore) Store(registryURL *RegistryURL, credentials *Credentials) error {
 	// We just overwrite the server property here with the host
-	// Whether it was one of the variants, or was not set at all (see for example Amazon ECR, https://github.com/containerd/nerdctl/issues/733
+	// Whether it was one of the variants, or was not set at all (see for example Amazon ECR, https://github.com/localfont/mikodctl/issues/733
 	// - which is likely a bug in docker) it doesn't matter.
 	// This is the credentials that were returned for that host, by the docker credentials store.
 	if registryURL.Namespace != nil {
@@ -94,7 +94,7 @@ func (cs *CredentialsStore) Store(registryURL *RegistryURL, credentials *Credent
 	return nil
 }
 
-// ShellCompletion will return candidate strings for nerdctl logout
+// ShellCompletion will return candidate strings for mikodctl logout
 func (cs *CredentialsStore) ShellCompletion() []string {
 	candidates := []string{}
 	for key := range cs.dockerConfigFile.AuthConfigs {

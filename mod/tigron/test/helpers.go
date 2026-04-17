@@ -17,8 +17,8 @@
 package test
 
 import (
-	"github.com/containerd/nerdctl/mod/tigron/internal"
-	"github.com/containerd/nerdctl/mod/tigron/tig"
+	"github.com/localfont/mikodctl/mod/tigron/internal"
+	"github.com/localfont/mikodctl/mod/tigron/tig"
 )
 
 // This is the implementation of Helpers

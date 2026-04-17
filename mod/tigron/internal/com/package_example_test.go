@@ -25,7 +25,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/containerd/nerdctl/mod/tigron/internal/com"
+	"github.com/localfont/mikodctl/mod/tigron/internal/com"
 )
 
 func ExampleCommand() {

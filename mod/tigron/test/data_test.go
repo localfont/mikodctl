@@ -21,7 +21,7 @@ package test
 import (
 	"testing"
 
-	"github.com/containerd/nerdctl/mod/tigron/internal/assertive"
+	"github.com/localfont/mikodctl/mod/tigron/internal/assertive"
 )
 
 func TestLabels(t *testing.T) {

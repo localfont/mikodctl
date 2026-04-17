@@ -26,10 +26,10 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/containerd/nerdctl/mod/tigron/test"
+	"github.com/localfont/mikodctl/mod/tigron/test"
 
-	"github.com/containerd/nerdctl/v2/pkg/testutil"
-	"github.com/containerd/nerdctl/v2/pkg/testutil/nettestutil"
+	"github.com/localfont/mikodctl/v2/pkg/testutil"
+	"github.com/localfont/mikodctl/v2/pkg/testutil/nettestutil"
 )
 
 const SignalCaught = "received"
@@ -60,8 +60,8 @@ func RunSigProxyContainer(signal os.Signal, exitOnSignal bool, args []string, da
 	args = append([]string{"run"}, args...)
 
 	cmd := helpers.Command(args...)
-	// NOTE: because of a test like TestStopWithStopSignal, we need to wait enough for nerdctl to terminate the container
-	// It looks like EL8 could be particularly slow (https://github.com/containerd/nerdctl/issues/4068)
+	// NOTE: because of a test like TestStopWithStopSignal, we need to wait enough for mikodctl to terminate the container
+	// It looks like EL8 could be particularly slow (https://github.com/localfont/mikodctl/issues/4068)
 	// Note that in normal circumstances, 10 seconds is plenty enough.
 	cmd.WithTimeout(40 * time.Second)
 	cmd.Background()

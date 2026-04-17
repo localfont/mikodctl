@@ -24,8 +24,8 @@ import (
 	containerd "github.com/containerd/containerd/v2/client"
 	"github.com/containerd/log"
 
-	"github.com/containerd/nerdctl/v2/pkg/api/types"
-	"github.com/containerd/nerdctl/v2/pkg/netutil"
+	"github.com/localfont/mikodctl/v2/pkg/api/types"
+	"github.com/localfont/mikodctl/v2/pkg/netutil"
 )
 
 func Remove(ctx context.Context, client *containerd.Client, options types.NetworkRemoveOptions) error {
@@ -64,8 +64,8 @@ func Remove(ctx context.Context, client *containerd.Client, options types.Networ
 			errs = append(errs, fmt.Errorf("%s is a pre-defined network and cannot be removed", req))
 			continue
 		}
-		if network.NerdctlID == nil {
-			errs = append(errs, fmt.Errorf("%s is managed outside nerdctl and cannot be removed", req))
+		if network.MikodctlID == nil {
+			errs = append(errs, fmt.Errorf("%s is managed outside mikodctl and cannot be removed", req))
 			continue
 		}
 		if err := cniEnv.RemoveNetwork(network); err != nil {

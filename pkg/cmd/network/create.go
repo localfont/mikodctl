@@ -22,8 +22,8 @@ import (
 
 	"github.com/containerd/errdefs"
 
-	"github.com/containerd/nerdctl/v2/pkg/api/types"
-	"github.com/containerd/nerdctl/v2/pkg/netutil"
+	"github.com/localfont/mikodctl/v2/pkg/api/types"
+	"github.com/localfont/mikodctl/v2/pkg/netutil"
 )
 
 func Create(options types.NetworkCreateOptions, stdout io.Writer) error {
@@ -45,6 +45,6 @@ func Create(options types.NetworkCreateOptions, stdout io.Writer) error {
 		}
 		return err
 	}
-	_, err = fmt.Fprintln(stdout, *net.NerdctlID)
+	_, err = fmt.Fprintln(stdout, *net.MikodctlID)
 	return err
 }

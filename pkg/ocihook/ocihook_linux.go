@@ -20,8 +20,8 @@ import (
 	"github.com/containerd/containerd/v2/contrib/apparmor"
 	"github.com/containerd/log"
 
-	"github.com/containerd/nerdctl/v2/pkg/apparmorutil"
-	"github.com/containerd/nerdctl/v2/pkg/defaults"
+	"github.com/localfont/mikodctl/v2/pkg/apparmorutil"
+	"github.com/localfont/mikodctl/v2/pkg/defaults"
 )
 
 func loadAppArmor() {

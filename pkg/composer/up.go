@@ -25,8 +25,8 @@ import (
 
 	"github.com/containerd/log"
 
-	"github.com/containerd/nerdctl/v2/pkg/composer/serviceparser"
-	"github.com/containerd/nerdctl/v2/pkg/reflectutil"
+	"github.com/localfont/mikodctl/v2/pkg/composer/serviceparser"
+	"github.com/localfont/mikodctl/v2/pkg/reflectutil"
 )
 
 type UpOptions struct {

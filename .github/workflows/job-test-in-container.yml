@@ -1,5 +1,5 @@
 # This job runs integration tests inside a container, for all supported variants (ipv6, canary, etc)
-# Note that it is linux and nerdctl (+/- gomodjail) only.
+# Note that it is linux and mikodctl (+/- gomodjail) only.
 name: job-test-in-container
 
 on:
@@ -21,7 +21,7 @@ on:
         type: string
       binary:
         required: false
-        default: nerdctl
+        default: mikodctl
         type: string
       containerd-version:
         required: false
@@ -46,7 +46,7 @@ env:
 jobs:
   test:
     name: |
-      ${{ inputs.binary != 'nerdctl' && format('{0} < ', inputs.binary) || '' }}
+      ${{ inputs.binary != 'mikodctl' && format('{0} < ', inputs.binary) || '' }}
       ${{ inputs.target }}
       ${{ contains(inputs.runner, 'arm') && '(arm)' || '' }}
       ${{ contains(inputs.runner, '22.04') && '(old ubuntu)' || '' }}
@@ -61,7 +61,7 @@ jobs:
         shell: bash
 
     env:
-      # https://github.com/containerd/nerdctl/issues/622
+      # https://github.com/localfont/mikodctl/issues/622
       # The only case when rootlesskit-version is force-specified is when we downgrade explicitly to v1
       WORKAROUND_ISSUE_622: ${{ inputs.rootlesskit-version }}
 

@@ -16,7 +16,7 @@
 
 package fs
 
-import "github.com/containerd/nerdctl/v2/pkg/internal/filesystem"
+import "github.com/localfont/mikodctl/v2/pkg/internal/filesystem"
 
 // InitFS will set the root location to store `internal/filesystem` ops files.
 // These files are used to allow `WriteFile` to backup and rollback content.

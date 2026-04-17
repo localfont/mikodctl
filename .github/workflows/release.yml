@@ -1,4 +1,4 @@
-# See https://github.com/containerd/nerdctl/blob/main/MAINTAINERS_GUIDE.md for how to make a release.
+# See https://github.com/localfont/mikodctl/blob/main/MAINTAINERS_GUIDE.md for how to make a release.
 name: Release
 on:
   push:
@@ -38,7 +38,7 @@ jobs:
       run: make artifacts
     - name: "SHA256SUMS"
       run: |
-        ( cd _output; sha256sum nerdctl-* ) | tee /tmp/SHA256SUMS
+        ( cd _output; sha256sum mikodctl-* ) | tee /tmp/SHA256SUMS
         mv /tmp/SHA256SUMS _output/SHA256SUMS
     - name: "The sha256sum of the SHA256SUMS file"
       run: (cd _output; sha256sum SHA256SUMS)

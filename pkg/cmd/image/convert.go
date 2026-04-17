@@ -44,14 +44,14 @@ import (
 	"github.com/containerd/stargz-snapshotter/recorder"
 	estargzdecompressutil "github.com/containerd/stargz-snapshotter/util/decompressutil"
 
-	"github.com/containerd/nerdctl/v2/pkg/api/types"
-	"github.com/containerd/nerdctl/v2/pkg/clientutil"
-	"github.com/containerd/nerdctl/v2/pkg/containerdutil"
-	converterutil "github.com/containerd/nerdctl/v2/pkg/imgutil/converter"
-	"github.com/containerd/nerdctl/v2/pkg/imgutil/jobs"
-	"github.com/containerd/nerdctl/v2/pkg/platformutil"
-	"github.com/containerd/nerdctl/v2/pkg/referenceutil"
-	"github.com/containerd/nerdctl/v2/pkg/snapshotterutil"
+	"github.com/localfont/mikodctl/v2/pkg/api/types"
+	"github.com/localfont/mikodctl/v2/pkg/clientutil"
+	"github.com/localfont/mikodctl/v2/pkg/containerdutil"
+	converterutil "github.com/localfont/mikodctl/v2/pkg/imgutil/converter"
+	"github.com/localfont/mikodctl/v2/pkg/imgutil/jobs"
+	"github.com/localfont/mikodctl/v2/pkg/platformutil"
+	"github.com/localfont/mikodctl/v2/pkg/referenceutil"
+	"github.com/localfont/mikodctl/v2/pkg/snapshotterutil"
 )
 
 func Convert(ctx context.Context, client *containerd.Client, srcRawRef, targetRawRef string, options types.ImageConvertOptions) error {
@@ -80,7 +80,7 @@ func Convert(ctx context.Context, client *containerd.Client, srcRawRef, targetRa
 	}
 	convertOpts = append(convertOpts, converter.WithPlatform(platMC))
 
-	// Ensure all the layers are here: https://github.com/containerd/nerdctl/issues/3425
+	// Ensure all the layers are here: https://github.com/localfont/mikodctl/issues/3425
 	err = EnsureAllContent(ctx, client, srcRef, platMC, options.GOptions)
 	if err != nil {
 		return err
@@ -381,7 +381,7 @@ func getNydusConvertOpts(options types.ImageConvertOptions) (*nydusconvert.PackO
 	return &nydusconvert.PackOption{
 		BuilderPath: options.NydusBuilderPath,
 		// the path will finally be used is <NERDCTL_DATA_ROOT>/nydus-converter-<hash>,
-		// for example: /var/lib/nerdctl/1935db59/nydus-converter-3269662176/,
+		// for example: /var/lib/mikodctl/1935db59/nydus-converter-3269662176/,
 		// and it will be deleted after the conversion
 		WorkDir:          workDir,
 		PrefetchPatterns: options.NydusPrefetchPatterns,

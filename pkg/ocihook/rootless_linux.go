@@ -23,7 +23,7 @@ import (
 
 	"github.com/containerd/go-cni"
 
-	"github.com/containerd/nerdctl/v2/pkg/rootlessutil"
+	"github.com/localfont/mikodctl/v2/pkg/rootlessutil"
 )
 
 func exposePortsRootless(ctx context.Context, rlkClient rlkclient.Client, ports []cni.PortMapping) error {

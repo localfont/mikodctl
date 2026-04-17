@@ -23,9 +23,9 @@ import (
 
 	containerd "github.com/containerd/containerd/v2/client"
 
-	"github.com/containerd/nerdctl/v2/pkg/api/types"
-	"github.com/containerd/nerdctl/v2/pkg/inspecttypes/native"
-	"github.com/containerd/nerdctl/v2/pkg/labels"
+	"github.com/localfont/mikodctl/v2/pkg/api/types"
+	"github.com/localfont/mikodctl/v2/pkg/inspecttypes/native"
+	"github.com/localfont/mikodctl/v2/pkg/labels"
 )
 
 func Prune(ctx context.Context, client *containerd.Client, options types.VolumePruneOptions) error {

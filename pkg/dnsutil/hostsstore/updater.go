@@ -17,15 +17,15 @@
 package hostsstore
 
 import (
-	"github.com/containerd/nerdctl/v2/pkg/netutil"
+	"github.com/localfont/mikodctl/v2/pkg/netutil"
 )
 
 // createLine returns a line string slice.
 // line is like "bar bar.nw0 foo foo.nw0\n"
-// for `nerdctl --name=foo --hostname=bar --network=nw0`.
+// for `mikodctl --name=foo --hostname=bar --network=nw0`.
 //
 // line is line "bar.example.com bar bar.nw0 foo foo.nw0\n"
-// for  `nerdctl --name=foo --hostname=bar --domainname=example.com --network=n0`.
+// for  `mikodctl --name=foo --hostname=bar --domainname=example.com --network=n0`.
 //
 // May return an empty string slice
 func createLine(thatNetwork string, meta *Meta, myNetworks map[string]struct{}) []string {

@@ -38,7 +38,7 @@ import (
 	"github.com/containerd/errdefs"
 	"github.com/containerd/log"
 
-	"github.com/containerd/nerdctl/v2/pkg/internal/filesystem"
+	"github.com/localfont/mikodctl/v2/pkg/internal/filesystem"
 )
 
 const (
@@ -317,7 +317,7 @@ func loggerFunc(dataStore string) (logging.LoggerFunc, error) {
 				return loggingProcessAdapter(ctx, driver, dataStore, logConfig.Address, getContainerWait, config)
 			})
 		} else if !errors.Is(err, os.ErrNotExist) {
-			// the file does not exist if the container was created with nerdctl < 0.20
+			// the file does not exist if the container was created with mikodctl < 0.20
 			return err
 		}
 		return nil

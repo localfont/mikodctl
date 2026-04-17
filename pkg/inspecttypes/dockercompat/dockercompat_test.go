@@ -35,10 +35,10 @@ import (
 	"github.com/containerd/containerd/v2/core/images"
 	"github.com/containerd/go-cni"
 
-	"github.com/containerd/nerdctl/v2/pkg/healthcheck"
-	"github.com/containerd/nerdctl/v2/pkg/inspecttypes/native"
-	"github.com/containerd/nerdctl/v2/pkg/internal/filesystem"
-	"github.com/containerd/nerdctl/v2/pkg/labels"
+	"github.com/localfont/mikodctl/v2/pkg/healthcheck"
+	"github.com/localfont/mikodctl/v2/pkg/inspecttypes/native"
+	"github.com/localfont/mikodctl/v2/pkg/internal/filesystem"
+	"github.com/localfont/mikodctl/v2/pkg/labels"
 )
 
 func TestContainerFromNative(t *testing.T) {
@@ -64,16 +64,16 @@ func TestContainerFromNative(t *testing.T) {
 		n        *native.Container
 		expected *Container
 	}{
-		// nerdctl container, mount /mnt/foo:/mnt/foo:rw,rslave; ResolvConfPath; hostname
+		// mikodctl container, mount /mnt/foo:/mnt/foo:rw,rslave; ResolvConfPath; hostname
 		{
-			name: "container from nerdctl",
+			name: "container from mikodctl",
 			n: &native.Container{
 				Container: containers.Container{
 					Labels: map[string]string{
-						"nerdctl/mounts":    "[{\"Type\":\"bind\",\"Source\":\"/mnt/foo\",\"Destination\":\"/mnt/foo\",\"Mode\":\"rshared,rw\",\"RW\":true,\"Propagation\":\"rshared\"}]",
-						"nerdctl/state-dir": tempStateDir,
-						"nerdctl/hostname":  "host1",
-						"nerdctl/user":      "test-user",
+						"mikodctl/mounts":    "[{\"Type\":\"bind\",\"Source\":\"/mnt/foo\",\"Destination\":\"/mnt/foo\",\"Mode\":\"rshared,rw\",\"RW\":true,\"Propagation\":\"rshared\"}]",
+						"mikodctl/state-dir": tempStateDir,
+						"mikodctl/hostname":  "host1",
+						"mikodctl/user":      "test-user",
 					},
 				},
 				Spec: &specs.Spec{
@@ -121,10 +121,10 @@ func TestContainerFromNative(t *testing.T) {
 				},
 				Config: &Config{
 					Labels: map[string]string{
-						"nerdctl/mounts":    "[{\"Type\":\"bind\",\"Source\":\"/mnt/foo\",\"Destination\":\"/mnt/foo\",\"Mode\":\"rshared,rw\",\"RW\":true,\"Propagation\":\"rshared\"}]",
-						"nerdctl/state-dir": tempStateDir,
-						"nerdctl/hostname":  "host1",
-						"nerdctl/user":      "test-user",
+						"mikodctl/mounts":    "[{\"Type\":\"bind\",\"Source\":\"/mnt/foo\",\"Destination\":\"/mnt/foo\",\"Mode\":\"rshared,rw\",\"RW\":true,\"Propagation\":\"rshared\"}]",
+						"mikodctl/state-dir": tempStateDir,
+						"mikodctl/hostname":  "host1",
+						"mikodctl/user":      "test-user",
 					},
 					Hostname: "host1",
 					Env:      []string{"/some/path"},

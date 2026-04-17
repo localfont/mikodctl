@@ -31,8 +31,8 @@ import (
 	"github.com/containerd/log"
 	"github.com/containerd/platforms"
 
-	"github.com/containerd/nerdctl/v2/pkg/platformutil"
-	"github.com/containerd/nerdctl/v2/pkg/systemutil"
+	"github.com/localfont/mikodctl/v2/pkg/platformutil"
+	"github.com/localfont/mikodctl/v2/pkg/systemutil"
 )
 
 func NewClient(ctx context.Context, namespace, address string, opts ...containerd.Opt) (*containerd.Client, context.Context, context.CancelFunc, error) {
@@ -60,7 +60,7 @@ func NewClient(ctx context.Context, namespace, address string, opts ...container
 func NewClientWithPlatform(ctx context.Context, namespace, address, platform string, clientOpts ...containerd.Opt) (*containerd.Client, context.Context, context.CancelFunc, error) {
 	if platform != "" {
 		if canExec, canExecErr := platformutil.CanExecProbably(platform); !canExec {
-			warn := fmt.Sprintf("Platform %q seems incompatible with the host platform %q. If you see \"exec format error\", see https://github.com/containerd/nerdctl/blob/main/docs/multi-platform.md",
+			warn := fmt.Sprintf("Platform %q seems incompatible with the host platform %q. If you see \"exec format error\", see https://github.com/localfont/mikodctl/blob/main/docs/multi-platform.md",
 				platform, platforms.DefaultString())
 			if canExecErr != nil {
 				log.L.WithError(canExecErr).Warn(warn)
@@ -78,9 +78,9 @@ func NewClientWithPlatform(ctx context.Context, namespace, address, platform str
 	return NewClient(ctx, namespace, address, clientOpts...)
 }
 
-// DataStore returns a string like "/var/lib/nerdctl/1935db59".
+// DataStore returns a string like "/var/lib/mikodctl/1935db59".
 // "1935db9" is from `$(echo -n "/run/containerd/containerd.sock" | sha256sum | cut -c1-8)`
-// on Windows it will return "%PROGRAMFILES%/nerdctl/1935db59"
+// on Windows it will return "%PROGRAMFILES%/mikodctl/1935db59"
 func DataStore(dataRoot, address string) (string, error) {
 	if err := os.MkdirAll(dataRoot, 0700); err != nil {
 		return "", err

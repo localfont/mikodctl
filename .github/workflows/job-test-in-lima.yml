@@ -57,7 +57,7 @@ jobs:
             template://${{ inputs.guest }}
 
       # FIXME: the tests should be directly executed in the VM without nesting Docker inside it
-      # https://github.com/containerd/nerdctl/issues/3858
+      # https://github.com/localfont/mikodctl/issues/3858
       - name: "Init: install dockerd in the guest VM"
         run: |
           set -eux

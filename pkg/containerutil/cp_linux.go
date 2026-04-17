@@ -34,9 +34,9 @@ import (
 	"github.com/containerd/errdefs"
 	"github.com/containerd/log"
 
-	"github.com/containerd/nerdctl/v2/pkg/api/types"
-	"github.com/containerd/nerdctl/v2/pkg/rootlessutil"
-	"github.com/containerd/nerdctl/v2/pkg/tarutil"
+	"github.com/localfont/mikodctl/v2/pkg/api/types"
+	"github.com/localfont/mikodctl/v2/pkg/rootlessutil"
+	"github.com/localfont/mikodctl/v2/pkg/tarutil"
 )
 
 // See https://docs.docker.com/engine/reference/commandline/cp/ for the specification.
@@ -53,7 +53,7 @@ var (
 	ErrSourceIsNotADir            = errors.New("source is not a directory")                                      // cp SOMEFILE/ foo:/
 	ErrDestinationIsNotADir       = errors.New("destination is not a directory")                                 // * cp ./ foo:/etc/issue/bah
 	ErrSourceDoesNotExist         = errors.New("source does not exist")                                          // cp NONEXISTENT foo:/
-	ErrDestinationParentMustExist = errors.New("destination parent does not exist")                              // nerdctl cp VALID_PATH foo:/NONEXISTENT/NONEXISTENT
+	ErrDestinationParentMustExist = errors.New("destination parent does not exist")                              // mikodctl cp VALID_PATH foo:/NONEXISTENT/NONEXISTENT
 	ErrDestinationDirMustExist    = errors.New("the destination directory must exist to be able to copy a file") // * cp SOMEFILE foo:/NONEXISTENT/
 	ErrCannotCopyDirToFile        = errors.New("cannot copy a directory to a file")                              // cp SOMEDIR foo:/etc/issue
 )
@@ -79,7 +79,7 @@ func getRoot(ctx context.Context, container containerd.Container) (string, int, 
 	return fmt.Sprintf("/proc/%d/root", pid), pid, nil
 }
 
-// CopyFiles implements `nerdctl cp`
+// CopyFiles implements `mikodctl cp`
 // It currently depends on the following assumptions:
 // - linux only
 // - tar binary exists on the system
@@ -231,7 +231,7 @@ func CopyFiles(ctx context.Context, client *containerd.Client, container contain
 		}
 	} else if !sourceSpec.fromStdin {
 		// Prepare a single-file directory to create an archive of the source file
-		td, err := os.MkdirTemp("", "nerdctl-cp")
+		td, err := os.MkdirTemp("", "mikodctl-cp")
 		if err != nil {
 			return err
 		}
@@ -244,7 +244,7 @@ func CopyFiles(ctx context.Context, client *containerd.Client, container contain
 		if destinationSpec.toStdout || destinationSpec.endsWithSeparator || (destinationSpec.exists && destinationSpec.isADir) {
 			tarCArg = filepath.Base(sourceSpec.resolvedPath)
 		} else {
-			// Handle `nerdctl cp /path/to/file some-container:/path/to/file-with-another-name`
+			// Handle `mikodctl cp /path/to/file some-container:/path/to/file-with-another-name`
 			tarCArg = filepath.Base(destinationSpec.resolvedPath)
 		}
 		cp = append(cp, sourceSpec.resolvedPath, filepath.Join(td, tarCArg))
@@ -367,7 +367,7 @@ func mountSnapshotForContainer(ctx context.Context, client *containerd.Client, c
 		return "", nil, err
 	}
 
-	tempDir, err := os.MkdirTemp("", "nerdctl-cp-")
+	tempDir, err := os.MkdirTemp("", "mikodctl-cp-")
 	if err != nil {
 		return "", nil, err
 	}

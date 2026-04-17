@@ -30,9 +30,9 @@ import (
 	transferimage "github.com/containerd/containerd/v2/core/transfer/image"
 	"github.com/containerd/platforms"
 
-	"github.com/containerd/nerdctl/v2/pkg/api/types"
-	"github.com/containerd/nerdctl/v2/pkg/platformutil"
-	"github.com/containerd/nerdctl/v2/pkg/transferutil"
+	"github.com/localfont/mikodctl/v2/pkg/api/types"
+	"github.com/localfont/mikodctl/v2/pkg/platformutil"
+	"github.com/localfont/mikodctl/v2/pkg/transferutil"
 )
 
 // FromArchive loads and unpacks the images from the tar archive specified in image load options.

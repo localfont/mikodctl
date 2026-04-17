@@ -38,17 +38,17 @@ import (
 	"github.com/containerd/go-cni"
 	"github.com/containerd/log"
 
-	"github.com/containerd/nerdctl/v2/pkg/bypass4netnsutil"
-	"github.com/containerd/nerdctl/v2/pkg/dnsutil/hostsstore"
-	"github.com/containerd/nerdctl/v2/pkg/internal/filesystem"
-	"github.com/containerd/nerdctl/v2/pkg/labels"
-	"github.com/containerd/nerdctl/v2/pkg/namestore"
-	"github.com/containerd/nerdctl/v2/pkg/netutil"
-	"github.com/containerd/nerdctl/v2/pkg/netutil/nettype"
-	"github.com/containerd/nerdctl/v2/pkg/ocihook/state"
-	"github.com/containerd/nerdctl/v2/pkg/portutil"
-	"github.com/containerd/nerdctl/v2/pkg/rootlessutil"
-	"github.com/containerd/nerdctl/v2/pkg/store"
+	"github.com/localfont/mikodctl/v2/pkg/bypass4netnsutil"
+	"github.com/localfont/mikodctl/v2/pkg/dnsutil/hostsstore"
+	"github.com/localfont/mikodctl/v2/pkg/internal/filesystem"
+	"github.com/localfont/mikodctl/v2/pkg/labels"
+	"github.com/localfont/mikodctl/v2/pkg/namestore"
+	"github.com/localfont/mikodctl/v2/pkg/netutil"
+	"github.com/localfont/mikodctl/v2/pkg/netutil/nettype"
+	"github.com/localfont/mikodctl/v2/pkg/ocihook/state"
+	"github.com/localfont/mikodctl/v2/pkg/portutil"
+	"github.com/localfont/mikodctl/v2/pkg/rootlessutil"
+	"github.com/localfont/mikodctl/v2/pkg/store"
 )
 
 const (
@@ -98,8 +98,8 @@ func Run(stdin io.Reader, stderr io.Writer, event, dataStore, cniPath, cniNetcon
 
 	// FIXME: CNI plugins are not safe to use concurrently
 	// See
-	// https://github.com/containerd/nerdctl/issues/3518
-	// https://github.com/containerd/nerdctl/issues/2908
+	// https://github.com/localfont/mikodctl/issues/3518
+	// https://github.com/localfont/mikodctl/issues/2908
 	// and likely others
 	// Fixing these issues would require a lot of work, possibly even stopping using individual cni binaries altogether
 	// or at least being very mindful in what operation we call inside CNIEnv at what point, with filesystem locking.
@@ -344,7 +344,7 @@ func getPortMapOpts(opts *handlerOpts) ([]cni.NamespaceOpts, error) {
 			portDriverDisallowsLoopbackChildIP = info.PortDriver.DisallowLoopbackChildIP // true for slirp4netns port driver
 		}
 		// For rootless, we need to modify the hostIP that is not bindable in the child namespace.
-		// https: //github.com/containerd/nerdctl/issues/88
+		// https: //github.com/localfont/mikodctl/issues/88
 		//
 		// We must NOT modify opts.ports here, because we use the unmodified opts.ports for
 		// interaction with RootlessKit API.
@@ -455,9 +455,9 @@ func reserveSocket(protocol, hostAddr string) (*os.File, error) {
 	return f.File()
 }
 
-// portReserverPidFilePath returns /run/nerdctl/<namespace>/<id>/port-reserver.pid
+// portReserverPidFilePath returns /run/mikodctl/<namespace>/<id>/port-reserver.pid
 func portReserverPidFilePath(opts *handlerOpts) string {
-	return filepath.Join("/run/nerdctl/", opts.state.Annotations[labels.Namespace], opts.state.ID, "port-reserver.pid")
+	return filepath.Join("/run/mikodctl/", opts.state.Annotations[labels.Namespace], opts.state.ID, "port-reserver.pid")
 }
 
 func applyNetworkSettings(opts *handlerOpts) (err error) {
@@ -559,7 +559,7 @@ func applyNetworkSettings(opts *handlerOpts) (err error) {
 	// leading to a bricked system where multiple containers may share the same name.
 	// Thus, we do pre-emptively clean things up - error is not checked, as in the majority of cases, that would
 	// legitimately error (and that does not matter)
-	// See https://github.com/containerd/nerdctl/issues/3355
+	// See https://github.com/localfont/mikodctl/issues/3355
 	_ = opts.cni.Remove(ctx, opts.fullID, "", namespaceOpts...)
 
 	// Defer CNI configuration removal to ensure idempotency of oci-hook.
@@ -618,7 +618,7 @@ func onCreateRuntime(opts *handlerOpts) error {
 	if err != nil {
 		log.L.WithError(err).Error("failed opening the namestore in onCreateRuntime")
 	} else if err := namst.Acquire(name, opts.state.ID); err != nil {
-		log.L.WithError(err).Error("failed re-acquiring name - see https://github.com/containerd/nerdctl/issues/2992")
+		log.L.WithError(err).Error("failed re-acquiring name - see https://github.com/localfont/mikodctl/issues/2992")
 	}
 
 	var netError error
@@ -652,7 +652,7 @@ func onPostStop(opts *handlerOpts) error {
 
 	var shouldExit bool
 	err = lf.Transform(func(lf *state.Store) error {
-		// See https://github.com/containerd/nerdctl/issues/3357
+		// See https://github.com/localfont/mikodctl/issues/3357
 		// Check if we actually errored during runtimeCreate
 		// If that is the case, CreateError is set, and we are in postStop while the container will NOT be deleted (see ticket).
 		// Thus, do NOT treat this as a deletion, as the container is still there.

@@ -27,7 +27,7 @@ import (
 	containerd "github.com/containerd/containerd/v2/client"
 	"github.com/containerd/log"
 
-	"github.com/containerd/nerdctl/v2/pkg/labels"
+	"github.com/localfont/mikodctl/v2/pkg/labels"
 )
 
 type CopyOptions struct {
@@ -88,7 +88,7 @@ func (c *Composer) Copy(ctx context.Context, co CopyOptions) error {
 			return err
 		}
 		if !co.DryRun {
-			if err := c.runNerdctlCmd(ctx, args...); err != nil {
+			if err := c.runMikodctlCmd(ctx, args...); err != nil {
 				return err
 			}
 		}

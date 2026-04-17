@@ -29,13 +29,13 @@ import (
 	containerd "github.com/containerd/containerd/v2/client"
 	"github.com/containerd/log"
 
-	"github.com/containerd/nerdctl/v2/pkg/composer/serviceparser"
-	"github.com/containerd/nerdctl/v2/pkg/config"
-	"github.com/containerd/nerdctl/v2/pkg/identifiers"
-	"github.com/containerd/nerdctl/v2/pkg/reflectutil"
+	"github.com/localfont/mikodctl/v2/pkg/composer/serviceparser"
+	"github.com/localfont/mikodctl/v2/pkg/config"
+	"github.com/localfont/mikodctl/v2/pkg/identifiers"
+	"github.com/localfont/mikodctl/v2/pkg/reflectutil"
 )
 
-// Options groups the command line options recommended for a Compose implementation (ProjectOptions) and extra options for nerdctl
+// Options groups the command line options recommended for a Compose implementation (ProjectOptions) and extra options for mikodctl
 type Options struct {
 	Project          string // empty for default
 	ProjectDirectory string
@@ -43,8 +43,8 @@ type Options struct {
 	Profiles         []string
 	Services         []string
 	EnvFile          string
-	NerdctlCmd       string
-	NerdctlArgs      []string
+	MikodctlCmd       string
+	MikodctlArgs      []string
 	NetworkInUse     func(ctx context.Context, netName string) (bool, error)
 	NetworkExists    func(string) (bool, error)
 	VolumeExists     func(string) (bool, error)
@@ -56,8 +56,8 @@ type Options struct {
 }
 
 func New(o Options, client *containerd.Client, cfg *config.Config) (*Composer, error) {
-	if o.NerdctlCmd == "" {
-		return nil, errors.New("got empty nerdctl cmd")
+	if o.MikodctlCmd == "" {
+		return nil, errors.New("got empty mikodctl cmd")
 	}
 	if o.NetworkExists == nil || o.VolumeExists == nil || o.EnsureImage == nil {
 		return nil, errors.New("got empty functions")
@@ -133,12 +133,12 @@ type Composer struct {
 	config  *config.Config
 }
 
-func (c *Composer) createNerdctlCmd(ctx context.Context, args ...string) *exec.Cmd {
-	return exec.CommandContext(ctx, c.NerdctlCmd, append(c.NerdctlArgs, args...)...)
+func (c *Composer) createMikodctlCmd(ctx context.Context, args ...string) *exec.Cmd {
+	return exec.CommandContext(ctx, c.MikodctlCmd, append(c.MikodctlArgs, args...)...)
 }
 
-func (c *Composer) runNerdctlCmd(ctx context.Context, args ...string) error {
-	cmd := c.createNerdctlCmd(ctx, args...)
+func (c *Composer) runMikodctlCmd(ctx context.Context, args ...string) error {
+	cmd := c.createMikodctlCmd(ctx, args...)
 	if c.DebugPrintFull {
 		log.G(ctx).Debugf("Running %v", cmd.Args)
 	}

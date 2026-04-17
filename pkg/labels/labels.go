@@ -19,8 +19,8 @@
 package labels
 
 const (
-	// Prefix is the common prefix of nerdctl labels
-	Prefix = "nerdctl/"
+	// Prefix is the common prefix of mikodctl labels
+	Prefix = "mikodctl/"
 
 	// Namespace is the containerd namespace such as "default", "k8s.io"
 	Namespace = Prefix + "namespace"
@@ -53,14 +53,14 @@ const (
 	// ExtraHosts are HostIPs to appended to /etc/hosts
 	ExtraHosts = Prefix + "extraHosts"
 
-	// StateDir is "/var/lib/nerdctl/<ADDRHASH>/containers/<NAMESPACE>/<ID>"
+	// StateDir is "/var/lib/mikodctl/<ADDRHASH>/containers/<NAMESPACE>/<ID>"
 	StateDir = Prefix + "state-dir"
 
 	// Networks is a JSON-marshalled string of []string, e.g. []string{"bridge"}.
 	// Currently, the length of the slice must be 1.
 	Networks = Prefix + "networks"
 
-	// DEPRECATED : https://github.com/containerd/nerdctl/pull/4290
+	// DEPRECATED : https://github.com/localfont/mikodctl/pull/4290
 	// Ports is a JSON-marshalled string of []cni.PortMapping .
 	Ports = Prefix + "ports"
 
@@ -73,7 +73,7 @@ const (
 	// LogURI is the log URI
 	LogURI = Prefix + "log-uri"
 
-	// PIDFile is the `nerdctl run --pidfile`
+	// PIDFile is the `mikodctl run --pidfile`
 	// (CLI flag is "pidfile", not "pid-file", for Podman compatibility)
 	PIDFile = Prefix + "pid-file"
 
@@ -91,7 +91,7 @@ const (
 
 	MACAddress = Prefix + "mac-address"
 
-	// PIDContainer is the `nerdctl run --pid` for restarting
+	// PIDContainer is the `mikodctl run --pid` for restarting
 	PIDContainer = Prefix + "pid-container"
 
 	// IPC is the `nerectl run --ipc` for restrating
@@ -102,11 +102,11 @@ const (
 	// that describes container error.
 	Error = Prefix + "error"
 
-	// NerdctlDefaultNetwork indicates whether a network is the default network
-	// created and owned by Nerdctl.
+	// MikodctlDefaultNetwork indicates whether a network is the default network
+	// created and owned by Mikodctl.
 	// Boolean value which can be parsed with strconv.ParseBool() is required.
-	// (like "nerdctl/default-network=true" or "nerdctl/default-network=false")
-	NerdctlDefaultNetwork = Prefix + "default-network"
+	// (like "mikodctl/default-network=true" or "mikodctl/default-network=false")
+	MikodctlDefaultNetwork = Prefix + "default-network"
 
 	// ContainerAutoRemove is to check whether the --rm option is specified.
 	ContainerAutoRemove = Prefix + "auto-remove"

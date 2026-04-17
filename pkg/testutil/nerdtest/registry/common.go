@@ -22,7 +22,7 @@ import (
 
 	"golang.org/x/crypto/bcrypt"
 
-	"github.com/containerd/nerdctl/mod/tigron/test"
+	"github.com/localfont/mikodctl/mod/tigron/test"
 )
 
 // Auth describes a struct able to serialize authenticator information into arguments to be fed to a registry container run

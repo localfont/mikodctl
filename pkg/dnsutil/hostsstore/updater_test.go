@@ -24,16 +24,16 @@ import (
 	types100 "github.com/containernetworking/cni/pkg/types/100"
 	"gotest.tools/v3/assert"
 
-	"github.com/containerd/nerdctl/v2/pkg/netutil"
+	"github.com/localfont/mikodctl/v2/pkg/netutil"
 )
 
 func TestCreateLine(t *testing.T) {
 	type testCase struct {
 		thatIP         string
 		thatNetwork    string
-		thatHostname   string // nerdctl run --hostname
-		thatDomainname string // nerdctl run --domainname
-		thatName       string // nerdctl run --name
+		thatHostname   string // mikodctl run --hostname
+		thatDomainname string // mikodctl run --domainname
+		thatName       string // mikodctl run --name
 		myNetwork      string
 		expected       string
 	}

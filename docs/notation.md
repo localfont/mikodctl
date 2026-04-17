@@ -1,11 +1,11 @@
 # Container Image Sign and Verify with notation tool
 
-| :zap: Requirement | nerdctl >= 1.3.0 |
+| :zap: Requirement | mikodctl >= 1.3.0 |
 |-------------------|------------------|
 
 [notation](https://github.com/notaryproject/notation) is a project to add signatures as standard items in the registry ecosystem, and to build a set of simple tooling for signing and verifying these signatures.
 
-You can enable container signing and verifying features with `push` and `pull` commands of `nerdctl` by using `notation`
+You can enable container signing and verifying features with `push` and `pull` commands of `mikodctl` by using `notation`
 under the hood with make use of flags `--sign` while pushing the container image, and `--verify` while pulling the
 container image.
 
@@ -29,7 +29,7 @@ EOF
 ```shell
 
 # Build the image
-$ nerdctl build -t localhost:5000/my-test -f Dockerfile.dummy .
+$ mikodctl build -t localhost:5000/my-test -f Dockerfile.dummy .
 
 # Generate a key-pair in notation's key store and trust store
 $ notation cert generate-test --default "test"
@@ -45,7 +45,7 @@ Sign the container image while pushing:
 
 ```
 # Sign the image and store the signature in the registry
-$ nerdctl push --sign=notation --notation-key-name test localhost:5000/my-test
+$ mikodctl push --sign=notation --notation-key-name test localhost:5000/my-test
 ```
 
 Verify the container image while pulling:
@@ -74,8 +74,8 @@ cat <<EOF | tee ~/.config/notation/trustpolicy.json
 EOF
 
 # Verify the image
-$ nerdctl pull --verify=notation localhost:5000/my-test
+$ mikodctl pull --verify=notation localhost:5000/my-test
 
 # You can not verify the image if it is not signed by the cert in the trust policy
-$ nerdctl pull --verify=notation localhost:5000/my-test-bad
+$ mikodctl pull --verify=notation localhost:5000/my-test-bad
 ```

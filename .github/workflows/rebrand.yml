@@ -20,44 +20,44 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Rebrand nerdctl to mikodctl
+      - name: Rebrand mikodctl to mikodctl
         run: |
-          echo "🏷️ Rebranding: nerdctl → mikodctl"
+          echo "🏷️ Rebranding: mikodctl → mikodctl"
           
           # Binary adını değiştir (Makefile)
           if [ -f "Makefile" ]; then
-            sed -i 's/nerdctl/mikodctl/g' Makefile
+            sed -i 's/mikodctl/mikodctl/g' Makefile
             echo "✅ Makefile güncellendi"
           fi
           
           # Go modül adını güncelle
           if [ -f "go.mod" ]; then
-            sed -i 's|github.com/containerd/nerdctl|github.com/localfont/mikodctl|g' go.mod
+            sed -i 's|github.com/localfont/mikodctl|github.com/localfont/mikodctl|g' go.mod
             echo "✅ go.mod güncellendi"
           fi
           
           # Tüm Go dosyalarındaki importları güncelle
-          find . -name "*.go" -type f -exec sed -i 's|github.com/containerd/nerdctl|github.com/localfont/mikodctl|g' {} \;
+          find . -name "*.go" -type f -exec sed -i 's|github.com/localfont/mikodctl|github.com/localfont/mikodctl|g' {} \;
           echo "✅ Go importları güncellendi"
           
           # Komut isimleri ve açıklamaları
-          find . -name "*.go" -type f -exec sed -i 's/"nerdctl"/"mikodctl"/g' {} \;
-          find . -name "*.go" -type f -exec sed -i 's/nerdctl /mikodctl /g' {} \;
+          find . -name "*.go" -type f -exec sed -i 's/"mikodctl"/"mikodctl"/g' {} \;
+          find . -name "*.go" -type f -exec sed -i 's/mikodctl /mikodctl /g' {} \;
           echo "✅ Komut referansları güncellendi"
           
           # README ve dokümantasyon
-          find . -name "*.md" -type f -exec sed -i 's/nerdctl/mikodctl/g' {} \;
+          find . -name "*.md" -type f -exec sed -i 's/mikodctl/mikodctl/g' {} \;
           find . -name "*.md" -type f -exec sed -i 's/Nerdctl/Mikodctl/g' {} \;
           find . -name "*.md" -type f -exec sed -i 's/NERDCTL/MIKODCTL/g' {} \;
           echo "✅ Markdown dosyaları güncellendi"
           
           # Docker/Dockerfile referansları
-          find . -name "Dockerfile*" -type f -exec sed -i 's/nerdctl/mikodctl/g' {} \;
-          find . -name "docker-compose*" -type f -exec sed -i 's/nerdctl/mikodctl/g' {} \;
+          find . -name "Dockerfile*" -type f -exec sed -i 's/mikodctl/mikodctl/g' {} \;
+          find . -name "docker-compose*" -type f -exec sed -i 's/mikodctl/mikodctl/g' {} \;
           echo "✅ Docker dosyaları güncellendi"
           
           # YAML ve script dosyaları
-          find . -name "*.yaml" -o -name "*.yml" -o -name "*.sh" | xargs -I {} sed -i 's/nerdctl/mikodctl/g' {} 2>/dev/null || true
+          find . -name "*.yaml" -o -name "*.yml" -o -name "*.sh" | xargs -I {} sed -i 's/mikodctl/mikodctl/g' {} 2>/dev/null || true
           echo "✅ YAML/Script dosyaları güncellendi"
 
       - name: Check for changes
@@ -73,7 +73,7 @@ jobs:
         if: steps.check_changes.outputs.has_changes == 'true'
         run: |
           git add -A
-          git commit -m "chore: rebrand nerdctl to mikodctl [skip ci]"
+          git commit -m "chore: rebrand mikodctl to mikodctl [skip ci]"
           git push origin HEAD:${{ github.ref_name }}
           echo "✅ Değişiklikler commit edildi ve pushlandı"
 

@@ -27,7 +27,7 @@ import (
 
 	"github.com/containerd/log"
 
-	"github.com/containerd/nerdctl/v2/pkg/internal/filesystem"
+	"github.com/localfont/mikodctl/v2/pkg/internal/filesystem"
 )
 
 var (
@@ -46,7 +46,7 @@ func hostSupports() bool {
 		}
 		// In some rare circumstances, apparmor may be enabled, but the tooling could be missing
 		// containerd implementation shells out to aa-parser, so, require it here.
-		// See https://github.com/containerd/nerdctl/issues/3945 for details.
+		// See https://github.com/localfont/mikodctl/issues/3945 for details.
 		pth, err := exec.LookPath("apparmor_parser")
 		if err != nil {
 			appArmorSupported = false
@@ -115,7 +115,7 @@ func CanApplySpecificExistingProfile(profileName string) bool {
 }
 
 type Profile struct {
-	Name string `json:"Name"`           // e.g., "nerdctl-default"
+	Name string `json:"Name"`           // e.g., "mikodctl-default"
 	Mode string `json:"Mode,omitempty"` // e.g., "enforce"
 }
 

@@ -24,10 +24,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/containerd/nerdctl/mod/tigron/internal/assertive"
-	"github.com/containerd/nerdctl/mod/tigron/internal/mimicry"
-	"github.com/containerd/nerdctl/mod/tigron/internal/mocks"
-	"github.com/containerd/nerdctl/mod/tigron/tig"
+	"github.com/localfont/mikodctl/mod/tigron/internal/assertive"
+	"github.com/localfont/mikodctl/mod/tigron/internal/mimicry"
+	"github.com/localfont/mikodctl/mod/tigron/internal/mocks"
+	"github.com/localfont/mikodctl/mod/tigron/tig"
 )
 
 func TestAssertivePass(t *testing.T) {

@@ -70,7 +70,7 @@ func NewRootlessKitClient() (client.Client, error) {
 	return client.New(apiSock)
 }
 
-// RootlessContainredSockAddress returns sock address of rootless containerd based on https://github.com/containerd/nerdctl/blob/main/docs/faq.md#containerd-socket-address
+// RootlessContainredSockAddress returns sock address of rootless containerd based on https://github.com/localfont/mikodctl/blob/main/docs/faq.md#containerd-socket-address
 func RootlessContainredSockAddress() (string, error) {
 	stateDir, err := RootlessKitStateDir()
 	if err != nil {

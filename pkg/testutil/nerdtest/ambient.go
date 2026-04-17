@@ -16,7 +16,7 @@
 
 package nerdtest
 
-import "github.com/containerd/nerdctl/v2/pkg/testutil"
+import "github.com/localfont/mikodctl/v2/pkg/testutil"
 
 func environmentHasIPv6() bool {
 	return testutil.GetEnableIPv6()

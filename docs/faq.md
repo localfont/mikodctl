@@ -4,13 +4,13 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 - [Project](#project)
-  - [How is nerdctl different from `docker` ?](#how-is-nerdctl-different-from-docker-)
-  - [How is nerdctl different from `ctr` and `crictl` ?](#how-is-nerdctl-different-from-ctr-and-crictl-)
+  - [How is mikodctl different from `docker` ?](#how-is-mikodctl-different-from-docker-)
+  - [How is mikodctl different from `ctr` and `crictl` ?](#how-is-mikodctl-different-from-ctr-and-crictl-)
 - [Mac & Windows](#mac--windows)
-  - [Does nerdctl run on macOS ?](#does-nerdctl-run-on-macos-)
-  - [Does nerdctl run on Windows ?](#does-nerdctl-run-on-windows-)
+  - [Does mikodctl run on macOS ?](#does-mikodctl-run-on-macos-)
+  - [Does mikodctl run on Windows ?](#does-mikodctl-run-on-windows-)
 - [Configuration](#configuration)
-  - [nerdctl ignores `[plugins."io.containerd.grpc.v1.cri"]` config](#nerdctl-ignores-pluginsiocontainerdgrpcv1cri-config)
+  - [mikodctl ignores `[plugins."io.containerd.grpc.v1.cri"]` config](#mikodctl-ignores-pluginsiocontainerdgrpcv1cri-config)
   - [How to login to a registry?](#how-to-login-to-a-registry)
   - [How to use a non-HTTPS registry?](#how-to-use-a-non-https-registry)
   - [How to specify the CA certificate of the registry?](#how-to-specify-the-ca-certificate-of-the-registry)
@@ -19,15 +19,15 @@
   - [How to change the runtime?](#how-to-change-the-runtime)
   - [How to change the CNI binary path?](#how-to-change-the-cni-binary-path)
 - [Kubernetes](#kubernetes)
-  - [`nerdctl ps -a` does not show Kubernetes containers](#nerdctl-ps--a-does-not-show-kubernetes-containers)
+  - [`mikodctl ps -a` does not show Kubernetes containers](#mikodctl-ps--a-does-not-show-kubernetes-containers)
   - [How to build an image for Kubernetes?](#how-to-build-an-image-for-kubernetes)
 - [containerd socket address](#containerd-socket-address)
-  - [Does nerdctl have an equivalent of `DOCKER_HOST=ssh://<USER>@<REMOTEHOST>` ?](#does-nerdctl-have-an-equivalent-of-docker_hostsshuserremotehost-)
-  - [Does nerdctl have an equivalent of `sudo usermod -aG docker <USER>` ?](#does-nerdctl-have-an-equivalent-of-sudo-usermod--ag-docker-user-)
+  - [Does mikodctl have an equivalent of `DOCKER_HOST=ssh://<USER>@<REMOTEHOST>` ?](#does-mikodctl-have-an-equivalent-of-docker_hostsshuserremotehost-)
+  - [Does mikodctl have an equivalent of `sudo usermod -aG docker <USER>` ?](#does-mikodctl-have-an-equivalent-of-sudo-usermod--ag-docker-user-)
 - [Rootless](#rootless)
-  - [How to use nerdctl as a non-root user? (Rootless mode)](#how-to-use-nerdctl-as-a-non-root-user-rootless-mode)
-  - [`nerdctl run -p <PORT>` does not propagate source IP](#nerdctl-run--p-port-does-not-propagate-source-ip)
-  - [`nerdctl run -p <PORT>` does not work with port numbers below 1024](#nerdctl-run--p-port-does-not-work-with-port-numbers-below-1024)
+  - [How to use mikodctl as a non-root user? (Rootless mode)](#how-to-use-mikodctl-as-a-non-root-user-rootless-mode)
+  - [`mikodctl run -p <PORT>` does not propagate source IP](#mikodctl-run--p-port-does-not-propagate-source-ip)
+  - [`mikodctl run -p <PORT>` does not work with port numbers below 1024](#mikodctl-run--p-port-does-not-work-with-port-numbers-below-1024)
   - [Can't ping](#cant-ping)
   - [Containers do not automatically start after rebooting the host](#containers-do-not-automatically-start-after-rebooting-the-host)
   - [Error `failed to create shim task: OCI runtime create failed: runc create failed: unable to start container process: unable to apply cgroup configuration: unable to start unit ... {Name:Slice Value:"user.slice"} {Name:Delegate Value:true} ... Permission denied: unknown`](#error-failed-to-create-shim-task-oci-runtime-create-failed-runc-create-failed-unable-to-start-container-process-unable-to-apply-cgroup-configuration-unable-to-start-unit--nameslice-valueuserslice-namedelegate-valuetrue--permission-denied-unknown)
@@ -38,73 +38,73 @@
 
 ## Project
 
-### How is nerdctl different from `docker` ?
+### How is mikodctl different from `docker` ?
 
-The goal of nerdctl is to facilitate experimenting the cutting-edge features of containerd that are not present in Docker.
+The goal of mikodctl is to facilitate experimenting the cutting-edge features of containerd that are not present in Docker.
 
 Such features include, but not limited to, [on-demand image pulling (lazy-pulling)](./stargz.md) and [image encryption/decryption](./ocicrypt.md).
-See also [`../README.md`](../README.md) for the list of the features present in nerdctl but not present in Docker (and vice versa).
+See also [`../README.md`](../README.md) for the list of the features present in mikodctl but not present in Docker (and vice versa).
 
-Note that competing with Docker is _not_ the goal of nerdctl. Those cutting-edge features are expected to be eventually available in Docker as well.
+Note that competing with Docker is _not_ the goal of mikodctl. Those cutting-edge features are expected to be eventually available in Docker as well.
 
-### How is nerdctl different from `ctr` and `crictl` ?
+### How is mikodctl different from `ctr` and `crictl` ?
 
 [`ctr`](https://github.com/containerd/containerd/tree/main/cmd/ctr) is a debugging utility bundled with containerd.
 
 ctr is incompatible with Docker CLI, and not friendly to users.
 
-Notably, `ctr` lacks the equivalents of the following nerdctl commands:
-- `nerdctl run -p <PORT>`
-- `nerdctl run --restart=always --net=bridge`
-- `nerdctl pull` with `~/.docker/config.json` and credential helper binaries such as `docker-credential-ecr-login`
-- `nerdctl logs`
-- `nerdctl build`
-- `nerdctl compose up`
+Notably, `ctr` lacks the equivalents of the following mikodctl commands:
+- `mikodctl run -p <PORT>`
+- `mikodctl run --restart=always --net=bridge`
+- `mikodctl pull` with `~/.docker/config.json` and credential helper binaries such as `docker-credential-ecr-login`
+- `mikodctl logs`
+- `mikodctl build`
+- `mikodctl compose up`
 
 [`crictl`](https://github.com/kubernetes-sigs/cri-tools) has similar restrictions too.
 
 ## Mac & Windows
 
-### Does nerdctl run on macOS ?
+### Does mikodctl run on macOS ?
 
 Yes, via a Linux virtual machine.
 
-[Lima](https://github.com/lima-vm/lima) project provides Linux virtual machines for macOS, with built-in integration for nerdctl.
+[Lima](https://github.com/lima-vm/lima) project provides Linux virtual machines for macOS, with built-in integration for mikodctl.
 
 ```console
 $ brew install lima
 $ limactl start
-$ lima nerdctl run -d --name nginx -p 127.0.0.1:8080:80 nginx:alpine
+$ lima mikodctl run -d --name nginx -p 127.0.0.1:8080:80 nginx:alpine
 ```
 
-[Rancher Desktop for Mac](https://rancherdesktop.io/) and [colima](https://github.com/abiosoft/colima) also provide custom Lima machines with nerdctl.
+[Rancher Desktop for Mac](https://rancherdesktop.io/) and [colima](https://github.com/abiosoft/colima) also provide custom Lima machines with mikodctl.
 
-### Does nerdctl run on Windows ?
+### Does mikodctl run on Windows ?
 
 Windows containers: Yes, but experimental.
 
-Linux containers: Yes, via WSL2. [Rancher Desktop for Windows](https://rancherdesktop.io/) provides a `nerdctl.exe` that wraps nerdctl binary in a WSL2 machine.
+Linux containers: Yes, via WSL2. [Rancher Desktop for Windows](https://rancherdesktop.io/) provides a `mikodctl.exe` that wraps mikodctl binary in a WSL2 machine.
 
 ## Configuration
 
-### nerdctl ignores `[plugins."io.containerd.grpc.v1.cri"]` config
+### mikodctl ignores `[plugins."io.containerd.grpc.v1.cri"]` config
 
-Expected behavior, because nerdctl does not use CRI (Kubernetes Container Runtime Interface) API.
+Expected behavior, because mikodctl does not use CRI (Kubernetes Container Runtime Interface) API.
 
-See the questions below for how to configure nerdctl.
+See the questions below for how to configure mikodctl.
 
 ### How to login to a registry?
 
-Use `nerdctl login`, or just create `~/.docker/config.json`.
-nerdctl also supports credential helper binaries such as `docker-credential-ecr-login`.
+Use `mikodctl login`, or just create `~/.docker/config.json`.
+mikodctl also supports credential helper binaries such as `docker-credential-ecr-login`.
 
 ### How to use a non-HTTPS registry?
 
-Use `nerdctl --insecure-registry run <IMAGE>`. See also [`registry.md`](./registry.md).
+Use `mikodctl --insecure-registry run <IMAGE>`. See also [`registry.md`](./registry.md).
 
 ### How to specify the CA certificate of the registry?
 
-| :zap: Requirement | nerdctl >= 0.16 |
+| :zap: Requirement | mikodctl >= 0.16 |
 |-------------------|-----------------|
 
 Create `~/.config/containerd/certs.d/<HOST:PORT>/hosts.toml` (or `/etc/containerd/certs.d/...` for rootful) to specify `ca` certificates.
@@ -127,8 +127,8 @@ See also [`registry.md`](./registry.md).
 
 ### How to change the cgroup driver?
 
-- Option 1: `nerdctl --cgroup-manager=(cgroupfs|systemd|none)`.
-- Option 2: Set `cgroup_manager` property in [`nerdctl.toml`](config.md)
+- Option 1: `mikodctl --cgroup-manager=(cgroupfs|systemd|none)`.
+- Option 2: Set `cgroup_manager` property in [`mikodctl.toml`](config.md)
 
 The default value is `systemd` on cgroup v2 hosts (both rootful and rootless), `cgroupfs` on cgroup v1 rootful hosts, `none` on cgroup v1 rootless hosts.
 
@@ -158,9 +158,9 @@ See also https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/configure-c
 </details>
 
 ### How to change the snapshotter?
-- Option 1: Use `nerdctl --snapshotter=(overlayfs|native|btrfs|...)`
+- Option 1: Use `mikodctl --snapshotter=(overlayfs|native|btrfs|...)`
 - Option 2: Set `$CONTAINERD_SNAPSHOTTER`
-- Option 3: Set `snapshotter` property in [`nerdctl.toml`](config.md)
+- Option 3: Set `snapshotter` property in [`mikodctl.toml`](config.md)
 
 The default value is `overlayfs`.
 
@@ -180,7 +180,7 @@ version = 2
 </details>
 
 ### How to change the runtime?
-Use `nerdctl run --runtime=<RUNTIME>`.
+Use `mikodctl run --runtime=<RUNTIME>`.
 
 The `<RUNTIME>` string can be either a containerd runtime plugin name (such as `io.containerd.runc.v2`),
 or a path to a runc-compatible binary (such as `/usr/local/sbin/runc`).
@@ -208,9 +208,9 @@ version = 2
 
 ### How to change the CNI binary path?
 
-- Option 1: Use `nerdctl --cni-path=<PATH>`
+- Option 1: Use `mikodctl --cni-path=<PATH>`
 - Option 2: Set `$CNI_PATH`
-- Option 3: Set `cni_path` property in [`nerdctl.toml`](config.md).
+- Option 3: Set `cni_path` property in [`mikodctl.toml`](config.md).
 
 The default value is automatically detected by checking the following candidates:
 - `~/.local/libexec/cni`
@@ -241,22 +241,22 @@ version = 2
 
 ## Kubernetes
 
-### `nerdctl ps -a` does not show Kubernetes containers
-Try `sudo nerdctl --namespace=k8s.io ps -a` .
+### `mikodctl ps -a` does not show Kubernetes containers
+Try `sudo mikodctl --namespace=k8s.io ps -a` .
 
-Note: k3s users have to specify `--address` too: `sudo nerdctl --address=/run/k3s/containerd/containerd.sock --namespace=k8s.io ps -a`
+Note: k3s users have to specify `--address` too: `sudo mikodctl --address=/run/k3s/containerd/containerd.sock --namespace=k8s.io ps -a`
 
 ### How to build an image for Kubernetes?
 
 For a multi-node cluster:
 ```console
-$ nerdctl build -t example.com/foo /some-dockerfile-directory
-$ nerdctl push example.com/foo
+$ mikodctl build -t example.com/foo /some-dockerfile-directory
+$ mikodctl push example.com/foo
 ```
 
 For a single-node cluster w/o registry:
 ```console
-# nerdctl --namespace k8s.io build -t foo /some-dockerfile-directory
+# mikodctl --namespace k8s.io build -t foo /some-dockerfile-directory
 # kubectl apply -f - <<EOF
 apiVersion: v1
 kind: Pod
@@ -273,22 +273,22 @@ EOF
 ## containerd socket address
 
 - rootful: `/run/containerd/containerd.sock`
-- rootless (e.g., default [Lima](https://github.com/lima-vm/lima) instance): `/proc/<PID of containerd>/root/run/containerd/containerd.sock`, or you can run this command to find out: `echo /proc/$(cat $XDG_RUNTIME_DIR/containerd-rootless/child_pid)/root/run/containerd/containerd.sock` (why it works:  [`rootlessutil.ParentMain`](https://github.com/containerd/nerdctl/blob/b160d8173fb765b76cf0920d26621843d377bc3f/pkg/rootlessutil/parent.go#L66))
+- rootless (e.g., default [Lima](https://github.com/lima-vm/lima) instance): `/proc/<PID of containerd>/root/run/containerd/containerd.sock`, or you can run this command to find out: `echo /proc/$(cat $XDG_RUNTIME_DIR/containerd-rootless/child_pid)/root/run/containerd/containerd.sock` (why it works:  [`rootlessutil.ParentMain`](https://github.com/localfont/mikodctl/blob/b160d8173fb765b76cf0920d26621843d377bc3f/pkg/rootlessutil/parent.go#L66))
 
-### Does nerdctl have an equivalent of `DOCKER_HOST=ssh://<USER>@<REMOTEHOST>` ?
+### Does mikodctl have an equivalent of `DOCKER_HOST=ssh://<USER>@<REMOTEHOST>` ?
 
-No. Just use `ssh -l <USER> <REMOTEHOST> nerdctl`.
+No. Just use `ssh -l <USER> <REMOTEHOST> mikodctl`.
 
-### Does nerdctl have an equivalent of `sudo usermod -aG docker <USER>` ?
+### Does mikodctl have an equivalent of `sudo usermod -aG docker <USER>` ?
 
-Not exactly same, but setting SETUID bit (`chmod +s`) on `nerdctl` binary gives similar user experience.
+Not exactly same, but setting SETUID bit (`chmod +s`) on `mikodctl` binary gives similar user experience.
 
 ```
 mkdir -p $HOME/bin
 chmod 700 $HOME/bin
-cp /usr/local/bin/nerdctl $HOME/bin
-sudo chown root $HOME/bin/nerdctl
-sudo chmod +s $HOME/bin/nerdctl
+cp /usr/local/bin/mikodctl $HOME/bin
+sudo chown root $HOME/bin/mikodctl
+sudo chmod +s $HOME/bin/mikodctl
 export PATH=$HOME/bin:$PATH
 ```
 
@@ -298,11 +298,11 @@ Using SETUID bit is highly discouraged. Consider using [Rootless mode](#rootless
 
 ## Rootless
 
-### How to use nerdctl as a non-root user? (Rootless mode)
+### How to use mikodctl as a non-root user? (Rootless mode)
 
 ```
 containerd-rootless-setuptool.sh install
-nerdctl run -d --name nginx -p 8080:80 nginx:alpine
+mikodctl run -d --name nginx -p 8080:80 nginx:alpine
 ```
 
 See also:
@@ -310,14 +310,14 @@ See also:
 - https://rootlesscontaine.rs/getting-started/common/
 - https://rootlesscontaine.rs/getting-started/containerd/
 
-### `nerdctl run -p <PORT>` does not propagate source IP
-Make sure that nerdctl is running with RootlessKit v3.0 or later.
+### `mikodctl run -p <PORT>` does not propagate source IP
+Make sure that mikodctl is running with RootlessKit v3.0 or later.
 
 For older version of RootlessKit, change the port driver to `slirp4netns` (sacrifices performance).
 
 See https://rootlesscontaine.rs/getting-started/containerd/#changing-the-port-forwarder .
 
-### `nerdctl run -p <PORT>` does not work with port numbers below 1024
+### `mikodctl run -p <PORT>` does not work with port numbers below 1024
 
 Set sysctl value `net.ipv4.ip_unprivileged_port_start=0` .
 
@@ -340,7 +340,7 @@ Running a rootless container with `systemd` cgroup driver requires dbus to be ru
 
 Otherwise runc may fail with an error like below:
 ```
-FATA[0000] failed to create shim task: OCI runtime create failed: runc create failed: unable to start container process: unable to apply cgroup configuration: unable to start unit "nerdctl-7bda4abaa1f006ab9feeb98c06953db43f212f1c0aaf658fb8a88d6f63dff9f9.scope" (properties [{Name:Description Value:"libcontainer container 7bda4abaa1f006ab9feeb98c06953db43f212f1c0aaf658fb8a88d6f63dff9f9"} {Name:Slice Value:"user.slice"} {Name:Delegate Value:true} {Name:PIDs Value:@au [1154]} {Name:MemoryAccounting Value:true} {Name:CPUAccounting Value:true} {Name:IOAccounting Value:true} {Name:TasksAccounting Value:true} {Name:DefaultDependencies Value:false}]): Permission denied: unknown
+FATA[0000] failed to create shim task: OCI runtime create failed: runc create failed: unable to start container process: unable to apply cgroup configuration: unable to start unit "mikodctl-7bda4abaa1f006ab9feeb98c06953db43f212f1c0aaf658fb8a88d6f63dff9f9.scope" (properties [{Name:Description Value:"libcontainer container 7bda4abaa1f006ab9feeb98c06953db43f212f1c0aaf658fb8a88d6f63dff9f9"} {Name:Slice Value:"user.slice"} {Name:Delegate Value:true} {Name:PIDs Value:@au [1154]} {Name:MemoryAccounting Value:true} {Name:CPUAccounting Value:true} {Name:IOAccounting Value:true} {Name:TasksAccounting Value:true} {Name:DefaultDependencies Value:false}]): Permission denied: unknown
 ```
 
 Solution:
@@ -355,7 +355,7 @@ systemctl --user start dbus
 Run the following commands:
 ```
 containerd-rootless-setuptool.sh uninstall
-rootlesskit rm -rf ~/.local/share/containerd ~/.local/share/nerdctl ~/.config/containerd
+rootlesskit rm -rf ~/.local/share/containerd ~/.local/share/mikodctl ~/.config/containerd
 ```
 
 ### How to clean a dangling cache of buildkit?
@@ -366,6 +366,6 @@ root mode.
 
 You can clear the cache objects by running the following command:
 ```
-nerdctl builder prune
+mikodctl builder prune
 ```
 The command produce a progress message of id and size of removed objects.

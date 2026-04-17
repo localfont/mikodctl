@@ -27,8 +27,8 @@ import (
 	"github.com/containerd/containerd/v2/pkg/archive"
 	"github.com/containerd/log"
 
-	"github.com/containerd/nerdctl/v2/pkg/api/types"
-	"github.com/containerd/nerdctl/v2/pkg/idutil/containerwalker"
+	"github.com/localfont/mikodctl/v2/pkg/api/types"
+	"github.com/localfont/mikodctl/v2/pkg/idutil/containerwalker"
 )
 
 // Export exports a container's filesystem as a tar archive
@@ -72,7 +72,7 @@ func exportContainer(ctx context.Context, client *containerd.Client, container c
 	}
 
 	// Create a temporary directory to mount the snapshot
-	tempDir, err := os.MkdirTemp("", "nerdctl-export-")
+	tempDir, err := os.MkdirTemp("", "mikodctl-export-")
 	if err != nil {
 		return fmt.Errorf("failed to create temporary mount directory: %w", err)
 	}
@@ -97,7 +97,7 @@ func exportContainer(ctx context.Context, client *containerd.Client, container c
 
 func createTarArchiveWithWriteDiff(ctx context.Context, rootPath string, options types.ContainerExportOptions) error {
 	// Create a temporary empty directory to use as the "before" state for WriteDiff
-	emptyDir, err := os.MkdirTemp("", "nerdctl-export-empty-")
+	emptyDir, err := os.MkdirTemp("", "mikodctl-export-empty-")
 	if err != nil {
 		return fmt.Errorf("failed to create temporary empty directory: %w", err)
 	}

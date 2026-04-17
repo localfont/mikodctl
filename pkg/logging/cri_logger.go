@@ -38,7 +38,7 @@ import (
 
 	"github.com/containerd/log"
 
-	"github.com/containerd/nerdctl/v2/pkg/logging/tail"
+	"github.com/localfont/mikodctl/v2/pkg/logging/tail"
 )
 
 // LogStreamType is the type of the stream in CRI container log.
@@ -168,7 +168,7 @@ func ReadLogs(opts *LogViewOptions, stdout, stderr io.Writer, stopChannel chan o
 						if err != nil {
 							if errors.Is(err, os.ErrNotExist) {
 								//If the user application outputs logs too quickly,
-								//There is a slight possibility that nerdctl has just rotated the log file,
+								//There is a slight possibility that mikodctl has just rotated the log file,
 								//try opening it once more.
 								time.Sleep(10 * time.Millisecond)
 							}

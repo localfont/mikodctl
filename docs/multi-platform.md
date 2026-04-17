@@ -1,9 +1,9 @@
 # Multi-platform
 
-| :zap: Requirement | nerdctl >= 0.13 |
+| :zap: Requirement | mikodctl >= 0.13 |
 |-------------------|-----------------|
 
-nerdctl can execute non-native container images using QEMU.
+mikodctl can execute non-native container images using QEMU.
 e.g., ARM on Intel, and vice versa.
 
 ## Preparation: Register QEMU to `/proc/sys/fs/binfmt_misc`
@@ -11,7 +11,7 @@ e.g., ARM on Intel, and vice versa.
 ```console
 $ sudo systemctl start containerd
 
-$ sudo nerdctl run --privileged --rm tonistiigi/binfmt:master --install all
+$ sudo mikodctl run --privileged --rm tonistiigi/binfmt:master --install all
 
 $ ls -1 /proc/sys/fs/binfmt_misc/qemu*
 /proc/sys/fs/binfmt_misc/qemu-aarch64
@@ -35,25 +35,25 @@ See also https://github.com/tonistiigi/binfmt
 ### Pull & Run
 
 ```console
-$ nerdctl pull --platform=arm64,s390x alpine
+$ mikodctl pull --platform=arm64,s390x alpine
 
-$ nerdctl run --rm --platform=arm64 alpine uname -a
+$ mikodctl run --rm --platform=arm64 alpine uname -a
 Linux e6227935cf12 5.13.0-19-generic #19-Ubuntu SMP Thu Oct 7 21:58:00 UTC 2021 aarch64 Linux
 
-$ nerdctl run --rm --platform=s390x alpine uname -a
+$ mikodctl run --rm --platform=s390x alpine uname -a
 Linux b39da08fbdbf 5.13.0-19-generic #19-Ubuntu SMP Thu Oct 7 21:58:00 UTC 2021 s390x Linux
 ```
 
 ### Build & Push
 ```console
-$ nerdctl build --platform=amd64,arm64 --output type=image,name=example.com/foo:latest,push=true .
+$ mikodctl build --platform=amd64,arm64 --output type=image,name=example.com/foo:latest,push=true .
 ```
 
 Or
 
 ```console
-$ nerdctl build --platform=amd64,arm64 -t example.com/foo:latest .
-$ nerdctl push --all-platforms example.com/foo:latest
+$ mikodctl build --platform=amd64,arm64 -t example.com/foo:latest .
+$ mikodctl push --all-platforms example.com/foo:latest
 ```
 
 ### Compose
@@ -63,7 +63,7 @@ See [`../examples/compose-multi-platform`](../examples/compose-multi-platform)
 
 As of 2025-03-01, qemu seems to be broken in most Apple-silicon setups.
 This might be due to qemu handling of host vs. guest page sizes
-(unconfirmed, see https://github.com/containerd/nerdctl/issues/3948 for more information).
+(unconfirmed, see https://github.com/localfont/mikodctl/issues/3948 for more information).
 
 It should also be noted that Linux 6.11 introduced a change to the VDSO (on ARM)
 that does break Rosetta.

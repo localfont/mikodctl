@@ -20,8 +20,8 @@ import (
 	"runtime"
 	"testing"
 
-	"github.com/containerd/nerdctl/mod/tigron/internal/assertive"
-	"github.com/containerd/nerdctl/mod/tigron/require"
+	"github.com/localfont/mikodctl/mod/tigron/internal/assertive"
+	"github.com/localfont/mikodctl/mod/tigron/require"
 )
 
 const (

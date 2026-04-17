@@ -64,7 +64,7 @@ func commonlock(path string, mode lockType) (file *os.File, err error) {
 		// Note that this cannot be done in platform specific implementation without moving all the fd Open and Close
 		// logic over there, which is undesirable.
 		if sl, err := os.Stat(path); err == nil && sl.IsDir() {
-			path = path + ".nerdctl.lock"
+			path = path + ".mikodctl.lock"
 		}
 	}
 

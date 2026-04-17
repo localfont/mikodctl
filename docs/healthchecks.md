@@ -1,14 +1,14 @@
-# Health Check Support in nerdctl
+# Health Check Support in mikodctl
 
-`nerdctl` supports Docker-compatible health checks for containers, allowing users to monitor container health via a user-defined command.
+`mikodctl` supports Docker-compatible health checks for containers, allowing users to monitor container health via a user-defined command.
 
 ## Configuration Options
-| :zap: Requirement | nerdctl >= 2.1.5 |
+| :zap: Requirement | mikodctl >= 2.1.5 |
 |-------------------|----------------|
 
 Health checks can be configured in multiple ways:
 
-1. At container creation time using `nerdctl run` or `nerdctl create` with these flags:
+1. At container creation time using `mikodctl run` or `mikodctl create` with these flags:
    - `--health-cmd`: Command to run to check health
    - `--health-interval`: Time between running the check (default: 30s)
    - `--health-timeout`: Maximum time to allow one check to run (default: 30s)
@@ -18,14 +18,14 @@ Health checks can be configured in multiple ways:
 
 2. At image build time using HEALTHCHECK in a Dockerfile
 
-**Note:** The `--health-start-interval` option is currently not supported by nerdctl.
+**Note:** The `--health-start-interval` option is currently not supported by mikodctl.
 
 ## Configuration Priority
 
-When a container is created, nerdctl determines the health check configuration based on this priority:
+When a container is created, mikodctl determines the health check configuration based on this priority:
 
 1. CLI flags take highest precedence (e.g., `--health-cmd`, etc.)
-2. If no CLI flags are set, nerdctl will use any health check defined in the image
+2. If no CLI flags are set, mikodctl will use any health check defined in the image
 3. If neither is present, no health check will be configured
 
 ### Disabling Health Checks
@@ -38,28 +38,28 @@ You can disable health checks using the following flag during container create/r
 
 ### Running Health Checks Manually
 
-nerdctl provides a container healthcheck command that can be manually triggered by the user. This command runs the
+mikodctl provides a container healthcheck command that can be manually triggered by the user. This command runs the
 configured health check inside the container and reports the result. It serves as the entry point for executing
 health checks, especially in scenarios where external scheduling is used.
 
 Example:
 ```
-nerdctl container healthcheck <container-id>
+mikodctl container healthcheck <container-id>
 ```
 
 ## Automatic Health Checks with systemd
 
-On Linux systems with systemd, nerdctl automatically creates and manages systemd timer units to execute health checks at the configured intervals. This provides reliable scheduling and execution of health checks without requiring a persistent daemon.
+On Linux systems with systemd, mikodctl automatically creates and manages systemd timer units to execute health checks at the configured intervals. This provides reliable scheduling and execution of health checks without requiring a persistent daemon.
 
 ### Requirements for Automatic Health Checks
 
 - systemd must be available on the system
 - Container must not be running in rootless mode
-- Configuration property `disable_hc_systemd` must not be set to `true` in nerdctl.toml
+- Configuration property `disable_hc_systemd` must not be set to `true` in mikodctl.toml
 
 ### How It Works
 
-1. When a container with health checks is created, nerdctl:
+1. When a container with health checks is created, mikodctl:
    - Creates a systemd timer unit for the container
    - Configures the timer according to the health check interval
    - Starts monitoring the container's health status
@@ -72,7 +72,7 @@ On Linux systems with systemd, nerdctl automatically creates and manages systemd
 
 1. Basic health check that verifies a web server:
 ```bash
-nerdctl run -d --name web \
+mikodctl run -d --name web \
   --health-cmd="curl -f http://localhost/ || exit 1" \
   --health-interval=5s \
   --health-retries=3 \
@@ -81,7 +81,7 @@ nerdctl run -d --name web \
 
 2. Health check with initialization period:
 ```bash
-nerdctl run -d --name app \
+mikodctl run -d --name app \
   --health-cmd="./health-check.sh" \
   --health-interval=30s \
   --health-timeout=10s \
@@ -92,5 +92,5 @@ nerdctl run -d --name app \
 
 3. Disable health checks:
 ```bash
-nerdctl run --no-healthcheck myapp
+mikodctl run --no-healthcheck myapp
 ```

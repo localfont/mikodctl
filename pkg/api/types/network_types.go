@@ -20,7 +20,7 @@ import (
 	"io"
 )
 
-// NetworkCreateOptions specifies options for `nerdctl network create`.
+// NetworkCreateOptions specifies options for `mikodctl network create`.
 type NetworkCreateOptions struct {
 	// GOptions is the global options
 	GOptions GlobalCommandOptions
@@ -38,7 +38,7 @@ type NetworkCreateOptions struct {
 	Internal    bool
 }
 
-// NetworkInspectOptions specifies options for `nerdctl network inspect`.
+// NetworkInspectOptions specifies options for `mikodctl network inspect`.
 type NetworkInspectOptions struct {
 	Stdout io.Writer
 	// GOptions is the global options
@@ -51,7 +51,7 @@ type NetworkInspectOptions struct {
 	Networks []string
 }
 
-// NetworkListOptions specifies options for `nerdctl network ls`.
+// NetworkListOptions specifies options for `mikodctl network ls`.
 type NetworkListOptions struct {
 	Stdout io.Writer
 	// GOptions is the global options
@@ -64,7 +64,7 @@ type NetworkListOptions struct {
 	Filters []string
 }
 
-// NetworkPruneOptions specifies options for `nerdctl network prune`.
+// NetworkPruneOptions specifies options for `mikodctl network prune`.
 type NetworkPruneOptions struct {
 	Stdout io.Writer
 	// GOptions is the global options
@@ -73,7 +73,7 @@ type NetworkPruneOptions struct {
 	NetworkDriversToKeep []string
 }
 
-// NetworkRemoveOptions specifies options for `nerdctl network rm`.
+// NetworkRemoveOptions specifies options for `mikodctl network rm`.
 type NetworkRemoveOptions struct {
 	Stdout io.Writer
 	// GOptions is the global options

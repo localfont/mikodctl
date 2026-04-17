@@ -21,7 +21,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/containerd/nerdctl/mod/tigron/internal/highk"
+	"github.com/localfont/mikodctl/mod/tigron/internal/highk"
 )
 
 func TestMain(m *testing.M) {

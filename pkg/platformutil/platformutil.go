@@ -23,7 +23,7 @@ import (
 
 	"github.com/containerd/platforms"
 
-	"github.com/containerd/nerdctl/v2/pkg/strutil"
+	"github.com/localfont/mikodctl/v2/pkg/strutil"
 )
 
 // NewMatchComparerFromOCISpecPlatformSlice returns MatchComparer.

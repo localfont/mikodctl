@@ -17,8 +17,8 @@
 package platform
 
 import (
-	"github.com/containerd/nerdctl/v2/pkg/rootlessutil"
-	"github.com/containerd/nerdctl/v2/pkg/testutil"
+	"github.com/localfont/mikodctl/v2/pkg/rootlessutil"
+	"github.com/localfont/mikodctl/v2/pkg/testutil"
 )
 
 func DataHome() (string, error) {

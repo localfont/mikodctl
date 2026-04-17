@@ -39,13 +39,13 @@ import (
 	"github.com/containerd/containerd/v2/defaults"
 	"github.com/containerd/log"
 
-	"github.com/containerd/nerdctl/v2/pkg/buildkitutil"
-	"github.com/containerd/nerdctl/v2/pkg/infoutil"
-	"github.com/containerd/nerdctl/v2/pkg/inspecttypes/dockercompat"
-	"github.com/containerd/nerdctl/v2/pkg/inspecttypes/native"
-	"github.com/containerd/nerdctl/v2/pkg/internal/filesystem"
-	"github.com/containerd/nerdctl/v2/pkg/platformutil"
-	"github.com/containerd/nerdctl/v2/pkg/rootlessutil"
+	"github.com/localfont/mikodctl/v2/pkg/buildkitutil"
+	"github.com/localfont/mikodctl/v2/pkg/infoutil"
+	"github.com/localfont/mikodctl/v2/pkg/inspecttypes/dockercompat"
+	"github.com/localfont/mikodctl/v2/pkg/inspecttypes/native"
+	"github.com/localfont/mikodctl/v2/pkg/internal/filesystem"
+	"github.com/localfont/mikodctl/v2/pkg/platformutil"
+	"github.com/localfont/mikodctl/v2/pkg/rootlessutil"
 )
 
 type Base struct {
@@ -80,7 +80,7 @@ func (b *Base) Cmd(args ...string) *Cmd {
 	return cmd
 }
 
-// ComposeCmd executes `nerdctl -n nerdctl-test compose` or `docker-compose`
+// ComposeCmd executes `mikodctl -n mikodctl-test compose` or `docker-compose`
 func (b *Base) ComposeCmd(args ...string) *Cmd {
 	binary := b.Binary
 	binaryArgs := append(b.Args, append([]string{"compose"}, args...)...)
@@ -266,7 +266,7 @@ func (b *Base) Info() dockercompat.Info {
 func (b *Base) InfoNative() native.Info {
 	b.T.Helper()
 	if IsDocker() {
-		b.T.Skip("InfoNative() should not be called for non-nerdctl target")
+		b.T.Skip("InfoNative() should not be called for non-mikodctl target")
 	}
 	cmdResult := b.Cmd("info", "--mode", "native", "--format", "{{ json . }}").Run()
 	assert.Equal(b.T, cmdResult.ExitCode, 0)
@@ -280,7 +280,7 @@ func (b *Base) InfoNative() native.Info {
 func (b *Base) ContainerdAddress() string {
 	b.T.Helper()
 	if IsDocker() {
-		b.T.Skip("ContainerdAddress() should not be called for non-nerdctl target")
+		b.T.Skip("ContainerdAddress() should not be called for non-mikodctl target")
 	}
 	if os.Geteuid() == 0 {
 		return defaults.DefaultAddress
@@ -487,11 +487,11 @@ var (
 )
 
 var (
-	testLockFile = filepath.Join(os.TempDir(), "nerdctl-test-prevent-concurrency", ".lock")
+	testLockFile = filepath.Join(os.TempDir(), "mikodctl-test-prevent-concurrency", ".lock")
 )
 
 func M(m *testing.M) {
-	flag.StringVar(&flagTestTarget, "test.target", "nerdctl", "target to test")
+	flag.StringVar(&flagTestTarget, "test.target", "mikodctl", "target to test")
 	flag.BoolVar(&flagTestKillDaemon, "test.allow-kill-daemon", false, "enable tests that kill the daemon")
 	flag.BoolVar(&flagTestModifyUsers, "test.allow-modify-users", false, "enable tests that creates/deletes user accounts on the host")
 	flag.BoolVar(&flagTestIPv6, "test.only-ipv6", false, "enable tests on IPv6")
@@ -500,7 +500,7 @@ func M(m *testing.M) {
 	flag.Parse()
 
 	if flagTestTarget == "" {
-		flagTestTarget = "nerdctl"
+		flagTestTarget = "mikodctl"
 	}
 
 	os.Exit(func() int {
@@ -677,7 +677,7 @@ func RequireExecutable(t testing.TB, name string) {
 	}
 }
 
-const Namespace = "nerdctl-test"
+const Namespace = "mikodctl-test"
 
 func NewBaseWithNamespace(t *testing.T, ns string) *Base {
 	if ns == "" || ns == "default" || ns == Namespace {
@@ -741,9 +741,9 @@ func Identifier(t testing.TB) string {
 	s = strings.ReplaceAll(s, " ", "_")
 	s = strings.ReplaceAll(s, "/", "-")
 	s = strings.ToLower(s)
-	s = "nerdctl-" + s
+	s = "mikodctl-" + s
 	if len(s) > 76 {
-		s = "nerdctl-" + digest.SHA256.FromString(t.Name()).Encoded()
+		s = "mikodctl-" + digest.SHA256.FromString(t.Name()).Encoded()
 	}
 	return s
 }

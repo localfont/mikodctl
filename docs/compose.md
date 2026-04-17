@@ -1,22 +1,22 @@
-# nerdctl compose
+# mikodctl compose
 
-| :zap: Requirement | nerdctl >= 0.8 |
+| :zap: Requirement | mikodctl >= 0.8 |
 |-------------------|----------------|
 
 ## Usage
 
-The `nerdctl compose` CLI is designed to be compatible with `docker-compose`.
+The `mikodctl compose` CLI is designed to be compatible with `docker-compose`.
 
 ```console
-$ nerdctl compose up -d
-$ nerdctl compose down
+$ mikodctl compose up -d
+$ mikodctl compose down
 ```
 
 See the Command Reference in [`../README.md`](../README.md).
 
 ## Spec conformance
 
-`nerdctl compose` implements [The Compose Specification](https://github.com/compose-spec/compose-spec),
+`mikodctl compose` implements [The Compose Specification](https://github.com/compose-spec/compose-spec),
 which was derived from [Docker Compose file version 3 specification](https://docs.docker.com/compose/compose-file/compose-file-v3/).
 
 ### Unimplemented YAML fields

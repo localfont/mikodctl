@@ -14,7 +14,7 @@
    limitations under the License.
 */
 
-// Package hostsstore provides the interface for /var/lib/nerdctl/<ADDRHASH>/etchosts
+// Package hostsstore provides the interface for /var/lib/mikodctl/<ADDRHASH>/etchosts
 // Prioritizes simplicity over scalability.
 // All methods perform atomic writes and are safe to use concurrently.
 // Note that locking is done per namespace.
@@ -40,12 +40,12 @@ import (
 	"github.com/containerd/errdefs"
 	"github.com/containerd/log"
 
-	"github.com/containerd/nerdctl/v2/pkg/internal/filesystem"
-	"github.com/containerd/nerdctl/v2/pkg/store"
+	"github.com/localfont/mikodctl/v2/pkg/internal/filesystem"
+	"github.com/localfont/mikodctl/v2/pkg/store"
 )
 
 const (
-	// hostsDirBasename is the base name of /var/lib/nerdctl/<ADDRHASH>/etchosts
+	// hostsDirBasename is the base name of /var/lib/mikodctl/<ADDRHASH>/etchosts
 	hostsDirBasename = "etchosts"
 	// metaJSON is stored as hostsDirBasename/<NS>/<ID>/meta.json
 	metaJSON = "meta.json"
@@ -113,7 +113,7 @@ func (x *hostsStore) Acquire(meta Meta) (err error) {
 			return err
 		}
 
-		// See https://github.com/containerd/nerdctl/issues/3907
+		// See https://github.com/localfont/mikodctl/issues/3907
 		// Because of the way we call network manager ContainerNetworkingOpts then SetupNetworking in sequence
 		// we need to make sure we do not overwrite an already allocated hosts file.
 		if _, err = os.Stat(loc); os.IsNotExist(err) {
@@ -149,7 +149,7 @@ func (x *hostsStore) Acquire(meta Meta) (err error) {
 func (x *hostsStore) Release(id string) (err error) {
 	// We remove "meta.json" but we still retain the "hosts" file
 	// because it is needed for restarting. The "hosts" is removed on
-	// `nerdctl rm`.
+	// `mikodctl rm`.
 	// https://github.com/rootless-containers/rootlesskit/issues/220#issuecomment-783224610
 	defer func() {
 		if err != nil {
@@ -319,7 +319,7 @@ func (x *hostsStore) updateAllHosts() (err error) {
 		}
 
 		// parse the hosts file, keep the original host record
-		// retain custom /etc/hosts entries outside <nerdctl> </nerdctl> region
+		// retain custom /etc/hosts entries outside <mikodctl> </mikodctl> region
 		var buf bytes.Buffer
 		if content != nil {
 			if err = parseHostsButSkipMarkedRegion(&buf, bytes.NewReader(content)); err != nil {

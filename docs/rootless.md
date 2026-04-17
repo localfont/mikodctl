@@ -17,24 +17,24 @@ $ containerd-rootless-setuptool.sh install
 [INFO] To control containerd.service, run: `systemctl --user (start|stop|restart) containerd.service`
 [INFO] To run containerd.service on system startup, run: `sudo loginctl enable-linger testuser`
 
-[INFO] Use `nerdctl` to connect to the rootless containerd.
+[INFO] Use `mikodctl` to connect to the rootless containerd.
 [INFO] You do NOT need to specify $CONTAINERD_ADDRESS explicitly.
 ```
 
 The usage of `containerd-rootless-setuptool.sh` is almost same as [`dockerd-rootless-setuptool.sh`](https://rootlesscontaine.rs/getting-started/docker/) .
 
-Resource limitation flags such as `nerdctl run --memory` require systemd and cgroup v2: https://rootlesscontaine.rs/getting-started/common/cgroup2/
+Resource limitation flags such as `mikodctl run --memory` require systemd and cgroup v2: https://rootlesscontaine.rs/getting-started/common/cgroup2/
 
 #### AppArmor Profile for Ubuntu 24.04+
 
 Configuring AppArmor is needed only on Ubuntu 24.04+, with RootlessKit installed under a non-standard path: https://rootlesscontaine.rs/getting-started/common/apparmor/
 
-## Client (nerdctl)
+## Client (mikodctl)
 
-Just execute `nerdctl`. No need to specify the socket address manually.
+Just execute `mikodctl`. No need to specify the socket address manually.
 
 ```console
-$ nerdctl run -it --rm alpine
+$ mikodctl run -it --rm alpine
 ```
 
 Depending on your kernel version, you may need to enable FUSE-OverlayFS or set `export CONTAINERD_SNAPSHOTTER=native`.
@@ -83,7 +83,7 @@ Then, add the following config to `~/.config/containerd/config.toml`, and run `s
 The snapshotter can be specified as `$CONTAINERD_SNAPSHOTTER`.
 ```console
 $ export CONTAINERD_SNAPSHOTTER=fuse-overlayfs
-$ nerdctl run -it --rm alpine
+$ mikodctl run -it --rm alpine
 ```
 
 If `fuse-overlayfs` does not work, try `export CONTAINERD_SNAPSHOTTER=native`.
@@ -113,13 +113,13 @@ Then, add the following config to `~/.config/containerd/config.toml` and run `sy
 The snapshotter can be specified as `$CONTAINERD_SNAPSHOTTER`.
 ```console
 $ export CONTAINERD_SNAPSHOTTER=stargz
-$ nerdctl run -it --rm ghcr.io/stargz-containers/alpine:3.10.2-esgz
+$ mikodctl run -it --rm ghcr.io/stargz-containers/alpine:3.10.2-esgz
 ```
 
 See https://github.com/containerd/stargz-snapshotter/blob/main/docs/pre-converted-images.md for the image list.
 
 ## bypass4netns
-| :zap: Requirement | nerdctl >= 0.17 |
+| :zap: Requirement | mikodctl >= 0.17 |
 |-------------------|-----------------|
 
 
@@ -136,14 +136,14 @@ The performance benchmark with iperf3 on Ubuntu 21.10 on Hyper-V VM is shown bel
 This benchmark can be reproduced with [https://github.com/rootless-containers/bypass4netns/blob/f009d96139e9e38ce69a2ea8a9a746349bad273c/Vagrantfile](https://github.com/rootless-containers/bypass4netns/blob/f009d96139e9e38ce69a2ea8a9a746349bad273c/Vagrantfile)
 
 Acceleration with bypass4netns is available with:
-- `--annotation nerdctl/bypass4netns=true` (for nerdctl v2.0 and later)
-- `--label nerdctl/bypass4netns=true` (deprecated form, used in nerdctl prior to v2.0).
+- `--annotation mikodctl/bypass4netns=true` (for mikodctl v2.0 and later)
+- `--label mikodctl/bypass4netns=true` (deprecated form, used in mikodctl prior to v2.0).
 
 You also need to have `bypass4netnsd` (bypass4netns daemon) to be running.
 Example
 ```console
 $ containerd-rootless-setuptool.sh install-bypass4netnsd
-$ nerdctl run -it --rm -p 8080:80 --annotation nerdctl/bypass4netns=true alpine
+$ mikodctl run -it --rm -p 8080:80 --annotation mikodctl/bypass4netns=true alpine
 ```
 
 More detail is available at [https://github.com/rootless-containers/bypass4netns/blob/master/README.md](https://github.com/rootless-containers/bypass4netns/blob/master/README.md)
@@ -160,9 +160,9 @@ Rootless containerd recognizes the following environment variables to configure 
 * `CONTAINERD_ROOTLESS_ROOTLESSKIT_SLIRP4NETNS_SECCOMP=(auto|true|false)`: whether to protect slirp4netns with seccomp. Defaults to "auto".
 * `CONTAINERD_ROOTLESS_ROOTLESSKIT_DETACH_NETNS=(auto|true|false)`: whether to launch rootlesskit with the "detach-netns" mode.
   Defaults to "auto", which is resolved to "true" if RootlessKit >= 2.0 is installed.
-  The "detached-netns" mode accelerates `nerdctl (pull|push|build)` and enables `nerdctl run --net=host`,
+  The "detached-netns" mode accelerates `mikodctl (pull|push|build)` and enables `mikodctl run --net=host`,
   however, there is a relatively minor drawback with BuildKit prior to v0.13:
-  the host loopback IP address (127.0.0.1) and abstract sockets are exposed to Dockerfile's "RUN" instructions during `nerdctl build` (not `nerdctl run`).
+  the host loopback IP address (127.0.0.1) and abstract sockets are exposed to Dockerfile's "RUN" instructions during `mikodctl build` (not `mikodctl run`).
   The drawback is fixed in BuildKit v0.13. Upgrading from a prior version of BuildKit needs removing the old systemd unit:
   `containerd-rootless-setuptool.sh uninstall-buildkit && rm -f ~/.config/buildkit/buildkitd.toml`
 
@@ -193,11 +193,11 @@ In `detach-netns` mode:
 
 ![rootlessKit-network-design.png](images/rootlessKit-network-design.png)
 
-- Rootlesskit Parent NetNS and Child NetNS are already configured by the startup script [containerd-rootless.sh](https://github.com/containerd/nerdctl/blob/main/extras/rootless/containerd-rootless.sh)
+- Rootlesskit Parent NetNS and Child NetNS are already configured by the startup script [containerd-rootless.sh](https://github.com/localfont/mikodctl/blob/main/extras/rootless/containerd-rootless.sh)
 - Rootlesskit Parent NetNS is the host network namespace
-- step1: `nerdctl` calls `containerd` in the host network namespace.
+- step1: `mikodctl` calls `containerd` in the host network namespace.
 - step2: `containerd` calls `runc` in the host network namespace.
 - step3: `runc` creates container with dedicated namespaces (e.g network ns) in the Parent netns.
-- step4: `runc` nsenter Rootlesskit Child NetNS before triggering nerdctl ocihook.
-- step5: `nerdctl` ocihook module leverages CNI.
-- step6: CNI configures container network namespace: create network interfaces `eth0` -> `veth0` -> `nerdctl0`.
+- step4: `runc` nsenter Rootlesskit Child NetNS before triggering mikodctl ocihook.
+- step5: `mikodctl` ocihook module leverages CNI.
+- step6: CNI configures container network namespace: create network interfaces `eth0` -> `veth0` -> `mikodctl0`.

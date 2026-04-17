@@ -20,7 +20,7 @@ import (
 	"context"
 	"testing"
 
-	"github.com/containerd/nerdctl/mod/tigron/internal/com"
+	"github.com/localfont/mikodctl/mod/tigron/internal/com"
 )
 
 // FIXME: this requires go 1.24 - uncomment when go 1.23 is out of support

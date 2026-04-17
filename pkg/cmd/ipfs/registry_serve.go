@@ -23,9 +23,9 @@ import (
 
 	"github.com/containerd/log"
 
-	"github.com/containerd/nerdctl/v2/pkg/api/types"
-	"github.com/containerd/nerdctl/v2/pkg/internal/filesystem"
-	"github.com/containerd/nerdctl/v2/pkg/ipfs"
+	"github.com/localfont/mikodctl/v2/pkg/api/types"
+	"github.com/localfont/mikodctl/v2/pkg/internal/filesystem"
+	"github.com/localfont/mikodctl/v2/pkg/ipfs"
 )
 
 func RegistryServe(options types.IPFSRegistryServeOptions) error {

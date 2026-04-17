@@ -1,5 +1,5 @@
-# This currently test docker and nerdctl on windows (w/o canary)
-# Structure is in to allow testing nerdctl on linux as well, though more work is required to make it functional.
+# This currently test docker and mikodctl on windows (w/o canary)
+# Structure is in to allow testing mikodctl on linux as well, though more work is required to make it functional.
 name: job-test-in-host
 
 on:
@@ -17,7 +17,7 @@ on:
         type: boolean
       binary:
         required: false
-        default: nerdctl
+        default: mikodctl
         type: string
       go-version:
         required: true
@@ -50,7 +50,7 @@ env:
 jobs:
   test:
     name: |
-      ${{ inputs.binary != 'nerdctl' && format('{0} < ', inputs.binary) || '' }}
+      ${{ inputs.binary != 'mikodctl' && format('{0} < ', inputs.binary) || '' }}
       ${{ contains(inputs.runner, 'ubuntu') && ' linux' || ' windows' }}
       ${{ contains(inputs.runner, 'arm') && '(arm)' || '' }}
       ${{ contains(inputs.runner, '22.04') && '(old ubuntu)' || '' }}
@@ -64,7 +64,7 @@ jobs:
     env:
       SHOULD_RUN: "yes"
       GO_VERSION: ${{ inputs.go-version }}
-      # Both Docker and nerdctl on linux need rootful right now
+      # Both Docker and mikodctl on linux need rootful right now
       WITH_SUDO: ${{ contains(inputs.runner, 'ubuntu') }}
       CONTAINERD_VERSION: ${{ inputs.containerd-version }}
       CONTAINERD_SHA: ${{ inputs.containerd-sha }}
@@ -134,10 +134,10 @@ jobs:
             echo "::endgroup::"
 
             echo "::group:: build nerctl"
-            go install ./cmd/nerdctl
+            go install ./cmd/mikodctl
             echo "$HOME/go/bin" >> "$GITHUB_PATH"
-            # Since tests are going to run root, we need nerdctl to be in a PATH that will survive `sudo`
-            sudo cp "$(which nerdctl)" /usr/local/bin
+            # Since tests are going to run root, we need mikodctl to be in a PATH that will survive `sudo`
+            sudo cp "$(which mikodctl)" /usr/local/bin
             echo "::endgroup::"
           fi
 
@@ -176,9 +176,9 @@ jobs:
           powershell hack/provisioning/windows/containerd.ps1
           echo "::endgroup::"
 
-          # Install nerdctl
+          # Install mikodctl
           echo "::group:: build nerctl"
-          go install ./cmd/nerdctl
+          go install ./cmd/mikodctl
           echo "::endgroup::"
 
           choco install jq

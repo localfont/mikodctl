@@ -29,10 +29,10 @@ import (
 	"github.com/containerd/imgcrypt/v2/images/encryption"
 	"github.com/containerd/imgcrypt/v2/images/encryption/parsehelpers"
 
-	"github.com/containerd/nerdctl/v2/pkg/api/types"
-	nerdconverter "github.com/containerd/nerdctl/v2/pkg/imgutil/converter"
-	"github.com/containerd/nerdctl/v2/pkg/platformutil"
-	"github.com/containerd/nerdctl/v2/pkg/referenceutil"
+	"github.com/localfont/mikodctl/v2/pkg/api/types"
+	nerdconverter "github.com/localfont/mikodctl/v2/pkg/imgutil/converter"
+	"github.com/localfont/mikodctl/v2/pkg/platformutil"
+	"github.com/localfont/mikodctl/v2/pkg/referenceutil"
 )
 
 func Crypt(ctx context.Context, client *containerd.Client, srcRawRef, targetRawRef string, encrypt bool, options types.ImageCryptOptions) error {
@@ -115,8 +115,8 @@ func parseImgcryptFlags(options types.ImageCryptOptions, encrypt bool) (parsehel
 			return a, errors.New("at least one recipient must be specified (e.g., --recipient=jwe:mypubkey.pem)")
 		}
 	}
-	// While --recipient can be specified only for `nerdctl image encrypt`,
-	// --dec-recipient can be specified for both `nerdctl image encrypt` and `nerdctl image decrypt`.
+	// While --recipient can be specified only for `mikodctl image encrypt`,
+	// --dec-recipient can be specified for both `mikodctl image encrypt` and `mikodctl image decrypt`.
 	a.DecRecipient = options.DecRecipients
 	return a, nil
 }

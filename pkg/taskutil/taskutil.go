@@ -44,9 +44,9 @@ import (
 	"github.com/containerd/errdefs"
 	"github.com/containerd/log"
 
-	"github.com/containerd/nerdctl/v2/pkg/cioutil"
-	"github.com/containerd/nerdctl/v2/pkg/consoleutil"
-	"github.com/containerd/nerdctl/v2/pkg/containerdutil"
+	"github.com/localfont/mikodctl/v2/pkg/cioutil"
+	"github.com/localfont/mikodctl/v2/pkg/consoleutil"
+	"github.com/localfont/mikodctl/v2/pkg/containerdutil"
 )
 
 // TaskOptions contains options for creating a new task
@@ -163,7 +163,7 @@ func NewTask(ctx context.Context, client *containerd.Client, container container
 		}
 
 		// args[0]: _NERDCTL_INTERNAL_LOGGING
-		// args[1]: /var/lib/nerdctl/1935db59
+		// args[1]: /var/lib/mikodctl/1935db59
 		if len(args) != 2 {
 			return nil, errors.New("parse logging path error")
 		}
@@ -204,7 +204,7 @@ func NewTask(ctx context.Context, client *containerd.Client, container container
 			if sv, err := containerdutil.ServerSemVer(ctx, client); err != nil {
 				log.G(ctx).Warn(err)
 			} else if sv.LessThan(semver.MustParse("1.6.0-0")) {
-				log.G(ctx).Warnf("`nerdctl (run|exec) -i` without `-t` expects containerd 1.6 or later, got containerd %v", sv)
+				log.G(ctx).Warnf("`mikodctl (run|exec) -i` without `-t` expects containerd 1.6 or later, got containerd %v", sv)
 			}
 			var stdinC io.ReadCloser = &StdinCloser{
 				Stdin: os.Stdin,

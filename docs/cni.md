@@ -1,11 +1,11 @@
-# Using CNI with nerdctl
+# Using CNI with mikodctl
 
-nerdctl uses CNI plugins for its container network, you can set network by
+mikodctl uses CNI plugins for its container network, you can set network by
 either `--network` or `--net` option.
 
 ## Basic networks
 
-nerdctl support some basic types of CNI plugins without any configuration
+mikodctl support some basic types of CNI plugins without any configuration
 needed(you should have CNI plugin be installed), for Linux systems the basic
 CNI plugin types are `bridge`, `portmap`, `firewall`, `tuning`, for Windows
 system, the supported CNI plugin types are `nat` only.
@@ -22,7 +22,7 @@ Configuration of the default network `bridge` of Linux:
   "plugins": [
     {
       "type": "bridge",
-      "bridge": "nerdctl0",
+      "bridge": "mikodctl0",
       "isGateway": true,
       "ipMasq": true,
       "hairpinMode": true,
@@ -58,21 +58,21 @@ Configuration of the default network `bridge` of Linux:
 
 ## Bridge isolation
 
-nerdctl >= 0.18 sets the `ingressPolicy` to `same-bridge` when `firewall` plugin >= 1.1.0 is installed.
-This `ingressPolicy` replaces the CNI `isolation` plugin used in nerdctl <= 0.17.
+mikodctl >= 0.18 sets the `ingressPolicy` to `same-bridge` when `firewall` plugin >= 1.1.0 is installed.
+This `ingressPolicy` replaces the CNI `isolation` plugin used in mikodctl <= 0.17.
 
-When `firewall` plugin >= 1.1.0 is not found, nerdctl does not enable the bridge isolation.
+When `firewall` plugin >= 1.1.0 is not found, mikodctl does not enable the bridge isolation.
 This means a container in `--net=foo` can connect to a container in `--net=bar`.
 
 ## macvlan/IPvlan networks
 
-nerdctl also support macvlan and IPvlan network driver.
+mikodctl also support macvlan and IPvlan network driver.
 
 To create a `macvlan` network which bridges with a given physical network interface, use `--driver macvlan` with
-`nerdctl network create` command.
+`mikodctl network create` command.
 
 ```
-# nerdctl network create mac0 --driver macvlan \
+# mikodctl network create mac0 --driver macvlan \
   --subnet=192.168.5.0/24
   --gateway=192.168.5.2
   -o parent=eth0
@@ -85,7 +85,7 @@ And the `subnet` should be under the same network as the network interface,
 an easier way is to use DHCP to assign the IP:
 
 ```
-# nerdctl network create mac0 --driver macvlan --ipam-driver=dhcp
+# mikodctl network create mac0 --driver macvlan --ipam-driver=dhcp
 ```
 
 Using `--driver ipvlan` can create `ipvlan` network, the default mode for IPvlan is `l2`.
@@ -94,7 +94,7 @@ Using `--driver ipvlan` can create `ipvlan` network, the default mode for IPvlan
 
 Nerdctl automatically sets the DHCP host-name option to the hostname value of the container.
 
-Furthermore, on network creation, nerdctl supports the ability to set other DHCP options through `--ipam-options`.
+Furthermore, on network creation, mikodctl supports the ability to set other DHCP options through `--ipam-options`.
 
 Currently, the following options are supported by the DHCP plugin:
 ```
@@ -107,7 +107,7 @@ vendor-class-identifier
 
 For example:
 ```
-# nerdctl network create --driver macvlan \
+# mikodctl network create --driver macvlan \
     --ipam-driver dhcp \
     --ipam-opt 'vendor-class-identifier={"type": "provide", "value": "Hey! Its me!"}' \
     my-dhcp-net
@@ -122,7 +122,7 @@ For rootless, the expected root location is `~/.config/cni/net.d/`
 
 Configuration files (like `10-mynet.conf`) can be placed either in the root location,
 or under a subfolder.
-If in the root location, this network will be available to all nerdctl namespaces.
+If in the root location, this network will be available to all mikodctl namespaces.
 If placed in a subfolder, it will be available only to the identically named namespace.
 
 For example, you have one configuration file(`/etc/cni/net.d/10-mynet.conf`)
@@ -150,7 +150,7 @@ This will configure a new CNI network with the name `mynet`, and you can use
 this network to create a container in any namespace:
 
 ```console
-# nerdctl run -it --net mynet --rm alpine ip addr show
+# mikodctl run -it --net mynet --rm alpine ip addr show
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN qlen 1000
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
     inet 127.0.0.1/8 scope host lo

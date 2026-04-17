@@ -35,18 +35,18 @@ import (
 	"github.com/containerd/containerd/v2/pkg/oci"
 	"github.com/containerd/log"
 
-	"github.com/containerd/nerdctl/v2/pkg/api/types"
-	"github.com/containerd/nerdctl/v2/pkg/clientutil"
-	"github.com/containerd/nerdctl/v2/pkg/dnsutil/hostsstore"
-	"github.com/containerd/nerdctl/v2/pkg/idutil/containerwalker"
-	"github.com/containerd/nerdctl/v2/pkg/internal/filesystem"
-	"github.com/containerd/nerdctl/v2/pkg/labels"
-	"github.com/containerd/nerdctl/v2/pkg/mountutil"
-	"github.com/containerd/nerdctl/v2/pkg/netutil"
-	"github.com/containerd/nerdctl/v2/pkg/netutil/nettype"
-	"github.com/containerd/nerdctl/v2/pkg/resolvconf"
-	"github.com/containerd/nerdctl/v2/pkg/rootlessutil"
-	"github.com/containerd/nerdctl/v2/pkg/strutil"
+	"github.com/localfont/mikodctl/v2/pkg/api/types"
+	"github.com/localfont/mikodctl/v2/pkg/clientutil"
+	"github.com/localfont/mikodctl/v2/pkg/dnsutil/hostsstore"
+	"github.com/localfont/mikodctl/v2/pkg/idutil/containerwalker"
+	"github.com/localfont/mikodctl/v2/pkg/internal/filesystem"
+	"github.com/localfont/mikodctl/v2/pkg/labels"
+	"github.com/localfont/mikodctl/v2/pkg/mountutil"
+	"github.com/localfont/mikodctl/v2/pkg/netutil"
+	"github.com/localfont/mikodctl/v2/pkg/netutil/nettype"
+	"github.com/localfont/mikodctl/v2/pkg/resolvconf"
+	"github.com/localfont/mikodctl/v2/pkg/rootlessutil"
+	"github.com/localfont/mikodctl/v2/pkg/strutil"
 )
 
 const (
@@ -622,7 +622,7 @@ func (m *hostNetworkManager) InternalNetworkingOptionLabels(_ context.Context) (
 }
 
 // withDedupMounts Returns the specOpts if the mountPath is not in existing mounts.
-// for https://github.com/containerd/nerdctl/issues/2685
+// for https://github.com/localfont/mikodctl/issues/2685
 func withDedupMounts(mountPath string, defaultSpec oci.SpecOpts) oci.SpecOpts {
 	return func(ctx context.Context, client oci.Client, c *containers.Container, s *oci.Spec) error {
 		for _, m := range s.Mounts {
@@ -810,7 +810,7 @@ func validateUtsSettings(netOpts types.NetworkOptions) error {
 }
 
 // Writes the provided hostname string in a "hostname" file in the Container's
-// Nerdctl-managed datastore and returns the oci.SpecOpts required in the container
+// Mikodctl-managed datastore and returns the oci.SpecOpts required in the container
 // spec for the file to be mounted under /etc/hostname in the new container.
 // If the hostname is empty, the leading 12 characters of the containerID
 // This sets world readable permissions on /etc/hostname, ignoring umask

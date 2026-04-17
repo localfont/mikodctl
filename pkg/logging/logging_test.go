@@ -63,7 +63,7 @@ func TestLoggingProcessAdapter(t *testing.T) {
 	normalString := generateRandomString(1024)
 
 	// Generate 64KB of random text of bufio MaxScanTokenSize
-	// https://github.com/containerd/nerdctl/issues/3343
+	// https://github.com/localfont/mikodctl/issues/3343
 	hugeString := generateRandomString(bufio.MaxScanTokenSize)
 
 	// Prepare mock driver and logging config

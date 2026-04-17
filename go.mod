@@ -1,5 +1,5 @@
 //gomodjail:confined
-module github.com/containerd/nerdctl/v2
+module github.com/localfont/mikodctl/v2
 
 go 1.26.2
 
@@ -19,7 +19,6 @@ require (
 	github.com/containerd/go-cni v1.1.13 //gomodjail:unconfined
 	github.com/containerd/imgcrypt/v2 v2.0.2 //gomodjail:unconfined
 	github.com/containerd/log v0.1.0
-	github.com/containerd/nerdctl/mod/tigron v0.0.0
 	github.com/containerd/nydus-snapshotter v0.15.14 //gomodjail:unconfined
 	github.com/containerd/platforms v1.0.0-rc.4 //gomodjail:unconfined
 	github.com/containerd/stargz-snapshotter v0.18.2 //gomodjail:unconfined
@@ -43,6 +42,7 @@ require (
 	github.com/go-viper/mapstructure/v2 v2.5.0
 	github.com/ipfs/go-cid v0.6.1
 	github.com/klauspost/compress v1.18.5
+	github.com/localfont/mikodctl/mod/tigron v0.0.0
 	github.com/mattn/go-isatty v0.0.21 //gomodjail:unconfined
 	github.com/moby/sys/mount v0.3.4
 	github.com/moby/sys/signal v0.7.1
@@ -154,4 +154,4 @@ require (
 	go.yaml.in/yaml/v4 v4.0.0-rc.4 // indirect
 )
 
-replace github.com/containerd/nerdctl/mod/tigron v0.0.0 => ./mod/tigron
+replace github.com/localfont/mikodctl/mod/tigron v0.0.0 => ./mod/tigron

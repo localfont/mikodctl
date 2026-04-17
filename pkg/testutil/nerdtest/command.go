@@ -25,13 +25,13 @@ import (
 
 	"gotest.tools/v3/assert"
 
-	"github.com/containerd/nerdctl/mod/tigron/test"
-	"github.com/containerd/nerdctl/mod/tigron/tig"
+	"github.com/localfont/mikodctl/mod/tigron/test"
+	"github.com/localfont/mikodctl/mod/tigron/tig"
 
-	"github.com/containerd/nerdctl/v2/pkg/internal/filesystem"
-	"github.com/containerd/nerdctl/v2/pkg/rootlessutil"
-	"github.com/containerd/nerdctl/v2/pkg/testutil"
-	"github.com/containerd/nerdctl/v2/pkg/testutil/nerdtest/platform"
+	"github.com/localfont/mikodctl/v2/pkg/internal/filesystem"
+	"github.com/localfont/mikodctl/v2/pkg/rootlessutil"
+	"github.com/localfont/mikodctl/v2/pkg/testutil"
+	"github.com/localfont/mikodctl/v2/pkg/testutil/nerdtest/platform"
 )
 
 const defaultNamespace = testutil.Namespace
@@ -63,8 +63,8 @@ func newNerdCommand(conf test.Config, t tig.T) *nerdCommand {
 	}
 
 	if isTargetNerdish() {
-		// Any target but docker is considered a nerdctl variant, either gomodjail, or homegrown cli based on the
-		// nerdctl codebase as a library.
+		// Any target but docker is considered a mikodctl variant, either gomodjail, or homegrown cli based on the
+		// mikodctl codebase as a library.
 		// Set the default namespace if we do not have one explicitly set already
 		if conf.Read(Namespace) == "" {
 			conf.Write(Namespace, defaultNamespace)
@@ -118,7 +118,7 @@ func (nc *nerdCommand) Background() {
 	nc.GenericCommand.Background()
 }
 
-// Run does override the generic command run, as we are testing both docker and nerdctl
+// Run does override the generic command run, as we are testing both docker and mikodctl
 func (nc *nerdCommand) prep() {
 	nc.T().Helper()
 
@@ -172,15 +172,15 @@ func (nc *nerdCommand) prep() {
 
 	// If no NERDCTL_TOML was explicitly provided, set it to the private dir
 	if nc.Env["NERDCTL_TOML"] == "" {
-		nc.Env["NERDCTL_TOML"] = filepath.Join(nc.GenericCommand.TempDir, "nerdctl.toml")
+		nc.Env["NERDCTL_TOML"] = filepath.Join(nc.GenericCommand.TempDir, "mikodctl.toml")
 	}
 
 	// If we have custom toml content, write it if it does not exist already
-	if nc.Config.Read(NerdctlToml) != "" {
+	if nc.Config.Read(MikodctlToml) != "" {
 		if !nc.hasWrittenToml {
 			dest := nc.Env["NERDCTL_TOML"]
-			err := filesystem.WriteFile(dest, []byte(nc.Config.Read(NerdctlToml)), test.FilePermissionsDefault)
-			assert.NilError(nc.T(), err, "failed to write NerdctlToml")
+			err := filesystem.WriteFile(dest, []byte(nc.Config.Read(MikodctlToml)), test.FilePermissionsDefault)
+			assert.NilError(nc.T(), err, "failed to write MikodctlToml")
 			nc.hasWrittenToml = true
 		}
 	}

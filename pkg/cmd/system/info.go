@@ -32,14 +32,14 @@ import (
 	containerd "github.com/containerd/containerd/v2/client"
 	"github.com/containerd/log"
 
-	"github.com/containerd/nerdctl/v2/pkg/api/types"
-	"github.com/containerd/nerdctl/v2/pkg/formatter"
-	"github.com/containerd/nerdctl/v2/pkg/infoutil"
-	"github.com/containerd/nerdctl/v2/pkg/inspecttypes/dockercompat"
-	"github.com/containerd/nerdctl/v2/pkg/inspecttypes/native"
-	"github.com/containerd/nerdctl/v2/pkg/logging"
-	"github.com/containerd/nerdctl/v2/pkg/rootlessutil"
-	"github.com/containerd/nerdctl/v2/pkg/strutil"
+	"github.com/localfont/mikodctl/v2/pkg/api/types"
+	"github.com/localfont/mikodctl/v2/pkg/formatter"
+	"github.com/localfont/mikodctl/v2/pkg/infoutil"
+	"github.com/localfont/mikodctl/v2/pkg/inspecttypes/dockercompat"
+	"github.com/localfont/mikodctl/v2/pkg/inspecttypes/native"
+	"github.com/localfont/mikodctl/v2/pkg/logging"
+	"github.com/localfont/mikodctl/v2/pkg/rootlessutil"
+	"github.com/localfont/mikodctl/v2/pkg/strutil"
 )
 
 func Info(ctx context.Context, client *containerd.Client, options types.SystemInfoOptions) error {
@@ -153,7 +153,7 @@ func prettyPrintInfoDockerCompat(stdout io.Writer, stderr io.Writer, info *docke
 	fmt.Fprintln(w)
 	fmt.Fprintf(w, "Server:\n")
 	fmt.Fprintf(w, " Server Version: %s\n", info.ServerVersion)
-	// Storage Driver is not really Server concept for nerdctl, but mimics `docker info` output
+	// Storage Driver is not really Server concept for mikodctl, but mimics `docker info` output
 	fmt.Fprintf(w, " Storage Driver: %s\n", info.Driver)
 	fmt.Fprintf(w, " Logging Driver: %s\n", info.LoggingDriver)
 	printF(w, " Cgroup Driver: ", info.CgroupDriver)

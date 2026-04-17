@@ -22,7 +22,7 @@ import (
 
 	"github.com/containerd/log"
 
-	"github.com/containerd/nerdctl/v2/pkg/strutil"
+	"github.com/localfont/mikodctl/v2/pkg/strutil"
 )
 
 type DownOptions struct {
@@ -110,7 +110,7 @@ func (c *Composer) downNetwork(ctx context.Context, shortName string) error {
 		}
 
 		log.G(ctx).Infof("Removing network %s", fullName)
-		if err := c.runNerdctlCmd(ctx, "network", "rm", fullName); err != nil {
+		if err := c.runMikodctlCmd(ctx, "network", "rm", fullName); err != nil {
 			log.G(ctx).Warn(err)
 		}
 	}
@@ -134,7 +134,7 @@ func (c *Composer) downVolume(ctx context.Context, shortName string) error {
 		return err
 	} else if volExists {
 		log.G(ctx).Infof("Removing volume %s", fullName)
-		if err := c.runNerdctlCmd(ctx, "volume", "rm", "-f", fullName); err != nil {
+		if err := c.runMikodctlCmd(ctx, "volume", "rm", "-f", fullName); err != nil {
 			log.G(ctx).Warn(err)
 		}
 	}

@@ -42,14 +42,14 @@ type Info struct {
 	IPv4Forwarding    bool
 	BridgeNfIptables  bool
 	BridgeNfIP6tables bool `json:"BridgeNfIp6tables"`
-	// Nfd is omitted because it does not make sense for nerdctl
+	// Nfd is omitted because it does not make sense for mikodctl
 	OomKillDisable bool
-	// NGoroutines is omitted because it does not make sense for nerdctl
+	// NGoroutines is omitted because it does not make sense for mikodctl
 	SystemTime    string
 	LoggingDriver string
 	CgroupDriver  string
 	CgroupVersion string `json:",omitempty"`
-	// NEventsListener is omitted because it does not make sense for nerdctl
+	// NEventsListener is omitted because it does not make sense for mikodctl
 	KernelVersion   string
 	OperatingSystem string
 	OSType          string
@@ -65,7 +65,7 @@ type Info struct {
 
 type PluginsInfo struct {
 	Log     []string
-	Storage []string // nerdctl extension
+	Storage []string // mikodctl extension
 }
 
 // VersionInfo mimics a `docker version` object.
@@ -82,7 +82,7 @@ type ClientVersion struct {
 	GoVersion  string
 	Os         string             // GOOS
 	Arch       string             // GOARCH
-	Components []ComponentVersion // nerdctl extension
+	Components []ComponentVersion // mikodctl extension
 }
 
 // ComponentVersion describes the version information for a specific component.

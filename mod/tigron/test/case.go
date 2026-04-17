@@ -24,9 +24,9 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/containerd/nerdctl/mod/tigron/internal/assertive"
-	"github.com/containerd/nerdctl/mod/tigron/internal/formatter"
-	"github.com/containerd/nerdctl/mod/tigron/tig"
+	"github.com/localfont/mikodctl/mod/tigron/internal/assertive"
+	"github.com/localfont/mikodctl/mod/tigron/internal/formatter"
+	"github.com/localfont/mikodctl/mod/tigron/tig"
 )
 
 // Case describes an entire test-case, including data, setup and cleanup routines, command and

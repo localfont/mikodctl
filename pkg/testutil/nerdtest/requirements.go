@@ -28,19 +28,19 @@ import (
 	"gotest.tools/v3/assert"
 
 	"github.com/containerd/containerd/v2/defaults"
-	"github.com/containerd/nerdctl/mod/tigron/require"
-	"github.com/containerd/nerdctl/mod/tigron/test"
+	"github.com/localfont/mikodctl/mod/tigron/require"
+	"github.com/localfont/mikodctl/mod/tigron/test"
 
-	"github.com/containerd/nerdctl/v2/pkg/buildkitutil"
-	"github.com/containerd/nerdctl/v2/pkg/clientutil"
-	"github.com/containerd/nerdctl/v2/pkg/containerdutil"
-	ncdefaults "github.com/containerd/nerdctl/v2/pkg/defaults"
-	"github.com/containerd/nerdctl/v2/pkg/inspecttypes/dockercompat"
-	"github.com/containerd/nerdctl/v2/pkg/netutil"
-	"github.com/containerd/nerdctl/v2/pkg/rootlessutil"
-	"github.com/containerd/nerdctl/v2/pkg/snapshotterutil"
-	"github.com/containerd/nerdctl/v2/pkg/testutil"
-	"github.com/containerd/nerdctl/v2/pkg/testutil/nerdtest/platform"
+	"github.com/localfont/mikodctl/v2/pkg/buildkitutil"
+	"github.com/localfont/mikodctl/v2/pkg/clientutil"
+	"github.com/localfont/mikodctl/v2/pkg/containerdutil"
+	ncdefaults "github.com/localfont/mikodctl/v2/pkg/defaults"
+	"github.com/localfont/mikodctl/v2/pkg/inspecttypes/dockercompat"
+	"github.com/localfont/mikodctl/v2/pkg/netutil"
+	"github.com/localfont/mikodctl/v2/pkg/rootlessutil"
+	"github.com/localfont/mikodctl/v2/pkg/snapshotterutil"
+	"github.com/localfont/mikodctl/v2/pkg/testutil"
+	"github.com/localfont/mikodctl/v2/pkg/testutil/nerdtest/platform"
 )
 
 var BuildkitHost test.ConfigKey = "BuildkitHost"
@@ -104,7 +104,7 @@ var IsFlaky = func(issueLink string) *test.Requirement {
 	}
 }
 
-// Docker marks a test as suitable solely for Docker and not Nerdctl
+// Docker marks a test as suitable solely for Docker and not Mikodctl
 // Generally used as require.Not(nerdtest.Docker), which of course it the opposite
 var Docker = &test.Requirement{
 	Check: func(data test.Data, helpers test.Helpers) (ret bool, mess string) {
@@ -118,16 +118,16 @@ var Docker = &test.Requirement{
 	},
 }
 
-// NerdctlNeedsFixing marks a test as unsuitable to be run for Nerdctl, because of a specific known issue which
+// MikodctlNeedsFixing marks a test as unsuitable to be run for Mikodctl, because of a specific known issue which
 // url must be passed as an argument
-var NerdctlNeedsFixing = func(issueLink string) *test.Requirement {
+var MikodctlNeedsFixing = func(issueLink string) *test.Requirement {
 	return &test.Requirement{
 		Check: func(data test.Data, helpers test.Helpers) (ret bool, mess string) {
 			ret = !isTargetNerdish()
 			if ret {
 				mess = "current target is docker"
 			} else {
-				mess = "current target is nerdctl, but we will skip as nerdctl currently has issue: " + issueLink
+				mess = "current target is mikodctl, but we will skip as mikodctl currently has issue: " + issueLink
 			}
 			return ret, mess
 		},
@@ -182,7 +182,7 @@ var RootlessWithoutDetachNetNS = require.All(Rootless, require.Not(RootlessWithD
 // Rootful marks a test as suitable only for rootful env
 var Rootful = require.Not(Rootless)
 
-// Info requires that `nerdctl info` satisfies the condition function passed as argument.
+// Info requires that `mikodctl info` satisfies the condition function passed as argument.
 func Info(f func(dockercompat.Info) error) *test.Requirement {
 	return &test.Requirement{
 		Check: func(data test.Data, helpers test.Helpers) (ret bool, mess string) {
@@ -328,7 +328,7 @@ var Registry = require.All(
 	})(),
 )
 
-// Build marks a test as suitable only if buildkitd is enabled (only tested for nerdctl obviously)
+// Build marks a test as suitable only if buildkitd is enabled (only tested for mikodctl obviously)
 var Build = &test.Requirement{
 	Check: func(data test.Data, helpers test.Helpers) (bool, string) {
 		// FIXME: shouldn't we run buildkitd in a container? At least for testing, that would be so much easier than
@@ -388,7 +388,7 @@ var Private = &test.Requirement{
 		data.Labels().Set("_deletenamespace", namespace)
 		// FIXME: is this necessary? Should NoParallel be subsumed into config?
 		helpers.Write(modePrivate, enabled)
-		return true, "private mode creates a dedicated namespace for nerdctl, and disable parallelism for docker"
+		return true, "private mode creates a dedicated namespace for mikodctl, and disable parallelism for docker"
 	},
 
 	Cleanup: func(data test.Data, helpers test.Helpers) {
@@ -485,7 +485,7 @@ func ContainerdVersion(v string) *test.Requirement {
 			if sv, err := containerdutil.ServerSemVer(ctx, client); err != nil {
 				return false, err.Error()
 			} else if sv.LessThan(semver.MustParse(v)) {
-				return false, fmt.Sprintf("`nerdctl commit --compression expects containerd %s or later, got containerd %v", v, sv)
+				return false, fmt.Sprintf("`mikodctl commit --compression expects containerd %s or later, got containerd %v", v, sv)
 			}
 			return true, ""
 		},

@@ -20,10 +20,10 @@ import (
 	"github.com/containerd/containerd/v2/defaults"
 	"github.com/containerd/containerd/v2/pkg/namespaces"
 
-	ncdefaults "github.com/containerd/nerdctl/v2/pkg/defaults"
+	ncdefaults "github.com/localfont/mikodctl/v2/pkg/defaults"
 )
 
-// Config corresponds to nerdctl.toml .
+// Config corresponds to mikodctl.toml .
 // See docs/config.md .
 type Config struct {
 	Debug            bool     `toml:"debug"`

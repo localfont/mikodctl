@@ -251,7 +251,7 @@ cmd_entrypoint_install() {
 	systemctl --user daemon-reload
 	INFO "To run \"${SYSTEMD_CONTAINERD_UNIT}\" on system startup automatically, run: \`sudo loginctl enable-linger $(id -un)\`"
 	INFO "------------------------------------------------------------------------------------------"
-	INFO "Use \`nerdctl\` to connect to the rootless containerd."
+	INFO "Use \`mikodctl\` to connect to the rootless containerd."
 	INFO "You do NOT need to specify \$CONTAINERD_ADDRESS explicitly."
 }
 
@@ -361,7 +361,7 @@ cmd_entrypoint_install_bypass4netnsd() {
 		[Install]
 		WantedBy=default.target
 	EOT
-	INFO "To use bypass4netnsd, set the \"nerdctl/bypass4netns=true\" annotation on containers, e.g., \`nerdctl run --annotation nerdctl/bypass4netns=true\`"
+	INFO "To use bypass4netnsd, set the \"mikodctl/bypass4netns=true\" annotation on containers, e.g., \`mikodctl run --annotation mikodctl/bypass4netns=true\`"
 }
 
 # CLI subcommand: "install-fuse-overlayfs"
@@ -486,7 +486,7 @@ cmd_entrypoint_install_ipfs() {
 	mkdir -p "${IPFS_PATH}"
 	cat <<-EOT | install_systemd_unit "${SYSTEMD_IPFS_UNIT}"
 		[Unit]
-		Description=ipfs daemon for rootless nerdctl
+		Description=ipfs daemon for rootless mikodctl
 		PartOf=${SYSTEMD_CONTAINERD_UNIT}
 
 		[Service]

@@ -30,9 +30,9 @@ import (
 
 	"github.com/containerd/log"
 
-	"github.com/containerd/nerdctl/v2/pkg/composer/serviceparser"
-	"github.com/containerd/nerdctl/v2/pkg/internal/filesystem"
-	"github.com/containerd/nerdctl/v2/pkg/labels"
+	"github.com/localfont/mikodctl/v2/pkg/composer/serviceparser"
+	"github.com/localfont/mikodctl/v2/pkg/internal/filesystem"
+	"github.com/localfont/mikodctl/v2/pkg/labels"
 )
 
 func (c *Composer) upServices(ctx context.Context, parsedServices []*serviceparser.Service, uo UpOptions) error {
@@ -146,7 +146,7 @@ func (c *Composer) upServiceContainer(ctx context.Context, service *serviceparse
 
 	// start the existing container and exit early
 	if existingCid != "" && recreate == RecreateNever {
-		cmd := c.createNerdctlCmd(ctx, append([]string{"start"}, existingCid)...)
+		cmd := c.createMikodctlCmd(ctx, append([]string{"start"}, existingCid)...)
 		if err := c.executeUpCmd(ctx, cmd, container.Name, runFlagD, service.Unparsed.StdinOpen); err != nil {
 			return "", fmt.Errorf("error while starting existing container %s: %w", container.Name, err)
 		}
@@ -170,7 +170,7 @@ func (c *Composer) upServiceContainer(ctx context.Context, service *serviceparse
 				return "", fmt.Errorf("failed to read labels for %s: %w", existingCid, err)
 			}
 			if lbls[labels.ComposeConfigHash] == currentHash {
-				cmd := c.createNerdctlCmd(ctx, append([]string{"start"}, existingCid)...)
+				cmd := c.createMikodctlCmd(ctx, append([]string{"start"}, existingCid)...)
 				if err := c.executeUpCmd(ctx, cmd, container.Name, runFlagD, service.Unparsed.StdinOpen); err != nil {
 					return "", fmt.Errorf("error while starting existing container %s: %w", container.Name, err)
 				}
@@ -178,7 +178,7 @@ func (c *Composer) upServiceContainer(ctx context.Context, service *serviceparse
 			}
 		}
 		log.G(ctx).Debugf("Container %q already exists, deleting", container.Name)
-		delCmd := c.createNerdctlCmd(ctx, "rm", "-f", container.Name)
+		delCmd := c.createMikodctlCmd(ctx, "rm", "-f", container.Name)
 		if err = delCmd.Run(); err != nil {
 			return "", fmt.Errorf("could not delete container %q: %w", container.Name, err)
 		}
@@ -217,7 +217,7 @@ func (c *Composer) upServiceContainer(ctx context.Context, service *serviceparse
 		fmt.Sprintf("-l=%s=%s", labels.ComposeConfigHash, currentHash),
 	}, container.RunArgs...)
 
-	cmd := c.createNerdctlCmd(ctx, append([]string{"run"}, container.RunArgs...)...)
+	cmd := c.createMikodctlCmd(ctx, append([]string{"run"}, container.RunArgs...)...)
 	if c.DebugPrintFull {
 		log.G(ctx).Debugf("Running %v", cmd.Args)
 	}
@@ -245,7 +245,7 @@ func (c *Composer) executeUpCmd(ctx context.Context, cmd *exec.Cmd, containerNam
 	if !runFlagD {
 		cmd.Stdout = os.Stdout
 	}
-	// Always propagate stderr to print detailed error messages (https://github.com/containerd/nerdctl/issues/1942)
+	// Always propagate stderr to print detailed error messages (https://github.com/localfont/mikodctl/issues/1942)
 	cmd.Stderr = os.Stderr
 
 	if err := cmd.Run(); err != nil {

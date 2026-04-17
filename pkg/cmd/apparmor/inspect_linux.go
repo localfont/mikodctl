@@ -21,8 +21,8 @@ import (
 
 	"github.com/containerd/containerd/v2/contrib/apparmor"
 
-	"github.com/containerd/nerdctl/v2/pkg/api/types"
-	"github.com/containerd/nerdctl/v2/pkg/defaults"
+	"github.com/localfont/mikodctl/v2/pkg/api/types"
+	"github.com/localfont/mikodctl/v2/pkg/defaults"
 )
 
 func Inspect(options types.ApparmorInspectOptions) error {

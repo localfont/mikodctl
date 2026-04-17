@@ -25,7 +25,7 @@ import (
 	"github.com/Microsoft/hcsshim"
 	"golang.org/x/sys/windows/svc/mgr"
 
-	"github.com/containerd/nerdctl/v2/pkg/inspecttypes/dockercompat"
+	"github.com/localfont/mikodctl/v2/pkg/inspecttypes/dockercompat"
 )
 
 const (

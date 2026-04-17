@@ -25,10 +25,10 @@ const (
 
 	schemeHTTPS scheme = "https"
 	schemeHTTP  scheme = "http"
-	// schemeNerdctlExperimental is currently provisional, to unlock namespace based host authentication
+	// schemeMikodctlExperimental is currently provisional, to unlock namespace based host authentication
 	// This may change or break without notice, and you should have no expectations that credentials saved like that
 	// will be supported in the future
-	schemeNerdctlExperimental scheme = "nerdctl-experimental"
+	schemeMikodctlExperimental scheme = "mikodctl-experimental"
 	// See https://github.com/moby/moby/blob/v27.1.1/registry/config.go#L42-L48
 	//nolint:misspell
 	// especially Sebastiaan comments on future domain consolidation

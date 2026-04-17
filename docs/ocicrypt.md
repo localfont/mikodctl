@@ -1,9 +1,9 @@
 # OCIcrypt
 
-| :zap: Requirement | nerdctl >= 0.7 |
+| :zap: Requirement | mikodctl >= 0.7 |
 |-------------------|----------------|
 
-nerdctl supports encryption and decryption using [OCIcrypt](https://github.com/containers/ocicrypt)
+mikodctl supports encryption and decryption using [OCIcrypt](https://github.com/containers/ocicrypt)
 (aka [imgcrypt](https://github.com/containerd/imgcrypt) for containerd).
 
 ## JWE mode
@@ -16,14 +16,14 @@ openssl genrsa -out mykey.pem
 openssl rsa -in mykey.pem -pubout -out mypubkey.pem
 ```
 
-Use `nerdctl image encrypt` to create an encrypted image:
+Use `mikodctl image encrypt` to create an encrypted image:
 ```bash
-nerdctl image encrypt --recipient=jwe:mypubkey.pem --platform=linux/amd64,linux/arm64 foo example.com/foo:encrypted
-nerdctl push example.com/foo:encrypted
+mikodctl image encrypt --recipient=jwe:mypubkey.pem --platform=linux/amd64,linux/arm64 foo example.com/foo:encrypted
+mikodctl push example.com/foo:encrypted
 ```
 
 :warning: CAUTION: This command only encrypts image layers, but does NOT encrypt [container configuration such as `Env` and `Cmd`](https://github.com/opencontainers/image-spec/blob/v1.0.1/config.md#example).
-To see non-encrypted information, run `nerdctl image inspect --mode=native --platform=PLATFORM example.com/foo:encrypted` .
+To see non-encrypted information, run `mikodctl image inspect --mode=native --platform=PLATFORM example.com/foo:encrypted` .
 
 ### Decryption
 
@@ -60,17 +60,17 @@ version = 2
 
 </details>
 
-#### Running nerdctl
+#### Running mikodctl
 
-No flag is needed for running encrypted images with `nerdctl run`, as long as the private key is stored
+No flag is needed for running encrypted images with `mikodctl run`, as long as the private key is stored
 in `/etc/containerd/ocicrypt/keys` (for rootless `~/.config/containerd/ocicrypt/keys`).
 
-Just run `nerdctl run example.com/encrypted-image`.
+Just run `mikodctl run example.com/encrypted-image`.
 
-To decrypt an image without running a container, use `nerdctl image decrypt` command:
+To decrypt an image without running a container, use `mikodctl image decrypt` command:
 ```bash
-nerdctl pull --unpack=false example.com/foo:encrypted
-nerdctl image decrypt --key=mykey.pem example.com/foo:encrypted foo:decrypted
+mikodctl pull --unpack=false example.com/foo:encrypted
+mikodctl image decrypt --key=mykey.pem example.com/foo:encrypted foo:decrypted
 ```
 
 ## PGP (GPG) mode
@@ -87,4 +87,4 @@ nerdctl image decrypt --key=mykey.pem example.com/foo:encrypted foo:decrypted
 - https://github.com/containers/ocicrypt (Low-level library, used by `containerd/imgcrypt`)
 - https://github.com/opencontainers/image-spec/pull/775 (Proposal for OCI Image Spec)
 - https://github.com/containerd/containerd/blob/main/docs/cri/decryption.md (configuration guide)
-  - The `plugins."io.containerd.grpc.v1.cri"` section does not apply to nerdctl, as nerdctl does not use CRI
+  - The `plugins."io.containerd.grpc.v1.cri"` section does not apply to mikodctl, as mikodctl does not use CRI

@@ -19,10 +19,10 @@ package netutil
 import (
 	"testing"
 
-	"github.com/containerd/nerdctl/v2/pkg/rootlessutil"
+	"github.com/localfont/mikodctl/v2/pkg/rootlessutil"
 )
 
-// Tests whether nerdctl properly creates the default network when required.
+// Tests whether mikodctl properly creates the default network when required.
 // On Linux, the default driver used will be "bridge". (netutil.DefaultNetworkName)
 func TestDefaultNetworkCreation(t *testing.T) {
 	if rootlessutil.IsRootless() {

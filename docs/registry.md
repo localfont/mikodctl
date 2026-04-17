@@ -1,6 +1,6 @@
 # registry authentication
 
-nerdctl uses `${DOCKER_CONFIG}/config.json` for the authentication with image registries.
+mikodctl uses `${DOCKER_CONFIG}/config.json` for the authentication with image registries.
 
 `$DOCKER_CONFIG` defaults to `$HOME/.docker`.
 
@@ -10,13 +10,13 @@ If you face `http: server gave HTTP response to HTTPS client` and you cannot con
 
 e.g.,
 ```console
-$ nerdctl --insecure-registry run --rm 192.168.12.34:5000/foo
+$ mikodctl --insecure-registry run --rm 192.168.12.34:5000/foo
 ```
 
 ## Specifying certificates
 
 
-| :zap: Requirement | nerdctl >= 0.16 |
+| :zap: Requirement | mikodctl >= 0.16 |
 |-------------------|-----------------|
 
 
@@ -36,12 +36,12 @@ See https://github.com/containerd/containerd/blob/main/docs/hosts.md for the syn
 Docker-style directories are also supported.
 The path is `~/.config/docker/certs.d` for rootless, `/etc/docker/certs.d` for rootful.
 
-## Accessing 127.0.0.1 from rootless nerdctl
+## Accessing 127.0.0.1 from rootless mikodctl
 
-Currently, rootless nerdctl cannot pull images from 127.0.0.1, because
+Currently, rootless mikodctl cannot pull images from 127.0.0.1, because
 the pull operation occurs in RootlessKit's network namespace.
 
-See https://github.com/containerd/nerdctl/issues/86 for the discussion about workarounds.
+See https://github.com/localfont/mikodctl/issues/86 for the discussion about workarounds.
 
 - - -
 
@@ -97,7 +97,7 @@ See also https://aws.amazon.com/ecr
 ### Logging in
 
 ```console
-$ aws ecr get-login-password --region <REGION> | nerdctl login --username AWS --password-stdin <AWS_ACCOUNT_ID>.dkr.ecr.<REGION>.amazonaws.com
+$ aws ecr get-login-password --region <REGION> | mikodctl login --username AWS --password-stdin <AWS_ACCOUNT_ID>.dkr.ecr.<REGION>.amazonaws.com
 Login Succeeded
 ```
 
@@ -127,7 +127,7 @@ aws_access_key_id = ...
 aws_secret_access_key = ...
 ```
 
-> **Note**: If you are running nerdctl inside a VM (including Lima, Colima, Rancher Desktop, and WSL2), `docker-credential-ecr-login` has to be installed inside the guest, not the host.
+> **Note**: If you are running mikodctl inside a VM (including Lima, Colima, Rancher Desktop, and WSL2), `docker-credential-ecr-login` has to be installed inside the guest, not the host.
 > Same applies to the path of `~/.docker/config.json` and `~/.aws/credentials`, too.
 
 </p>
@@ -140,8 +140,8 @@ You have to create a repository via https://console.aws.amazon.com/ecr/home/ .
 ### Pushing an image
 
 ```console
-$ nerdctl tag hello-world <AWS_ACCOUNT_ID>.dkr.ecr.<REGION>.amazonaws.com/<REPO>
-$ nerdctl push <AWS_ACCOUNT_ID>.dkr.ecr.<REGION>.amazonaws.com/<REPO>
+$ mikodctl tag hello-world <AWS_ACCOUNT_ID>.dkr.ecr.<REGION>.amazonaws.com/<REPO>
+$ mikodctl push <AWS_ACCOUNT_ID>.dkr.ecr.<REGION>.amazonaws.com/<REPO>
 ```
 
 The pushed image appears in the repository you manually created in the previous step.
@@ -155,7 +155,7 @@ You have to create a "Container registry" resource manually via [the Azure porta
 
 ### Logging in
 ```console
-$ nerdctl login -u <USERNAME> <REGISTRY>.azurecr.io
+$ mikodctl login -u <USERNAME> <REGISTRY>.azurecr.io
 Enter Password: ********[Enter]
 
 Login Succeeded
@@ -164,7 +164,7 @@ Login Succeeded
 The login credentials can be found as "Access keys" in [the Azure portal](https://portal.azure.com/).
 See also https://docs.microsoft.com/en-us/azure/container-registry/container-registry-authentication .
 
-> **Note**: nerdctl prior to v0.16.1 had a bug that required pressing the Enter key twice.
+> **Note**: mikodctl prior to v0.16.1 had a bug that required pressing the Enter key twice.
 
 ### Creating a repo
 You do not need to create a repo explicitly.
@@ -172,8 +172,8 @@ You do not need to create a repo explicitly.
 ### Pushing an image
 
 ```console
-$ nerdctl tag hello-world <REGISTRY>.azurecr.io/hello-world
-$ nerdctl push <REGISTRY>.azurecr.io/hello-world
+$ mikodctl tag hello-world <REGISTRY>.azurecr.io/hello-world
+$ mikodctl push <REGISTRY>.azurecr.io/hello-world
 ```
 
 The pushed image appears in [the Azure portal](https://portal.azure.com/).
@@ -184,13 +184,13 @@ See also https://hub.docker.com/
 
 ### Logging in
 ```console
-$ nerdctl login -u <USERNAME>
+$ mikodctl login -u <USERNAME>
 Enter Password: ********[Enter]
 
 Login Succeeded
 ```
 
-> **Note**: nerdctl prior to v0.16.1 had a bug that required pressing the Enter key twice.
+> **Note**: mikodctl prior to v0.16.1 had a bug that required pressing the Enter key twice.
 
 ### Creating a repo
 You do not need to create a repo explicitly, for public images.
@@ -200,8 +200,8 @@ To create a private repo, see https://hub.docker.com/repositories .
 ### Pushing an image
 
 ```console
-$ nerdctl tag hello-world <USERNAME>/hello-world
-$ nerdctl push <USERNAME>/hello-world
+$ mikodctl tag hello-world <USERNAME>/hello-world
+$ mikodctl push <USERNAME>/hello-world
 ```
 
 The pushed image appears in https://hub.docker.com/repositories .
@@ -213,7 +213,7 @@ See also https://docs.github.com/en/packages/working-with-a-github-packages-regi
 ### Logging in
 
 ```console
-$ nerdctl login ghcr.io -u <USERNAME>
+$ mikodctl login ghcr.io -u <USERNAME>
 Enter Password: ********[Enter]
 
 Login Succeeded
@@ -223,7 +223,7 @@ The `<USERNAME>` is your GitHub username but in lower characters.
 
 The "Password" here is a [GitHub Personal access token](https://github.com/settings/tokens), with `read:packages` and `write:packages` scopes.
 
-> **Note**: nerdctl prior to v0.16.1 had a bug that required pressing the Enter key twice.
+> **Note**: mikodctl prior to v0.16.1 had a bug that required pressing the Enter key twice.
 
 ### Creating a repo
 You do not need to create a repo explicitly.
@@ -231,8 +231,8 @@ You do not need to create a repo explicitly.
 ### Pushing an image
 
 ```console
-$ nerdctl tag hello-world ghcr.io/<USERNAME>/hello-world
-$ nerdctl push ghcr.io/<USERNAME>/hello-world
+$ mikodctl tag hello-world ghcr.io/<USERNAME>/hello-world
+$ mikodctl push ghcr.io/<USERNAME>/hello-world
 ```
 
 The pushed image appears in the "Packages" tab of your GitHub profile.
@@ -244,7 +244,7 @@ See also https://docs.gitlab.com/ee/user/packages/container_registry/
 ### Logging in
 
 ```console
-$ nerdctl login registry.gitlab.com -u <USERNAME>
+$ mikodctl login registry.gitlab.com -u <USERNAME>
 Enter Password: ********[Enter]
 
 Login Succeeded
@@ -254,7 +254,7 @@ The `<USERNAME>` is your GitLab username.
 
 The "Password" here is either a [GitLab Personal access token](https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html) or a [GitLab Deploy token](https://docs.gitlab.com/ee/user/project/deploy_tokens/index.html). Both options require minimum scope of `read_registry` for pull access and both `write_registry` and `read_registry` scopes for push access.
 
-> **Note**: nerdctl prior to v0.16.1 had a bug that required pressing the Enter key twice.
+> **Note**: mikodctl prior to v0.16.1 had a bug that required pressing the Enter key twice.
 
 ### Creating a repo
 Container registries in GitLab are created at the project level. A project in GitLab must exist first before you begin working with its container registry.
@@ -264,8 +264,8 @@ Container registries in GitLab are created at the project level. A project in Gi
 In this example we have created a GitLab project named `myproject`.
 
 ```console
-$ nerdctl tag hello-world registry.gitlab.com/<USERNAME>/myproject/hello-world:latest
-$ nerdctl push registry.gitlab.com/<USERNAME>/myproject/hello-world:latest
+$ mikodctl tag hello-world registry.gitlab.com/<USERNAME>/myproject/hello-world:latest
+$ mikodctl push registry.gitlab.com/<USERNAME>/myproject/hello-world:latest
 ```
 
 The pushed image appears under the "Packages & Registries -> Container Registry" tab of your project on GitLab.
@@ -281,7 +281,7 @@ Create a [GCP Service Account](https://cloud.google.com/iam/docs/creating-managi
 Then run the following command:
 
 ```console
-$ cat <GCP_SERVICE_ACCOUNT_KEY_JSON> | nerdctl login -u _json_key --password-stdin https://<REGION>-docker.pkg.dev
+$ cat <GCP_SERVICE_ACCOUNT_KEY_JSON> | mikodctl login -u _json_key --password-stdin https://<REGION>-docker.pkg.dev
 WARNING! Your password will be stored unencrypted in /home/<USERNAME>/.docker/config.json.
 Configure a credential helper to remove this warning. See
 https://docs.docker.com/engine/reference/commandline/login/#credentials-store
@@ -318,7 +318,7 @@ Docker configuration file updated.
 
 Google Cloud SDK (`gcloud`, `docker-credential-gcloud`) has to be installed, see https://cloud.google.com/sdk/docs/quickstart .
 
-> **Note**: If you are running nerdctl inside a VM (including Lima, Colima, Rancher Desktop, and WSL2), the Google Cloud SDK has to be installed inside the guest, not the host.
+> **Note**: If you are running mikodctl inside a VM (including Lima, Colima, Rancher Desktop, and WSL2), the Google Cloud SDK has to be installed inside the guest, not the host.
 
 </p>
 </details>
@@ -331,8 +331,8 @@ Choose "Docker" as the repository format.
 ### Pushing an image
 
 ```console
-$ nerdctl tag hello-world <REGION>-docker.pkg.dev/<GCP_PROJECT_ID>/<REPO>/hello-world
-$ nerdctl push <REGION>-docker.pkg.dev/<GCP_PROJECT_ID>/<REPO>/hello-world
+$ mikodctl tag hello-world <REGION>-docker.pkg.dev/<GCP_PROJECT_ID>/<REPO>/hello-world
+$ mikodctl push <REGION>-docker.pkg.dev/<GCP_PROJECT_ID>/<REPO>/hello-world
 ```
 
 The pushed image appears in the repository you manually created in the previous step.
@@ -348,7 +348,7 @@ Create a [GCP Service Account](https://cloud.google.com/iam/docs/creating-managi
 Then run the following command:
 
 ```console
-$ cat <GCP_SERVICE_ACCOUNT_KEY_JSON> | nerdctl login -u _json_key --password-stdin https://asia.gcr.io
+$ cat <GCP_SERVICE_ACCOUNT_KEY_JSON> | mikodctl login -u _json_key --password-stdin https://asia.gcr.io
 WARNING! Your password will be stored unencrypted in /home/<USERNAME>/.docker/config.json.
 Configure a credential helper to remove this warning. See
 https://docs.docker.com/engine/reference/commandline/login/#credentials-store
@@ -388,7 +388,7 @@ Docker configuration file updated.
 
 Google Cloud SDK (`gcloud`, `docker-credential-gcloud`) has to be installed, see https://cloud.google.com/sdk/docs/quickstart .
 
-> **Note**: If you are running nerdctl inside a VM (including Lima, Colima, Rancher Desktop, and WSL2), the Google Cloud SDK has to be installed inside the guest, not the host.
+> **Note**: If you are running mikodctl inside a VM (including Lima, Colima, Rancher Desktop, and WSL2), the Google Cloud SDK has to be installed inside the guest, not the host.
 
 </p>
 </details>
@@ -399,8 +399,8 @@ You do not need to create a repo explicitly.
 ### Pushing an image
 
 ```console
-$ nerdctl tag hello-world asia.gcr.io/<GCP_PROJECT_ID>/hello-world
-$ nerdctl push asia.gcr.io/<GCP_PROJECT_ID>/hello-world
+$ mikodctl tag hello-world asia.gcr.io/<GCP_PROJECT_ID>/hello-world
+$ mikodctl push asia.gcr.io/<GCP_PROJECT_ID>/hello-world
 ```
 
 The pushed image appears in https://console.cloud.google.com/gcr/ .
@@ -411,7 +411,7 @@ See also https://www.jfrog.com/confluence/display/JFROG/Getting+Started+with+Art
 
 ### Logging in
 ```console
-$ nerdctl login <SERVER_NAME>.jfrog.io -u <USERNAME>
+$ mikodctl login <SERVER_NAME>.jfrog.io -u <USERNAME>
 Enter Password: ********[Enter]
 
 Login Succeeded
@@ -420,7 +420,7 @@ Login Succeeded
 Login using the default username: admin, and password: password for the on-prem installation, or the credentials provided to you by email for the cloud installation.
 JFrog Platform is integrated with OAuth allowing you to delegate authentication requests to external providers (the provider types supported are Google, OpenID Connect, GitHub Enterprise, and Cloud Foundry UAA)
 
-> **Note**: nerdctl prior to v0.16.1 had a bug that required pressing the Enter key twice.
+> **Note**: mikodctl prior to v0.16.1 had a bug that required pressing the Enter key twice.
 
 ### Creating a repo
 1. Add local Docker repository
@@ -432,8 +432,8 @@ JFrog Platform is integrated with OAuth allowing you to delegate authentication 
 
 ### Pushing an image
 ```console
-$ nerdctl tag hello-world <SERVER_NAME>.jfrog.io/<VIRTUAL_REPO_NAME>/hello-world
-$ nerdctl push <SERVER_NAME>.jfrog.io/<VIRTUAL_REPO_NAME>/hello-world
+$ mikodctl tag hello-world <SERVER_NAME>.jfrog.io/<VIRTUAL_REPO_NAME>/hello-world
+$ mikodctl push <SERVER_NAME>.jfrog.io/<VIRTUAL_REPO_NAME>/hello-world
 ```
 
 The `SERVER_NAME` is the first part of the URL given to you for your environment: `https://<SERVER_NAME>.jfrog.io`
@@ -449,13 +449,13 @@ See also https://docs.quay.io/solution/getting-started.html
 ### Logging in
 
 ```console
-$ nerdctl login quay.io -u <USERNAME>
+$ mikodctl login quay.io -u <USERNAME>
 Enter Password: ********[Enter]
 
 Login Succeeded
 ```
 
-> **Note**: nerdctl prior to v0.16.1 had a bug that required pressing the Enter key twice.
+> **Note**: mikodctl prior to v0.16.1 had a bug that required pressing the Enter key twice.
 
 ### Creating a repo
 You do not need to create a repo explicitly.
@@ -463,8 +463,8 @@ You do not need to create a repo explicitly.
 ### Pushing an image
 
 ```console
-$ nerdctl tag hello-world quay.io/<USERNAME>/hello-world
-$ nerdctl push quay.io/<USERNAME>/hello-world
+$ mikodctl tag hello-world quay.io/<USERNAME>/hello-world
+$ mikodctl push quay.io/<USERNAME>/hello-world
 ```
 
 The pushed image appears in https://quay.io/repository/ .

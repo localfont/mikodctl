@@ -18,7 +18,7 @@ package types
 
 import "io"
 
-// ManifestAnnotateOptions specifies options for `nerdctl manifest annotate`.
+// ManifestAnnotateOptions specifies options for `mikodctl manifest annotate`.
 type ManifestAnnotateOptions struct {
 	Stdout     io.Writer
 	GOptions   GlobalCommandOptions
@@ -29,7 +29,7 @@ type ManifestAnnotateOptions struct {
 	OsFeatures []string
 }
 
-// ManifestCreateOptions specifies options for `nerdctl manifest create`.
+// ManifestCreateOptions specifies options for `mikodctl manifest create`.
 type ManifestCreateOptions struct {
 	Stdout   io.Writer
 	GOptions GlobalCommandOptions
@@ -39,7 +39,7 @@ type ManifestCreateOptions struct {
 	Insecure bool
 }
 
-// ManifestInspectOptions specifies options for `nerdctl manifest inspect`.
+// ManifestInspectOptions specifies options for `mikodctl manifest inspect`.
 type ManifestInspectOptions struct {
 	Stdout   io.Writer
 	GOptions GlobalCommandOptions
@@ -49,7 +49,7 @@ type ManifestInspectOptions struct {
 	Insecure bool
 }
 
-// ManifestPushOptions specifies options for `nerdctl manifest push`.
+// ManifestPushOptions specifies options for `mikodctl manifest push`.
 type ManifestPushOptions struct {
 	Stdout   io.Writer
 	GOptions GlobalCommandOptions

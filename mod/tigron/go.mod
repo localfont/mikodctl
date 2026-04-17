@@ -1,4 +1,4 @@
-module github.com/containerd/nerdctl/mod/tigron
+module github.com/localfont/mikodctl/mod/tigron
 
 go 1.23.0
 

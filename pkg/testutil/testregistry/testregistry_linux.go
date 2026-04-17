@@ -26,12 +26,12 @@ import (
 	"golang.org/x/crypto/bcrypt"
 	"gotest.tools/v3/assert"
 
-	"github.com/containerd/nerdctl/v2/pkg/internal/filesystem"
-	"github.com/containerd/nerdctl/v2/pkg/testutil"
-	"github.com/containerd/nerdctl/v2/pkg/testutil/nerdtest/platform"
-	"github.com/containerd/nerdctl/v2/pkg/testutil/nettestutil"
-	"github.com/containerd/nerdctl/v2/pkg/testutil/portlock"
-	"github.com/containerd/nerdctl/v2/pkg/testutil/testca"
+	"github.com/localfont/mikodctl/v2/pkg/internal/filesystem"
+	"github.com/localfont/mikodctl/v2/pkg/testutil"
+	"github.com/localfont/mikodctl/v2/pkg/testutil/nerdtest/platform"
+	"github.com/localfont/mikodctl/v2/pkg/testutil/nettestutil"
+	"github.com/localfont/mikodctl/v2/pkg/testutil/portlock"
+	"github.com/localfont/mikodctl/v2/pkg/testutil/testca"
 )
 
 type RegistryServer struct {

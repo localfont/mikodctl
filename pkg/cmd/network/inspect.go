@@ -25,13 +25,13 @@ import (
 	containerd "github.com/containerd/containerd/v2/client"
 	"github.com/containerd/log"
 
-	"github.com/containerd/nerdctl/v2/pkg/api/types"
-	"github.com/containerd/nerdctl/v2/pkg/containerinspector"
-	"github.com/containerd/nerdctl/v2/pkg/formatter"
-	"github.com/containerd/nerdctl/v2/pkg/inspecttypes/dockercompat"
-	"github.com/containerd/nerdctl/v2/pkg/inspecttypes/native"
-	"github.com/containerd/nerdctl/v2/pkg/labels"
-	"github.com/containerd/nerdctl/v2/pkg/netutil"
+	"github.com/localfont/mikodctl/v2/pkg/api/types"
+	"github.com/localfont/mikodctl/v2/pkg/containerinspector"
+	"github.com/localfont/mikodctl/v2/pkg/formatter"
+	"github.com/localfont/mikodctl/v2/pkg/inspecttypes/dockercompat"
+	"github.com/localfont/mikodctl/v2/pkg/inspecttypes/native"
+	"github.com/localfont/mikodctl/v2/pkg/labels"
+	"github.com/localfont/mikodctl/v2/pkg/netutil"
 )
 
 func Inspect(ctx context.Context, client *containerd.Client, options types.NetworkInspectOptions) error {
@@ -80,8 +80,8 @@ func Inspect(ctx context.Context, client *containerd.Client, options types.Netwo
 
 		r := &native.Network{
 			CNI:           json.RawMessage(network.Bytes),
-			NerdctlID:     network.NerdctlID,
-			NerdctlLabels: network.NerdctlLabels,
+			MikodctlID:     network.MikodctlID,
+			MikodctlLabels: network.MikodctlLabels,
 			File:          network.File,
 			Containers:    containers,
 		}

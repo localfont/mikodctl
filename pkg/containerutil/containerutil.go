@@ -45,18 +45,18 @@ import (
 	"github.com/containerd/go-cni"
 	"github.com/containerd/log"
 
-	"github.com/containerd/nerdctl/v2/pkg/config"
-	"github.com/containerd/nerdctl/v2/pkg/consoleutil"
-	"github.com/containerd/nerdctl/v2/pkg/errutil"
-	"github.com/containerd/nerdctl/v2/pkg/formatter"
-	"github.com/containerd/nerdctl/v2/pkg/healthcheck"
-	"github.com/containerd/nerdctl/v2/pkg/ipcutil"
-	"github.com/containerd/nerdctl/v2/pkg/labels"
-	"github.com/containerd/nerdctl/v2/pkg/labels/k8slabels"
-	"github.com/containerd/nerdctl/v2/pkg/rootlessutil"
-	"github.com/containerd/nerdctl/v2/pkg/signalutil"
-	"github.com/containerd/nerdctl/v2/pkg/strutil"
-	"github.com/containerd/nerdctl/v2/pkg/taskutil"
+	"github.com/localfont/mikodctl/v2/pkg/config"
+	"github.com/localfont/mikodctl/v2/pkg/consoleutil"
+	"github.com/localfont/mikodctl/v2/pkg/errutil"
+	"github.com/localfont/mikodctl/v2/pkg/formatter"
+	"github.com/localfont/mikodctl/v2/pkg/healthcheck"
+	"github.com/localfont/mikodctl/v2/pkg/ipcutil"
+	"github.com/localfont/mikodctl/v2/pkg/labels"
+	"github.com/localfont/mikodctl/v2/pkg/labels/k8slabels"
+	"github.com/localfont/mikodctl/v2/pkg/rootlessutil"
+	"github.com/localfont/mikodctl/v2/pkg/signalutil"
+	"github.com/localfont/mikodctl/v2/pkg/strutil"
+	"github.com/localfont/mikodctl/v2/pkg/taskutil"
 )
 
 // PrintHostPort writes to `writer` the public (HostIP:HostPort) of a given `containerPort/protocol` in a container.
@@ -122,7 +122,7 @@ func UpdateExplicitlyStoppedLabel(ctx context.Context, container containerd.Cont
 	return container.Update(ctx, containerd.UpdateContainerOpts(opt))
 }
 
-// UpdateErrorLabel updates the "nerdctl/error"
+// UpdateErrorLabel updates the "mikodctl/error"
 // label of the container according to the container error.
 func UpdateErrorLabel(ctx context.Context, container containerd.Container, err error) error {
 	opt := containerd.WithAdditionalContainerLabels(map[string]string{
@@ -206,7 +206,7 @@ func GenerateSharingPIDOpts(ctx context.Context, targetCon containerd.Container)
 }
 
 // Start starts `container` with `attach` flag. If `attach` is true, it will attach to the container's stdio.
-func Start(ctx context.Context, container containerd.Container, isAttach bool, isInteractive bool, client *containerd.Client, detachKeys string, checkpointDir string, cfg *config.Config, nerdctlCmd string, nerdctlArgs []string) (err error) {
+func Start(ctx context.Context, container containerd.Container, isAttach bool, isInteractive bool, client *containerd.Client, detachKeys string, checkpointDir string, cfg *config.Config, mikodctlCmd string, mikodctlArgs []string) (err error) {
 	// defer the storage of start error in the dedicated label
 	defer func() {
 		if err != nil {
@@ -219,7 +219,7 @@ func Start(ctx context.Context, container containerd.Container, isAttach bool, i
 	}
 
 	if _, ok := lab[k8slabels.ContainerType]; ok {
-		log.L.Warnf("nerdctl does not support starting container %s created by Kubernetes", container.ID())
+		log.L.Warnf("mikodctl does not support starting container %s created by Kubernetes", container.ID())
 	}
 	if err := ReconfigNetContainer(ctx, container, client, lab); err != nil {
 		return err
@@ -277,7 +277,7 @@ func Start(ctx context.Context, container containerd.Container, isAttach bool, i
 	attachStreamOpt := []string{}
 	if isAttach {
 		// In start, isAttach attaches only STDOUT/STDERR
-		// source: https://github.com/containerd/nerdctl/blob/main/docs/command-reference.md#whale-nerdctl-start
+		// source: https://github.com/localfont/mikodctl/blob/main/docs/command-reference.md#whale-mikodctl-start
 		attachStreamOpt = []string{"STDOUT", "STDERR"}
 	}
 	task, err := taskutil.NewTask(ctx, client, container, taskutil.TaskOptions{
@@ -304,7 +304,7 @@ func Start(ctx context.Context, container containerd.Container, isAttach bool, i
 	}
 
 	// If container has health checks configured, create and start systemd timer/service files.
-	if err := healthcheck.CreateTimer(ctx, container, cfg, nerdctlCmd, nerdctlArgs); err != nil {
+	if err := healthcheck.CreateTimer(ctx, container, cfg, mikodctlCmd, mikodctlArgs); err != nil {
 		return fmt.Errorf("failed to create healthcheck timer: %w", err)
 	}
 	if err := healthcheck.StartTimer(ctx, container, cfg); err != nil {
@@ -526,7 +526,7 @@ func Pause(ctx context.Context, client *containerd.Client, id string) error {
 }
 
 // Unpause unpauses a container by its id.
-func Unpause(ctx context.Context, client *containerd.Client, id string, cfg *config.Config, nerdctlCmd string, nerdctlArgs []string) error {
+func Unpause(ctx context.Context, client *containerd.Client, id string, cfg *config.Config, mikodctlCmd string, mikodctlArgs []string) error {
 	container, err := client.LoadContainer(ctx, id)
 	if err != nil {
 		return err
@@ -543,7 +543,7 @@ func Unpause(ctx context.Context, client *containerd.Client, id string, cfg *con
 	}
 
 	// Recreate healthcheck related systemd timer/service files.
-	if err := healthcheck.CreateTimer(ctx, container, cfg, nerdctlCmd, nerdctlArgs); err != nil {
+	if err := healthcheck.CreateTimer(ctx, container, cfg, mikodctlCmd, mikodctlArgs); err != nil {
 		return fmt.Errorf("failed to create healthcheck timer: %w", err)
 	}
 	if err := healthcheck.StartTimer(ctx, container, cfg); err != nil {
@@ -558,7 +558,7 @@ func Unpause(ctx context.Context, client *containerd.Client, id string, cfg *con
 	}
 }
 
-// ContainerStateDirPath returns the path to the Nerdctl-managed state directory for the container with the given ID.
+// ContainerStateDirPath returns the path to the Mikodctl-managed state directory for the container with the given ID.
 func ContainerStateDirPath(ns, dataStore, id string) (string, error) {
 	return filepath.Join(dataStore, "containers", ns, id), nil
 }

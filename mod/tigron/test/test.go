@@ -17,7 +17,7 @@
 package test
 
 import (
-	"github.com/containerd/nerdctl/mod/tigron/tig"
+	"github.com/localfont/mikodctl/mod/tigron/tig"
 )
 
 // Testable TODO.

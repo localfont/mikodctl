@@ -25,8 +25,8 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/containerd/nerdctl/mod/tigron/internal/assertive"
-	"github.com/containerd/nerdctl/mod/tigron/tig"
+	"github.com/localfont/mikodctl/mod/tigron/internal/assertive"
+	"github.com/localfont/mikodctl/mod/tigron/tig"
 )
 
 const (

@@ -29,9 +29,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/containerd/nerdctl/mod/tigron/expect"
-	"github.com/containerd/nerdctl/mod/tigron/internal/assertive"
-	"github.com/containerd/nerdctl/mod/tigron/internal/com"
+	"github.com/localfont/mikodctl/mod/tigron/expect"
+	"github.com/localfont/mikodctl/mod/tigron/internal/assertive"
+	"github.com/localfont/mikodctl/mod/tigron/internal/com"
 )
 
 const windows = "windows"

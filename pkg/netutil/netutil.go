@@ -36,12 +36,12 @@ import (
 	"github.com/containerd/errdefs"
 	"github.com/containerd/log"
 
-	"github.com/containerd/nerdctl/v2/pkg/api/types"
-	"github.com/containerd/nerdctl/v2/pkg/internal/filesystem"
-	"github.com/containerd/nerdctl/v2/pkg/labels"
-	"github.com/containerd/nerdctl/v2/pkg/netutil/nettype"
-	subnetutil "github.com/containerd/nerdctl/v2/pkg/netutil/subnet"
-	"github.com/containerd/nerdctl/v2/pkg/strutil"
+	"github.com/localfont/mikodctl/v2/pkg/api/types"
+	"github.com/localfont/mikodctl/v2/pkg/internal/filesystem"
+	"github.com/localfont/mikodctl/v2/pkg/labels"
+	"github.com/localfont/mikodctl/v2/pkg/netutil/nettype"
+	subnetutil "github.com/localfont/mikodctl/v2/pkg/netutil/subnet"
+	"github.com/localfont/mikodctl/v2/pkg/strutil"
 )
 
 type CNIEnv struct {
@@ -75,8 +75,8 @@ func (e *CNIEnv) ListNetworksMatch(reqs []string, allowPseudoNetwork bool) (list
 		// If nothing, try to match the id
 		if len(result) == 0 {
 			for _, networkConfig := range networkConfigs {
-				if networkConfig.NerdctlID != nil {
-					if len(req) <= len((*networkConfig.NerdctlID)) && (*networkConfig.NerdctlID)[0:len(req)] == req {
+				if networkConfig.MikodctlID != nil {
+					if len(req) <= len((*networkConfig.MikodctlID)) && (*networkConfig.MikodctlID)[0:len(req)] == req {
 						result = append(result, networkConfig)
 					}
 				}
@@ -239,7 +239,7 @@ func (e *CNIEnv) NetworkByNameOrID(key string) (*NetworkConfig, error) {
 		if n.Name == key {
 			return n, nil
 		}
-		if n.NerdctlID != nil && (*n.NerdctlID == key || (*n.NerdctlID)[0:12] == key) {
+		if n.MikodctlID != nil && (*n.MikodctlID == key || (*n.MikodctlID)[0:12] == key) {
 			return n, nil
 		}
 	}
@@ -280,16 +280,16 @@ func (e *CNIEnv) usedSubnets() ([]*net.IPNet, error) {
 
 type NetworkConfig struct {
 	*libcni.NetworkConfigList
-	NerdctlID     *string
-	NerdctlLabels *map[string]string
+	MikodctlID     *string
+	MikodctlLabels *map[string]string
 	File          string
 }
 
 type cniNetworkConfig struct {
 	CNIVersion string            `json:"cniVersion"`
 	Name       string            `json:"name"`
-	ID         string            `json:"nerdctlID"`
-	Labels     map[string]string `json:"nerdctlLabels"`
+	ID         string            `json:"mikodctlID"`
+	Labels     map[string]string `json:"mikodctlLabels"`
 	Plugins    []CNIPlugin       `json:"plugins"`
 }
 
@@ -332,15 +332,15 @@ func (e *CNIEnv) RemoveNetwork(net *NetworkConfig) error {
 }
 
 // GetDefaultNetworkConfig checks whether the default network exists
-// by first searching for if any network bears the `labels.NerdctlDefaultNetwork`
+// by first searching for if any network bears the `labels.MikodctlDefaultNetwork`
 // label, or falls back to checking whether any network bears the
 // `DefaultNetworkName` name.
 func (e *CNIEnv) GetDefaultNetworkConfig() (*NetworkConfig, error) {
-	// Search for networks bearing the `labels.NerdctlDefaultNetwork` label.
+	// Search for networks bearing the `labels.MikodctlDefaultNetwork` label.
 	defaultLabelFilterF := func(nc *NetworkConfig) bool {
-		if nc.NerdctlLabels == nil {
+		if nc.MikodctlLabels == nil {
 			return false
-		} else if _, ok := (*nc.NerdctlLabels)[labels.NerdctlDefaultNetwork]; ok {
+		} else if _, ok := (*nc.MikodctlLabels)[labels.MikodctlDefaultNetwork]; ok {
 			return true
 		}
 		return false
@@ -351,7 +351,7 @@ func (e *CNIEnv) GetDefaultNetworkConfig() (*NetworkConfig, error) {
 	}
 	if len(labelMatches) >= 1 {
 		if len(labelMatches) > 1 {
-			log.L.Warnf("returning the first network bearing the %q label out of the multiple found: %#v", labels.NerdctlDefaultNetwork, labelMatches)
+			log.L.Warnf("returning the first network bearing the %q label out of the multiple found: %#v", labels.MikodctlDefaultNetwork, labelMatches)
 		}
 		return labelMatches[0], nil
 	}
@@ -369,11 +369,11 @@ func (e *CNIEnv) GetDefaultNetworkConfig() (*NetworkConfig, error) {
 			log.L.Warnf("returning the first network bearing the %q default network name out of the multiple found: %#v", DefaultNetworkName, nameMatches)
 		}
 
-		// Warn the user if the default network was not created by nerdctl.
+		// Warn the user if the default network was not created by mikodctl.
 		match := nameMatches[0]
 		exists, statErr := fsExists(e, DefaultNetworkName)
-		if match.NerdctlID == nil || statErr != nil || !exists {
-			log.L.Warnf("default network named %q does not have an internal nerdctl ID or nerdctl-managed config file, it was most likely NOT created by nerdctl", DefaultNetworkName)
+		if match.MikodctlID == nil || statErr != nil || !exists {
+			log.L.Warnf("default network named %q does not have an internal mikodctl ID or mikodctl-managed config file, it was most likely NOT created by mikodctl", DefaultNetworkName)
 		}
 
 		return nameMatches[0], nil
@@ -420,7 +420,7 @@ func (e *CNIEnv) createDefaultNetworkConfig(bridgeIP string) error {
 		Subnets:    []string{bridgeCIDR},
 		Gateway:    bridgeGatewayIP,
 		IPAMDriver: "default",
-		Labels:     []string{fmt.Sprintf("%s=true", labels.NerdctlDefaultNetwork)},
+		Labels:     []string{fmt.Sprintf("%s=true", labels.MikodctlDefaultNetwork)},
 	}
 
 	_, err = e.CreateNetwork(opts)
@@ -464,8 +464,8 @@ func (e *CNIEnv) generateNetworkConfig(name string, labels []string, plugins []C
 	}
 	return &NetworkConfig{
 		NetworkConfigList: l,
-		NerdctlID:         &id,
-		NerdctlLabels:     &labelsMap,
+		MikodctlID:         &id,
+		MikodctlLabels:     &labelsMap,
 		File:              "",
 	}, nil
 }
@@ -492,11 +492,11 @@ func cniLoad(fileNames []string) (configList []*NetworkConfig, err error) {
 		if err != nil {
 			return nil, wrapCNIError(fileName, err)
 		}
-		id, nerdctlLabels := nerdctlIDLabels(netConfigList.Bytes)
+		id, mikodctlLabels := mikodctlIDLabels(netConfigList.Bytes)
 		configList = append(configList, &NetworkConfig{
 			NetworkConfigList: netConfigList,
-			NerdctlID:         id,
-			NerdctlLabels:     nerdctlLabels,
+			MikodctlID:         id,
+			MikodctlLabels:     mikodctlLabels,
 			File:              fileName,
 		})
 	}
@@ -504,10 +504,10 @@ func cniLoad(fileNames []string) (configList []*NetworkConfig, err error) {
 	return configList, nil
 }
 
-func nerdctlIDLabels(b []byte) (*string, *map[string]string) {
+func mikodctlIDLabels(b []byte) (*string, *map[string]string) {
 	type idLabels struct {
-		ID     *string            `json:"nerdctlID,omitempty"`
-		Labels *map[string]string `json:"nerdctlLabels,omitempty"`
+		ID     *string            `json:"mikodctlID,omitempty"`
+		Labels *map[string]string `json:"mikodctlLabels,omitempty"`
 	}
 	var idl idLabels
 	if err := json.Unmarshal(b, &idl); err != nil {

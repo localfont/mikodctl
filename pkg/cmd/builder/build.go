@@ -37,14 +37,14 @@ import (
 	"github.com/containerd/log"
 	"github.com/containerd/platforms"
 
-	"github.com/containerd/nerdctl/v2/pkg/api/types"
-	"github.com/containerd/nerdctl/v2/pkg/buildkitutil"
-	"github.com/containerd/nerdctl/v2/pkg/clientutil"
-	"github.com/containerd/nerdctl/v2/pkg/containerutil"
-	"github.com/containerd/nerdctl/v2/pkg/internal/filesystem"
-	"github.com/containerd/nerdctl/v2/pkg/platformutil"
-	"github.com/containerd/nerdctl/v2/pkg/referenceutil"
-	"github.com/containerd/nerdctl/v2/pkg/strutil"
+	"github.com/localfont/mikodctl/v2/pkg/api/types"
+	"github.com/localfont/mikodctl/v2/pkg/buildkitutil"
+	"github.com/localfont/mikodctl/v2/pkg/clientutil"
+	"github.com/localfont/mikodctl/v2/pkg/containerutil"
+	"github.com/localfont/mikodctl/v2/pkg/internal/filesystem"
+	"github.com/localfont/mikodctl/v2/pkg/platformutil"
+	"github.com/localfont/mikodctl/v2/pkg/referenceutil"
+	"github.com/localfont/mikodctl/v2/pkg/strutil"
 )
 
 type PlatformParser interface {
@@ -561,7 +561,7 @@ func isImageSharable(buildkitHost, namespace, uuid, snapshotter string, platform
 	}
 	// NOTE: It's possible that BuildKit doesn't download the base image of non-default platform (e.g. when the provided
 	//       Dockerfile doesn't contain instructions require base images like RUN) even if `--output type=image,unpack=true`
-	//       is passed to BuildKit. Thus, we need to use `type=docker` or `type=oci` when nerdctl builds non-default platform
+	//       is passed to BuildKit. Thus, we need to use `type=docker` or `type=oci` when mikodctl builds non-default platform
 	//       image using `platform` option.
 	parser := new(platformParser)
 	return executor == "containerd" && containerdUUID == uuid && containerdNamespace == namespace && workerSnapshotter == snapshotter && isBuildPlatformDefault(platform, parser), nil

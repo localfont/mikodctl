@@ -32,10 +32,10 @@ import (
 	ptypes "github.com/containerd/containerd/v2/pkg/protobuf/types"
 	"github.com/containerd/log"
 
-	"github.com/containerd/nerdctl/v2/pkg/buildkitutil"
-	"github.com/containerd/nerdctl/v2/pkg/inspecttypes/dockercompat"
-	"github.com/containerd/nerdctl/v2/pkg/inspecttypes/native"
-	"github.com/containerd/nerdctl/v2/pkg/version"
+	"github.com/localfont/mikodctl/v2/pkg/buildkitutil"
+	"github.com/localfont/mikodctl/v2/pkg/inspecttypes/dockercompat"
+	"github.com/localfont/mikodctl/v2/pkg/inspecttypes/native"
+	"github.com/localfont/mikodctl/v2/pkg/version"
 )
 
 func NativeDaemonInfo(ctx context.Context, client *containerd.Client) (*native.DaemonInfo, error) {
@@ -79,7 +79,7 @@ func Info(ctx context.Context, client *containerd.Client, snapshotter, cgroupMan
 
 	var info dockercompat.Info
 	info.ID = daemonIntro.UUID
-	// Storage drivers and logging drivers are not really Server concept for nerdctl, but mimics `docker info` output
+	// Storage drivers and logging drivers are not really Server concept for mikodctl, but mimics `docker info` output
 	info.Driver = snapshotter
 	info.Plugins.Storage = snapshotterPlugins
 	info.SystemTime = time.Now().Format(time.RFC3339Nano)

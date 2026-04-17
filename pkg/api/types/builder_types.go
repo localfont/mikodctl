@@ -18,7 +18,7 @@ package types
 
 import "io"
 
-// BuilderBuildOptions specifies options for `nerdctl (image/builder) build`.
+// BuilderBuildOptions specifies options for `mikodctl (image/builder) build`.
 type BuilderBuildOptions struct {
 	Stdin  io.Reader
 	Stdout io.Writer
@@ -78,7 +78,7 @@ type BuilderBuildOptions struct {
 	SourcePolicyFile string
 }
 
-// BuilderPruneOptions specifies options for `nerdctl builder prune`.
+// BuilderPruneOptions specifies options for `mikodctl builder prune`.
 type BuilderPruneOptions struct {
 	Stderr io.Writer
 	// GOptions is the global options

@@ -32,20 +32,20 @@ import (
 
 	"github.com/containerd/log"
 
-	"github.com/containerd/nerdctl/v2/pkg/identifiers"
-	"github.com/containerd/nerdctl/v2/pkg/reflectutil"
+	"github.com/localfont/mikodctl/v2/pkg/identifiers"
+	"github.com/localfont/mikodctl/v2/pkg/reflectutil"
 )
 
 // ComposeExtensionKey defines fields used to implement extension features.
 const (
-	ComposeVerify                            = "x-nerdctl-verify"
-	ComposeCosignPublicKey                   = "x-nerdctl-cosign-public-key"
-	ComposeSign                              = "x-nerdctl-sign"
-	ComposeCosignPrivateKey                  = "x-nerdctl-cosign-private-key"
-	ComposeCosignCertificateIdentity         = "x-nerdctl-cosign-certificate-identity"
-	ComposeCosignCertificateIdentityRegexp   = "x-nerdctl-cosign-certificate-identity-regexp"
-	ComposeCosignCertificateOidcIssuer       = "x-nerdctl-cosign-certificate-oidc-issuer"
-	ComposeCosignCertificateOidcIssuerRegexp = "x-nerdctl-cosign-certificate-oidc-issuer-regexp"
+	ComposeVerify                            = "x-mikodctl-verify"
+	ComposeCosignPublicKey                   = "x-mikodctl-cosign-public-key"
+	ComposeSign                              = "x-mikodctl-sign"
+	ComposeCosignPrivateKey                  = "x-mikodctl-cosign-private-key"
+	ComposeCosignCertificateIdentity         = "x-mikodctl-cosign-certificate-identity"
+	ComposeCosignCertificateIdentityRegexp   = "x-mikodctl-cosign-certificate-identity-regexp"
+	ComposeCosignCertificateOidcIssuer       = "x-mikodctl-cosign-certificate-oidc-issuer"
+	ComposeCosignCertificateOidcIssuerRegexp = "x-mikodctl-cosign-certificate-oidc-issuer-regexp"
 )
 
 // Separator is used for naming components (e.g., service image or container)
@@ -197,7 +197,7 @@ type Build struct {
 	Force            bool     // force build even if already present
 	BuildArgs        []string // {"-t", "example.com/foo", "--target", "foo", "/path/to/ctx"}
 	DockerfileInline string   // store contents of dockerfile_inline field is specified
-	// TODO: call BuildKit API directly without executing `nerdctl build`
+	// TODO: call BuildKit API directly without executing `mikodctl build`
 }
 
 type Service struct {
@@ -322,7 +322,7 @@ func getGPUs(svc types.ServiceConfig) (reqs []string, _ error) {
 
 var restartFailurePat = regexp.MustCompile(`^on-failure:\d+$`)
 
-// getRestart returns `nerdctl run --restart` flag string
+// getRestart returns `mikodctl run --restart` flag string
 //
 // restart:                         {"no" (default), "always", "on-failure", "unless-stopped"} (https://github.com/compose-spec/compose-spec/blob/167f207d0a8967df87c5ed757dbb1a2bb6025a1e/spec.md#restart)
 // deploy.restart_policy.condition: {"none", "on-failure", "any" (default)}                    (https://github.com/compose-spec/compose-spec/blob/167f207d0a8967df87c5ed757dbb1a2bb6025a1e/deploy.md#restart_policy)
@@ -485,7 +485,7 @@ func newContainer(project *types.Project, parsed *Service, i int) (*Container, e
 
 	c.RunArgs = []string{
 		"--name=" + c.Name,
-		"--pull=never", // because image will be ensured before running replicas with `nerdctl run`.
+		"--pull=never", // because image will be ensured before running replicas with `mikodctl run`.
 	}
 
 	for k, v := range svc.Annotations {

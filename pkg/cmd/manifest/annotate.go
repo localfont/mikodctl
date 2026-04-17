@@ -23,10 +23,10 @@ import (
 
 	ocispec "github.com/opencontainers/image-spec/specs-go/v1"
 
-	"github.com/containerd/nerdctl/v2/pkg/api/types"
-	"github.com/containerd/nerdctl/v2/pkg/manifeststore"
-	"github.com/containerd/nerdctl/v2/pkg/referenceutil"
-	"github.com/containerd/nerdctl/v2/pkg/store"
+	"github.com/localfont/mikodctl/v2/pkg/api/types"
+	"github.com/localfont/mikodctl/v2/pkg/manifeststore"
+	"github.com/localfont/mikodctl/v2/pkg/referenceutil"
+	"github.com/localfont/mikodctl/v2/pkg/store"
 )
 
 func Annotate(ctx context.Context, listRef string, manifestRef string, options types.ManifestAnnotateOptions) error {

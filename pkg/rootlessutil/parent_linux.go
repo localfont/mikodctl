@@ -28,7 +28,7 @@ import (
 
 	"github.com/containerd/log"
 
-	"github.com/containerd/nerdctl/v2/pkg/internal/filesystem"
+	"github.com/localfont/mikodctl/v2/pkg/internal/filesystem"
 )
 
 func IsRootlessParent() bool {
@@ -98,7 +98,7 @@ func ParentMain(hostGatewayIP string) error {
 
 	// Only append wd if we do have a working dir
 	// - https://github.com/rootless-containers/usernetes/pull/327
-	// - https://github.com/containerd/nerdctl/issues/3328
+	// - https://github.com/localfont/mikodctl/issues/3328
 	wd, err := os.Getwd()
 	if err != nil {
 		log.L.WithError(err).Warn("unable to determine working directory")

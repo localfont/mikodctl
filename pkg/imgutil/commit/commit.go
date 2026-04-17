@@ -48,12 +48,12 @@ import (
 	estargzconvert "github.com/containerd/stargz-snapshotter/nativeconverter/estargz"
 	zstdchunkedconvert "github.com/containerd/stargz-snapshotter/nativeconverter/zstdchunked"
 
-	"github.com/containerd/nerdctl/v2/pkg/api/types"
-	"github.com/containerd/nerdctl/v2/pkg/clientutil"
-	"github.com/containerd/nerdctl/v2/pkg/cmd/image"
-	"github.com/containerd/nerdctl/v2/pkg/containerutil"
-	"github.com/containerd/nerdctl/v2/pkg/imgutil"
-	"github.com/containerd/nerdctl/v2/pkg/labels"
+	"github.com/localfont/mikodctl/v2/pkg/api/types"
+	"github.com/localfont/mikodctl/v2/pkg/clientutil"
+	"github.com/localfont/mikodctl/v2/pkg/cmd/image"
+	"github.com/localfont/mikodctl/v2/pkg/containerutil"
+	"github.com/localfont/mikodctl/v2/pkg/imgutil"
+	"github.com/localfont/mikodctl/v2/pkg/labels"
 )
 
 type Changes struct {
@@ -115,7 +115,7 @@ func Commit(ctx context.Context, client *containerd.Client, container containerd
 	// to commit container created by moby.
 	baseImgWithoutPlatform, err := client.ImageService().Get(ctx, info.Image)
 	if err != nil {
-		return emptyDigest, fmt.Errorf("container %q lacks image (wasn't created by nerdctl?): %w", id, err)
+		return emptyDigest, fmt.Errorf("container %q lacks image (wasn't created by mikodctl?): %w", id, err)
 	}
 	platformLabel := info.Labels[labels.Platform]
 	if platformLabel == "" {
@@ -135,11 +135,11 @@ func Commit(ctx context.Context, client *containerd.Client, container containerd
 		return emptyDigest, err
 	}
 
-	// Ensure all the layers are here: https://github.com/containerd/nerdctl/issues/3425
+	// Ensure all the layers are here: https://github.com/localfont/mikodctl/issues/3425
 	err = image.EnsureAllContent(ctx, client, baseImg.Name(), platformMC, globalOptions)
 	if err != nil {
 		log.G(ctx).Warn("Unable to fetch missing layers before committing. " +
-			"If you try to save or push this image, it might fail. See https://github.com/containerd/nerdctl/issues/3439.")
+			"If you try to save or push this image, it might fail. See https://github.com/localfont/mikodctl/issues/3439.")
 	}
 
 	if opts.Pause {

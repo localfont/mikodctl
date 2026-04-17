@@ -31,12 +31,12 @@ import (
 	"github.com/containerd/containerd/v2/core/transfer/registry"
 	"github.com/containerd/log"
 
-	"github.com/containerd/nerdctl/v2/pkg/api/types"
-	"github.com/containerd/nerdctl/v2/pkg/errutil"
-	"github.com/containerd/nerdctl/v2/pkg/imgutil/dockerconfigresolver"
-	"github.com/containerd/nerdctl/v2/pkg/platformutil"
-	"github.com/containerd/nerdctl/v2/pkg/referenceutil"
-	"github.com/containerd/nerdctl/v2/pkg/transferutil"
+	"github.com/localfont/mikodctl/v2/pkg/api/types"
+	"github.com/localfont/mikodctl/v2/pkg/errutil"
+	"github.com/localfont/mikodctl/v2/pkg/imgutil/dockerconfigresolver"
+	"github.com/localfont/mikodctl/v2/pkg/platformutil"
+	"github.com/localfont/mikodctl/v2/pkg/referenceutil"
+	"github.com/localfont/mikodctl/v2/pkg/transferutil"
 )
 
 func prepareImageStore(ctx context.Context, parsedReference *referenceutil.ImageReference, options types.ImagePullOptions) (*transferimage.Store, error) {

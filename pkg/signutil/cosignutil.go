@@ -26,7 +26,7 @@ import (
 
 	"github.com/containerd/log"
 
-	"github.com/containerd/nerdctl/v2/pkg/imgutil"
+	"github.com/localfont/mikodctl/v2/pkg/imgutil"
 )
 
 // SignCosign signs an image(`rawRef`) using a cosign private key (`keyRef`)

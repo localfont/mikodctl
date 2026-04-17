@@ -22,8 +22,8 @@ import (
 	"github.com/opencontainers/runtime-spec/specs-go"
 	"gotest.tools/v3/assert"
 
-	"github.com/containerd/nerdctl/v2/pkg/api/types"
-	"github.com/containerd/nerdctl/v2/pkg/imgutil"
+	"github.com/localfont/mikodctl/v2/pkg/api/types"
+	"github.com/localfont/mikodctl/v2/pkg/imgutil"
 )
 
 // TestCreateSnapshotOpts tests the createSnapshotOpts function.

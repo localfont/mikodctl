@@ -22,9 +22,9 @@ import (
 	containerd "github.com/containerd/containerd/v2/client"
 	transferimage "github.com/containerd/containerd/v2/core/transfer/image"
 
-	"github.com/containerd/nerdctl/v2/pkg/api/types"
-	"github.com/containerd/nerdctl/v2/pkg/platformutil"
-	"github.com/containerd/nerdctl/v2/pkg/referenceutil"
+	"github.com/localfont/mikodctl/v2/pkg/api/types"
+	"github.com/localfont/mikodctl/v2/pkg/platformutil"
+	"github.com/localfont/mikodctl/v2/pkg/referenceutil"
 )
 
 func Tag(ctx context.Context, client *containerd.Client, options types.ImageTagOptions) error {

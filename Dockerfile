@@ -143,14 +143,14 @@ ENV GOARCH=${TARGETARCH}
 COPY ./Dockerfile.d/SHA256SUMS.d/ /SHA256SUMS.d
 WORKDIR /nowhere
 RUN echo "${TARGETARCH:-amd64}" | sed -e s/amd64/x86_64/ -e s/arm64/aarch64/ | tee /target_uname_m
-RUN mkdir -p /out/share/doc/nerdctl-full && touch /out/share/doc/nerdctl-full/README.md
+RUN mkdir -p /out/share/doc/mikodctl-full && touch /out/share/doc/mikodctl-full/README.md
 ARG CONTAINERD_VERSION
 COPY --from=build-containerd /out/${TARGETARCH:-amd64}/* /out/bin/
 COPY --from=build-containerd /out/containerd.service /out/lib/systemd/system/containerd.service
-RUN echo "- containerd: ${CONTAINERD_VERSION%%@*}" >> /out/share/doc/nerdctl-full/README.md
+RUN echo "- containerd: ${CONTAINERD_VERSION%%@*}" >> /out/share/doc/mikodctl-full/README.md
 ARG RUNC_VERSION
 COPY --from=build-runc /out/runc.${TARGETARCH:-amd64} /out/bin/runc
-RUN echo "- runc: ${RUNC_VERSION%%@*}" >> /out/share/doc/nerdctl-full/README.md
+RUN echo "- runc: ${RUNC_VERSION%%@*}" >> /out/share/doc/mikodctl-full/README.md
 ARG CNI_PLUGINS_VERSION
 RUN CNI_PLUGINS_VERSION=${CNI_PLUGINS_VERSION%%@*}; \
   fname="cni-plugins-${TARGETOS:-linux}-${TARGETARCH:-amd64}-${CNI_PLUGINS_VERSION}.tgz" && \
@@ -159,7 +159,7 @@ RUN CNI_PLUGINS_VERSION=${CNI_PLUGINS_VERSION%%@*}; \
   mkdir -p /out/libexec/cni && \
   tar xzf "${fname}" -C /out/libexec/cni && \
   rm -f "${fname}" && \
-  echo "- CNI plugins: ${CNI_PLUGINS_VERSION}" >> /out/share/doc/nerdctl-full/README.md
+  echo "- CNI plugins: ${CNI_PLUGINS_VERSION}" >> /out/share/doc/mikodctl-full/README.md
 ARG BUILDKIT_VERSION
 RUN BUILDKIT_VERSION=${BUILDKIT_VERSION%%@*}; \
   fname="buildkit-${BUILDKIT_VERSION}.${TARGETOS:-linux}-${TARGETARCH:-amd64}.tar.gz" && \
@@ -168,7 +168,7 @@ RUN BUILDKIT_VERSION=${BUILDKIT_VERSION%%@*}; \
   tar xzf "${fname}" -C /out && \
   rm -f "${fname}" /out/bin/buildkit-qemu-* /out/bin/buildkit-cni-* /out/bin/buildkit-runc && \
   for f in /out/libexec/cni/*; do [ -x "$f" ] && [ -f "$f" ] && ln -s ../libexec/cni/$(basename $f) /out/bin/buildkit-cni-$(basename $f); done && \
-  echo "- BuildKit: ${BUILDKIT_VERSION}" >> /out/share/doc/nerdctl-full/README.md
+  echo "- BuildKit: ${BUILDKIT_VERSION}" >> /out/share/doc/mikodctl-full/README.md
 # NOTE: github.com/moby/buildkit/examples/systemd is not included in BuildKit v0.8.x, will be included in v0.9.x
 RUN cd /out/lib/systemd/system && \
   sedcomm='s@bin/containerd@bin/buildkitd@g; s@(Description|Documentation)=.*@@' && \
@@ -186,16 +186,16 @@ RUN --mount=type=secret,id=github_token,env=GITHUB_TOKEN \
   tar xzf "${fname}" -C /out/bin && \
   rm -f "${fname}" /out/bin/stargz-store && \
   mv stargz-snapshotter.service /out/lib/systemd/system/stargz-snapshotter.service && \
-  echo "- Stargz Snapshotter: ${STARGZ_SNAPSHOTTER_VERSION}" >> /out/share/doc/nerdctl-full/README.md
+  echo "- Stargz Snapshotter: ${STARGZ_SNAPSHOTTER_VERSION}" >> /out/share/doc/mikodctl-full/README.md
 ARG IMGCRYPT_VERSION
 RUN git clone --quiet --depth 1 --branch "${IMGCRYPT_VERSION%%@*}" https://github.com/containerd/imgcrypt.git /go/src/github.com/containerd/imgcrypt && \
   cd /go/src/github.com/containerd/imgcrypt && \
   git-checkout-tag-with-hash.sh "${IMGCRYPT_VERSION}" && \
   CGO_ENABLED=0 make && DESTDIR=/out make install && \
-  echo "- imgcrypt: ${IMGCRYPT_VERSION%%@*}" >> /out/share/doc/nerdctl-full/README.md
+  echo "- imgcrypt: ${IMGCRYPT_VERSION%%@*}" >> /out/share/doc/mikodctl-full/README.md
 ARG BYPASS4NETNS_VERSION
 COPY --from=build-bypass4netns /out/${TARGETARCH:-amd64}/* /out/bin/
-RUN echo "- bypass4netns: ${BYPASS4NETNS_VERSION%%@*}" >> /out/share/doc/nerdctl-full/README.md
+RUN echo "- bypass4netns: ${BYPASS4NETNS_VERSION%%@*}" >> /out/share/doc/mikodctl-full/README.md
 ARG FUSE_OVERLAYFS_VERSION
 RUN FUSE_OVERLAYFS_VERSION=${FUSE_OVERLAYFS_VERSION%%@*}; \
   fname="fuse-overlayfs-$(cat /target_uname_m)" && \
@@ -203,7 +203,7 @@ RUN FUSE_OVERLAYFS_VERSION=${FUSE_OVERLAYFS_VERSION%%@*}; \
   grep "${fname}" "/SHA256SUMS.d/fuse-overlayfs-${FUSE_OVERLAYFS_VERSION}" | sha256sum -c && \
   mv "${fname}" /out/bin/fuse-overlayfs && \
   chmod +x /out/bin/fuse-overlayfs && \
-  echo "- fuse-overlayfs: ${FUSE_OVERLAYFS_VERSION}" >> /out/share/doc/nerdctl-full/README.md
+  echo "- fuse-overlayfs: ${FUSE_OVERLAYFS_VERSION}" >> /out/share/doc/mikodctl-full/README.md
 ARG CONTAINERD_FUSE_OVERLAYFS_VERSION
 RUN CONTAINERD_FUSE_OVERLAYFS_VERSION=${CONTAINERD_FUSE_OVERLAYFS_VERSION%%@*}; \
   fname="containerd-fuse-overlayfs-${CONTAINERD_FUSE_OVERLAYFS_VERSION##*v}-${TARGETOS:-linux}-${TARGETARCH:-amd64}.tar.gz" && \
@@ -211,14 +211,14 @@ RUN CONTAINERD_FUSE_OVERLAYFS_VERSION=${CONTAINERD_FUSE_OVERLAYFS_VERSION%%@*}; 
   grep "${fname}" "/SHA256SUMS.d/containerd-fuse-overlayfs-${CONTAINERD_FUSE_OVERLAYFS_VERSION}" | sha256sum -c && \
   tar xzf "${fname}" -C /out/bin && \
   rm -f "${fname}" && \
-  echo "- containerd-fuse-overlayfs: ${CONTAINERD_FUSE_OVERLAYFS_VERSION}" >> /out/share/doc/nerdctl-full/README.md
+  echo "- containerd-fuse-overlayfs: ${CONTAINERD_FUSE_OVERLAYFS_VERSION}" >> /out/share/doc/mikodctl-full/README.md
 ARG TINI_VERSION
 RUN TINI_VERSION=${TINI_VERSION%%@*}; \
   fname="tini-static-${TARGETARCH:-amd64}" && \
   curl -o "${fname}" -fsSL --retry 5 --retry-delay 5 --retry-max-time 120 --connect-timeout 20 --proto '=https' --tlsv1.2 "https://github.com/krallin/tini/releases/download/${TINI_VERSION}/${fname}" && \
   grep "${fname}" "/SHA256SUMS.d/tini-${TINI_VERSION}" | sha256sum -c && \
   cp -a "${fname}" /out/bin/tini && chmod +x /out/bin/tini && \
-  echo "- Tini: ${TINI_VERSION}" >> /out/share/doc/nerdctl-full/README.md
+  echo "- Tini: ${TINI_VERSION}" >> /out/share/doc/mikodctl-full/README.md
 ARG BUILDG_VERSION
 # FIXME: this is a mildly-confusing approach. Buildkit will perform some "smart" replacement at build time and output
 # confusing debugging information, eg: BUILDG_VERSION will appear as if the original ARG value was used.
@@ -228,7 +228,7 @@ RUN BUILDG_VERSION=${BUILDG_VERSION%%@*}; \
   grep "${fname}" "/SHA256SUMS.d/buildg-${BUILDG_VERSION}" | sha256sum -c && \
   tar xzf "${fname}" -C /out/bin && \
   rm -f "${fname}" && \
-  echo "- buildg: ${BUILDG_VERSION}" >> /out/share/doc/nerdctl-full/README.md
+  echo "- buildg: ${BUILDG_VERSION}" >> /out/share/doc/mikodctl-full/README.md
 ARG ROOTLESSKIT_VERSION
 RUN ROOTLESSKIT_VERSION=${ROOTLESSKIT_VERSION%%@*}; \
   fname="rootlesskit-$(cat /target_uname_m).tar.gz" && \
@@ -236,35 +236,35 @@ RUN ROOTLESSKIT_VERSION=${ROOTLESSKIT_VERSION%%@*}; \
   grep "${fname}" "/SHA256SUMS.d/rootlesskit-${ROOTLESSKIT_VERSION}" | sha256sum -c && \
   tar xzf "${fname}" -C /out/bin && \
   rm -f "${fname}" /out/bin/rootlesskit-docker-proxy && \
-  echo "- RootlessKit: ${ROOTLESSKIT_VERSION}" >> /out/share/doc/nerdctl-full/README.md
+  echo "- RootlessKit: ${ROOTLESSKIT_VERSION}" >> /out/share/doc/mikodctl-full/README.md
 ARG GOMODJAIL_VERSION
 COPY --from=build-gomodjail /out/${TARGETARCH:-amd64}/* /out/bin/
-RUN echo "- gomodjail: ${GOMODJAIL_VERSION}" >> /out/share/doc/nerdctl-full/README.md
+RUN echo "- gomodjail: ${GOMODJAIL_VERSION}" >> /out/share/doc/mikodctl-full/README.md
 ARG CONTAINERIZED_SYSTEMD_VERSION
 RUN --mount=type=secret,id=github_token,env=GITHUB_TOKEN \
   http::helper github::file AkihiroSuda/containerized-systemd docker-entrypoint.sh "${CONTAINERIZED_SYSTEMD_VERSION}" > /docker-entrypoint.sh && \
   chmod +x /docker-entrypoint.sh
 
-RUN echo "" >> /out/share/doc/nerdctl-full/README.md && \
-  echo "## License" >> /out/share/doc/nerdctl-full/README.md && \
-  echo "- bin/fuse-overlayfs: [GNU GENERAL PUBLIC LICENSE, Version 2](https://github.com/containers/fuse-overlayfs/blob/${FUSE_OVERLAYFS_VERSION%%@*}/COPYING)" >> /out/share/doc/nerdctl-full/README.md && \
-  echo "- bin/{runc,bypass4netns,bypass4netnsd}: Apache License 2.0, statically linked with libseccomp ([LGPL 2.1](https://github.com/seccomp/libseccomp/blob/main/LICENSE), source code available at https://github.com/seccomp/libseccomp/)" >> /out/share/doc/nerdctl-full/README.md && \
-  echo "- bin/tini: [MIT License](https://github.com/krallin/tini/blob/${TINI_VERSION%%@*}/LICENSE)" >> /out/share/doc/nerdctl-full/README.md && \
-  echo "- Other files: [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)" >> /out/share/doc/nerdctl-full/README.md
+RUN echo "" >> /out/share/doc/mikodctl-full/README.md && \
+  echo "## License" >> /out/share/doc/mikodctl-full/README.md && \
+  echo "- bin/fuse-overlayfs: [GNU GENERAL PUBLIC LICENSE, Version 2](https://github.com/containers/fuse-overlayfs/blob/${FUSE_OVERLAYFS_VERSION%%@*}/COPYING)" >> /out/share/doc/mikodctl-full/README.md && \
+  echo "- bin/{runc,bypass4netns,bypass4netnsd}: Apache License 2.0, statically linked with libseccomp ([LGPL 2.1](https://github.com/seccomp/libseccomp/blob/main/LICENSE), source code available at https://github.com/seccomp/libseccomp/)" >> /out/share/doc/mikodctl-full/README.md && \
+  echo "- bin/tini: [MIT License](https://github.com/krallin/tini/blob/${TINI_VERSION%%@*}/LICENSE)" >> /out/share/doc/mikodctl-full/README.md && \
+  echo "- Other files: [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)" >> /out/share/doc/mikodctl-full/README.md
 
 FROM build-dependencies AS build-full
-COPY . /go/src/github.com/containerd/nerdctl
-RUN { echo "# nerdctl (full distribution)"; echo "- nerdctl: $(cd /go/src/github.com/containerd/nerdctl && git describe --tags)"; cat /out/share/doc/nerdctl-full/README.md; } > /out/share/doc/nerdctl-full/README.md.new; mv /out/share/doc/nerdctl-full/README.md.new /out/share/doc/nerdctl-full/README.md
-WORKDIR /go/src/github.com/containerd/nerdctl
+COPY . /go/src/github.com/containerd/mikodctl
+RUN { echo "# mikodctl (full distribution)"; echo "- mikodctl: $(cd /go/src/github.com/containerd/mikodctl && git describe --tags)"; cat /out/share/doc/mikodctl-full/README.md; } > /out/share/doc/mikodctl-full/README.md.new; mv /out/share/doc/mikodctl-full/README.md.new /out/share/doc/mikodctl-full/README.md
+WORKDIR /go/src/github.com/containerd/mikodctl
 RUN BINDIR=/out/bin make binaries install
 # FIXME: `gomodjail pack` depends on QEMU for non-native architecture
 # TODO: gomodjail should provide a plain shell script that utilizes `zip(1)` for packing the self-extract archive, without running `gomodjail pack`..
-RUN /out/bin/gomodjail pack --go-mod=/go/src/github.com/containerd/nerdctl/go.mod /out/bin/nerdctl && \
-  cp -a nerdctl.gomodjail /out/bin/
-COPY README.md /out/share/doc/nerdctl/
-COPY docs /out/share/doc/nerdctl/docs
+RUN /out/bin/gomodjail pack --go-mod=/go/src/github.com/containerd/mikodctl/go.mod /out/bin/mikodctl && \
+  cp -a mikodctl.gomodjail /out/bin/
+COPY README.md /out/share/doc/mikodctl/
+COPY docs /out/share/doc/mikodctl/docs
 RUN (cd /out && find ! -type d | sort | xargs sha256sum > /tmp/SHA256SUMS ) && \
-  mv /tmp/SHA256SUMS /out/share/doc/nerdctl-full/SHA256SUMS && \
+  mv /tmp/SHA256SUMS /out/share/doc/mikodctl-full/SHA256SUMS && \
   chown -R 0:0 /out
 
 FROM scratch AS out-full
@@ -284,14 +284,14 @@ COPY --from=out-full / /usr/local/
 RUN perl -pi -e 's/multi-user.target/docker-entrypoint.target/g' /usr/local/lib/systemd/system/*.service && \
   systemctl enable containerd buildkit stargz-snapshotter && \
   mkdir -p /etc/bash_completion.d && \
-  nerdctl completion bash >/etc/bash_completion.d/nerdctl && \
+  mikodctl completion bash >/etc/bash_completion.d/mikodctl && \
   mkdir -p -m 0755 /etc/cni
 COPY ./Dockerfile.d/etc_containerd_config.toml /etc/containerd/config.toml
 COPY ./Dockerfile.d/etc_buildkit_buildkitd.toml /etc/buildkit/buildkitd.toml
 VOLUME /var/lib/containerd
 VOLUME /var/lib/buildkit
 VOLUME /var/lib/containerd-stargz-grpc
-VOLUME /var/lib/nerdctl
+VOLUME /var/lib/mikodctl
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["bash", "--login", "-i"]
 
@@ -317,8 +317,8 @@ ARG TARGETARCH
 ENV PATH=/usr/local/go/bin:$PATH
 ARG GOTESTSUM_VERSION
 RUN GOBIN=/usr/local/bin go install gotest.tools/gotestsum@${GOTESTSUM_VERSION}
-COPY . /go/src/github.com/containerd/nerdctl
-WORKDIR /go/src/github.com/containerd/nerdctl
+COPY . /go/src/github.com/containerd/mikodctl
+WORKDIR /go/src/github.com/containerd/mikodctl
 VOLUME /tmp
 ENV CGO_ENABLED=0
 # copy cosign binary for integration test
@@ -335,13 +335,13 @@ RUN fname="soci-snapshotter-${SOCI_SNAPSHOTTER_VERSION}-${TARGETOS:-linux}-${TAR
 COPY --from=build-kubo /out/${TARGETARCH:-amd64}/* /usr/local/bin/
 COPY ./Dockerfile.d/test-integration-etc_containerd-stargz-grpc_config.toml /etc/containerd-stargz-grpc/config.toml
 COPY ./Dockerfile.d/test-integration-ipfs-offline.service /usr/local/lib/systemd/system/
-COPY ./Dockerfile.d/test-integration-buildkit-nerdctl-test.service /usr/local/lib/systemd/system/
+COPY ./Dockerfile.d/test-integration-buildkit-mikodctl-test.service /usr/local/lib/systemd/system/
 COPY ./Dockerfile.d/test-integration-soci-snapshotter.service /usr/local/lib/systemd/system/
 RUN cp /usr/local/bin/tini /usr/local/bin/tini-custom
 # using test integration containerd config
 COPY ./Dockerfile.d/test-integration-etc_containerd_config.toml /etc/containerd/config.toml
 # install ipfs service. avoid using 5001(api)/8080(gateway) which are reserved by tests.
-RUN systemctl enable test-integration-ipfs-offline test-integration-buildkit-nerdctl-test test-integration-soci-snapshotter && \
+RUN systemctl enable test-integration-ipfs-offline test-integration-buildkit-mikodctl-test test-integration-soci-snapshotter && \
   ipfs init && \
   ipfs config Addresses.API "/ip4/127.0.0.1/tcp/5888" && \
   ipfs config Addresses.Gateway "/ip4/127.0.0.1/tcp/5889"

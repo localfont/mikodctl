@@ -18,12 +18,12 @@
 package annotations
 
 const (
-	// Prefix is the common prefix of nerdctl annotations
-	Prefix = "nerdctl/"
+	// Prefix is the common prefix of mikodctl annotations
+	Prefix = "mikodctl/"
 
 	// Bypass4netns is the flag for acceleration with bypass4netns
 	// Boolean value which can be parsed with strconv.ParseBool() is required.
-	// (like "nerdctl/bypass4netns=true" or "nerdctl/bypass4netns=false")
+	// (like "mikodctl/bypass4netns=true" or "mikodctl/bypass4netns=false")
 	Bypass4netns = Prefix + "bypass4netns"
 
 	// Bypass4netnsIgnoreSubnets is a JSON of []string that is appended to

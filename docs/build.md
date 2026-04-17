@@ -1,6 +1,6 @@
-# Setting up `nerdctl build` with BuildKit
+# Setting up `mikodctl build` with BuildKit
 
-`nerdctl build` (and `nerdctl compose build`) relies on [BuildKit](https://github.com/moby/buildkit).
+`mikodctl build` (and `mikodctl compose build`) relies on [BuildKit](https://github.com/moby/buildkit).
 To use it, you need to set up BuildKit.
 
 BuildKit has 2 types of backends.
@@ -11,8 +11,8 @@ BuildKit has 2 types of backends.
 You need to set up BuildKit with either of the above workers.
 
 Note that OCI worker cannot access base images (`FROM` images in Dockerfiles) managed by containerd.
-Thus you cannot let `nerdctl build` use containerd-managed images as the base image.
-They include images previously built using `nerdctl build`.
+Thus you cannot let `mikodctl build` use containerd-managed images as the base image.
+They include images previously built using `mikodctl build`.
 
 For example, the following build `bar` fails with OCI worker because it tries to use the previously built and containerd-managed image `foo`.
 
@@ -21,12 +21,12 @@ $ mkdir -p /tmp/ctx && cat <<EOF > /tmp/ctx/Dockerfile
 FROM ghcr.io/stargz-containers/ubuntu:20.04-org
 RUN echo hello
 EOF
-$ nerdctl build -t foo /tmp/ctx
+$ mikodctl build -t foo /tmp/ctx
 $ cat <<EOF > /tmp/ctx/Dockerfile
 FROM foo
 RUN echo bar
 EOF
-$ nerdctl build -t bar /tmp/ctx
+$ mikodctl build -t bar /tmp/ctx
 ```
 
 This limitation can be avoided using containerd worker as mentioned later.
@@ -35,7 +35,7 @@ This limitation can be avoided using containerd worker as mentioned later.
 
 ### Rootless
 
-| :zap: Requirement | nerdctl >= 0.18, BuildKit >= 0.10 |
+| :zap: Requirement | mikodctl >= 0.18, BuildKit >= 0.10 |
 |-------------------|-----------------------------------|
 
 ```
@@ -81,7 +81,7 @@ $ containerd-rootless-setuptool.sh install-buildkit
 ```
 
 As mentioned in the above, BuildKit with this configuration cannot use images managed by containerd.
-They include images previously built with `nerdctl build`.
+They include images previously built with `mikodctl build`.
 
 BuildKit will expose the socket at `$XDG_RUNTIME_DIR/buildkit/buildkitd.sock`.
 
@@ -91,13 +91,13 @@ BuildKit will expose the socket at `$XDG_RUNTIME_DIR/buildkit/buildkitd.sock`.
 $ sudo systemctl enable --now buildkit
 ```
 
-## Which BuildKit socket will nerdctl use?
+## Which BuildKit socket will mikodctl use?
 
-You can specify BuildKit address for `nerdctl build` using `--buildkit-host` flag or `BUILDKIT_HOST` envvar.
-When BuildKit address isn't specified, nerdctl tries some default BuildKit addresses the following order and uses the first available one.
+You can specify BuildKit address for `mikodctl build` using `--buildkit-host` flag or `BUILDKIT_HOST` envvar.
+When BuildKit address isn't specified, mikodctl tries some default BuildKit addresses the following order and uses the first available one.
 
 - `<runtime directory>/buildkit-<current namespace>/buildkitd.sock`
 - `<runtime directory>/buildkit-default/buildkitd.sock`
 - `<runtime directory>/buildkit/buildkitd.sock`
 
-For example, if you run rootless nerdctl with `test` containerd namespace, it tries to use `$XDG_RUNTIME_DIR/buildkit-test/buildkitd.sock` by default then try to fall back to `$XDG_RUNTIME_DIR/buildkit-default/buildkitd.sock` and `$XDG_RUNTIME_DIR/buildkit/buildkitd.sock`
+For example, if you run rootless mikodctl with `test` containerd namespace, it tries to use `$XDG_RUNTIME_DIR/buildkit-test/buildkitd.sock` by default then try to fall back to `$XDG_RUNTIME_DIR/buildkit-default/buildkitd.sock` and `$XDG_RUNTIME_DIR/buildkit/buildkitd.sock`

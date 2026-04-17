@@ -21,7 +21,7 @@
 ##########################
 # Configuration
 ##########################
-PACKAGE := "github.com/containerd/nerdctl/v2"
+PACKAGE := "github.com/containerd/mikodctl/v2"
 
 DOCKER ?= docker
 GO ?= go
@@ -37,7 +37,7 @@ BINDIR  ?= $(PREFIX)/bin
 DATADIR ?= $(PREFIX)/share
 DOCDIR  ?= $(DATADIR)/doc
 
-BINARY ?= "nerdctl"
+BINARY ?= "mikodctl"
 MAKEFILE_DIR := $(patsubst %/,%,$(dir $(abspath $(lastword $(MAKEFILE_LIST)))))
 VERSION ?= $(shell git -C $(MAKEFILE_DIR) describe --match 'v[0-9]*' --dirty='.m' --always --tags 2>/dev/null || echo no_git_information)
 VERSION_TRIMMED := $(VERSION:v%=%)
@@ -96,7 +96,7 @@ help:
 	@echo " * 'lint' - Run linters against codebase."
 	@echo " * 'fix' - Automatically fixes imports, modules, and simple formatting."
 	@echo " * 'test' - Run basic unit testing."
-	@echo " * 'binaries' - Build nerdctl."
+	@echo " * 'binaries' - Build mikodctl."
 	@echo " * 'install' - Install binaries to system locations."
 	@echo " * 'uninstall' - Remove installed binaries and documentation."
 	@echo " * 'clean' - Clean artifacts."
@@ -108,7 +108,7 @@ binaries: $(CURDIR)/_output/$(BINARY)$(BIN_EXT)
 
 $(CURDIR)/_output/$(BINARY)$(BIN_EXT):
 	$(call title, $@: $(GOOS)/$(GOARCH))
-	$(GO_BUILD) $(GO_BUILD_FLAGS) $(VERBOSE_FLAG) -o $(CURDIR)/_output/$(BINARY)$(BIN_EXT) ./cmd/nerdctl
+	$(GO_BUILD) $(GO_BUILD_FLAGS) $(VERBOSE_FLAG) -o $(CURDIR)/_output/$(BINARY)$(BIN_EXT) ./cmd/mikodctl
 	$(call footer, $@)
 
 install:
@@ -116,7 +116,7 @@ install:
 	install -D -m 755 $(CURDIR)/_output/$(BINARY) $(DESTDIR)$(BINDIR)/$(BINARY)
 	install -D -m 755 $(MAKEFILE_DIR)/extras/rootless/containerd-rootless.sh $(DESTDIR)$(BINDIR)/containerd-rootless.sh
 	install -D -m 755 $(MAKEFILE_DIR)/extras/rootless/containerd-rootless-setuptool.sh $(DESTDIR)$(BINDIR)/containerd-rootless-setuptool.sh
-	install -D -m 644 -t $(DESTDIR)$(DOCDIR)/nerdctl $(MAKEFILE_DIR)/docs/*.md
+	install -D -m 644 -t $(DESTDIR)$(DOCDIR)/mikodctl $(MAKEFILE_DIR)/docs/*.md
 	$(call footer, $@)
 
 uninstall:
@@ -124,7 +124,7 @@ uninstall:
 	rm -f $(DESTDIR)$(BINDIR)/$(BINARY)
 	rm -f $(DESTDIR)$(BINDIR)/containerd-rootless.sh
 	rm -f $(DESTDIR)$(BINDIR)/containerd-rootless-setuptool.sh
-	rm -rf $(DESTDIR)$(DOCDIR)/nerdctl
+	rm -rf $(DESTDIR)$(DOCDIR)/mikodctl
 	$(call footer, $@)
 
 clean:
@@ -267,46 +267,46 @@ TAR_OWNER0_FLAGS=--owner=0 --group=0
 TAR_FLATTEN_FLAGS=--transform 's/.*\///g'
 
 define make_artifact_full_linux
-	$(DOCKER) build --secret id=github_token,env=GITHUB_TOKEN --output type=tar,dest=$(CURDIR)/_output/nerdctl-full-$(VERSION_TRIMMED)-linux-$(1).tar --target out-full --platform $(1) --build-arg GO_VERSION -f $(MAKEFILE_DIR)/Dockerfile $(MAKEFILE_DIR)
-	gzip -9 $(CURDIR)/_output/nerdctl-full-$(VERSION_TRIMMED)-linux-$(1).tar
+	$(DOCKER) build --secret id=github_token,env=GITHUB_TOKEN --output type=tar,dest=$(CURDIR)/_output/mikodctl-full-$(VERSION_TRIMMED)-linux-$(1).tar --target out-full --platform $(1) --build-arg GO_VERSION -f $(MAKEFILE_DIR)/Dockerfile $(MAKEFILE_DIR)
+	gzip -9 $(CURDIR)/_output/mikodctl-full-$(VERSION_TRIMMED)-linux-$(1).tar
 endef
 
 artifacts: clean
 	$(call title, $@)
 	GOOS=linux GOARCH=amd64       make -C $(CURDIR) -f $(MAKEFILE_DIR)/Makefile binaries
-	tar $(TAR_OWNER0_FLAGS) $(TAR_FLATTEN_FLAGS) -czvf $(CURDIR)/_output/nerdctl-$(VERSION_TRIMMED)-linux-amd64.tar.gz   $(CURDIR)/_output/nerdctl $(MAKEFILE_DIR)/extras/rootless/*
+	tar $(TAR_OWNER0_FLAGS) $(TAR_FLATTEN_FLAGS) -czvf $(CURDIR)/_output/mikodctl-$(VERSION_TRIMMED)-linux-amd64.tar.gz   $(CURDIR)/_output/mikodctl $(MAKEFILE_DIR)/extras/rootless/*
 
 	GOOS=linux GOARCH=arm64       make -C $(CURDIR) -f $(MAKEFILE_DIR)/Makefile binaries
-	tar $(TAR_OWNER0_FLAGS) $(TAR_FLATTEN_FLAGS) -czvf $(CURDIR)/_output/nerdctl-$(VERSION_TRIMMED)-linux-arm64.tar.gz   $(CURDIR)/_output/nerdctl $(MAKEFILE_DIR)/extras/rootless/*
+	tar $(TAR_OWNER0_FLAGS) $(TAR_FLATTEN_FLAGS) -czvf $(CURDIR)/_output/mikodctl-$(VERSION_TRIMMED)-linux-arm64.tar.gz   $(CURDIR)/_output/mikodctl $(MAKEFILE_DIR)/extras/rootless/*
 
 	GOOS=linux GOARCH=arm GOARM=7 make -C $(CURDIR) -f $(MAKEFILE_DIR)/Makefile binaries
-	tar $(TAR_OWNER0_FLAGS) $(TAR_FLATTEN_FLAGS) -czvf $(CURDIR)/_output/nerdctl-$(VERSION_TRIMMED)-linux-arm-v7.tar.gz  $(CURDIR)/_output/nerdctl $(MAKEFILE_DIR)/extras/rootless/*
+	tar $(TAR_OWNER0_FLAGS) $(TAR_FLATTEN_FLAGS) -czvf $(CURDIR)/_output/mikodctl-$(VERSION_TRIMMED)-linux-arm-v7.tar.gz  $(CURDIR)/_output/mikodctl $(MAKEFILE_DIR)/extras/rootless/*
 
 	GOOS=linux GOARCH=loong64     make -C $(CURDIR) -f $(MAKEFILE_DIR)/Makefile binaries
-	tar $(TAR_OWNER0_FLAGS) $(TAR_FLATTEN_FLAGS) -czvf $(CURDIR)/_output/nerdctl-$(VERSION_TRIMMED)-linux-loong64.tar.gz   $(CURDIR)/_output/nerdctl $(MAKEFILE_DIR)/extras/rootless/*
+	tar $(TAR_OWNER0_FLAGS) $(TAR_FLATTEN_FLAGS) -czvf $(CURDIR)/_output/mikodctl-$(VERSION_TRIMMED)-linux-loong64.tar.gz   $(CURDIR)/_output/mikodctl $(MAKEFILE_DIR)/extras/rootless/*
 
 	GOOS=linux GOARCH=ppc64le     make -C $(CURDIR) -f $(MAKEFILE_DIR)/Makefile binaries
-	tar $(TAR_OWNER0_FLAGS) $(TAR_FLATTEN_FLAGS) -czvf $(CURDIR)/_output/nerdctl-$(VERSION_TRIMMED)-linux-ppc64le.tar.gz $(CURDIR)/_output/nerdctl $(MAKEFILE_DIR)/extras/rootless/*
+	tar $(TAR_OWNER0_FLAGS) $(TAR_FLATTEN_FLAGS) -czvf $(CURDIR)/_output/mikodctl-$(VERSION_TRIMMED)-linux-ppc64le.tar.gz $(CURDIR)/_output/mikodctl $(MAKEFILE_DIR)/extras/rootless/*
 
 	GOOS=linux GOARCH=riscv64     make -C $(CURDIR) -f $(MAKEFILE_DIR)/Makefile binaries
-	tar $(TAR_OWNER0_FLAGS) $(TAR_FLATTEN_FLAGS) -czvf $(CURDIR)/_output/nerdctl-$(VERSION_TRIMMED)-linux-riscv64.tar.gz $(CURDIR)/_output/nerdctl $(MAKEFILE_DIR)/extras/rootless/*
+	tar $(TAR_OWNER0_FLAGS) $(TAR_FLATTEN_FLAGS) -czvf $(CURDIR)/_output/mikodctl-$(VERSION_TRIMMED)-linux-riscv64.tar.gz $(CURDIR)/_output/mikodctl $(MAKEFILE_DIR)/extras/rootless/*
 
 	GOOS=linux GOARCH=s390x       make -C $(CURDIR) -f $(MAKEFILE_DIR)/Makefile binaries
-	tar $(TAR_OWNER0_FLAGS) $(TAR_FLATTEN_FLAGS) -czvf $(CURDIR)/_output/nerdctl-$(VERSION_TRIMMED)-linux-s390x.tar.gz   $(CURDIR)/_output/nerdctl $(MAKEFILE_DIR)/extras/rootless/*
+	tar $(TAR_OWNER0_FLAGS) $(TAR_FLATTEN_FLAGS) -czvf $(CURDIR)/_output/mikodctl-$(VERSION_TRIMMED)-linux-s390x.tar.gz   $(CURDIR)/_output/mikodctl $(MAKEFILE_DIR)/extras/rootless/*
 
 	GOOS=windows GOARCH=amd64     make -C $(CURDIR) -f $(MAKEFILE_DIR)/Makefile binaries
-	tar $(TAR_OWNER0_FLAGS) $(TAR_FLATTEN_FLAGS) -czvf $(CURDIR)/_output/nerdctl-$(VERSION_TRIMMED)-windows-amd64.tar.gz $(CURDIR)/_output/nerdctl.exe
+	tar $(TAR_OWNER0_FLAGS) $(TAR_FLATTEN_FLAGS) -czvf $(CURDIR)/_output/mikodctl-$(VERSION_TRIMMED)-windows-amd64.tar.gz $(CURDIR)/_output/mikodctl.exe
 
 	GOOS=freebsd GOARCH=amd64     make -C $(CURDIR) -f $(MAKEFILE_DIR)/Makefile binaries
-	tar $(TAR_OWNER0_FLAGS) $(TAR_FLATTEN_FLAGS) -czvf $(CURDIR)/_output/nerdctl-$(VERSION_TRIMMED)-freebsd-amd64.tar.gz $(CURDIR)/_output/nerdctl
+	tar $(TAR_OWNER0_FLAGS) $(TAR_FLATTEN_FLAGS) -czvf $(CURDIR)/_output/mikodctl-$(VERSION_TRIMMED)-freebsd-amd64.tar.gz $(CURDIR)/_output/mikodctl
 
-	rm -f $(CURDIR)/_output/nerdctl $(CURDIR)/_output/nerdctl.exe
+	rm -f $(CURDIR)/_output/mikodctl $(CURDIR)/_output/mikodctl.exe
 
 	$(call make_artifact_full_linux,amd64)
 	$(call make_artifact_full_linux,arm64)
 
 	$(GO) -C $(MAKEFILE_DIR) mod vendor
-	tar $(TAR_OWNER0_FLAGS) -czf $(CURDIR)/_output/nerdctl-$(VERSION_TRIMMED)-go-mod-vendor.tar.gz $(MAKEFILE_DIR)/go.mod $(MAKEFILE_DIR)/go.sum $(MAKEFILE_DIR)/vendor
+	tar $(TAR_OWNER0_FLAGS) -czf $(CURDIR)/_output/mikodctl-$(VERSION_TRIMMED)-go-mod-vendor.tar.gz $(MAKEFILE_DIR)/go.mod $(MAKEFILE_DIR)/go.sum $(MAKEFILE_DIR)/vendor
 	$(call footer, $@)
 
 .PHONY: \

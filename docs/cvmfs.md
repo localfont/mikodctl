@@ -36,37 +36,37 @@ repository = "myrepo.mydomain"
 $ systemctl start containerd cvmfs-snapshotter
 ```
 
-## Enable CernVM-FS Snapshotter for `nerdctl run` and `nerdctl pull`
+## Enable CernVM-FS Snapshotter for `mikodctl run` and `mikodctl pull`
 
-| :zap: Requirement | nerdctl >= 1.6.3 |
+| :zap: Requirement | mikodctl >= 1.6.3 |
 | ----------------- | ---------------- |
 
-- Run `nerdctl` with `--snapshotter cvmfs-snapshotter` as in the example below:
+- Run `mikodctl` with `--snapshotter cvmfs-snapshotter` as in the example below:
 ```console
-$ nerdctl run -it --rm --snapshotter cvmfs-snapshotter clelange/cms-higgs-4l-full:latest
+$ mikodctl run -it --rm --snapshotter cvmfs-snapshotter clelange/cms-higgs-4l-full:latest
 ```
 
 - You can also only pull the image with CernVM-FS Snapshotter without running the container:
 ```console
-$ nerdctl pull --snapshotter cvmfs-snapshotter clelange/cms-higgs-4l-full:latest
+$ mikodctl pull --snapshotter cvmfs-snapshotter clelange/cms-higgs-4l-full:latest
 ```
 
 The speedup for pulling this 9 GB (4.3 GB compressed) image is shown below:
 - #### with the snapshotter:
 ```console
-$ nerdctl --snapshotter cvmfs-snapshotter pull clelange/cms-higgs-4l-full:latest
+$ mikodctl --snapshotter cvmfs-snapshotter pull clelange/cms-higgs-4l-full:latest
 docker.io/clelange/cms-higgs-4l-full:latest:                                      resolved       |++++++++++++++++++++++++++++++++++++++|
 manifest-sha256:b8acbe80629dd28d213c03cf1ffd3d46d39e573f54215a281fabce7494b3d546: done           |++++++++++++++++++++++++++++++++++++++|
 config-sha256:89ef54b6c4fbbedeeeb29b1df2b9916b6d157c87cf1878ea882bff86a3093b5c:   done           |++++++++++++++++++++++++++++++++++++++|
 elapsed: 4.7 s                                                                    total:  19.8 K (4.2 KiB/s)
 
-$ nerdctl images
+$ mikodctl images
 REPOSITORY                    TAG       IMAGE ID        CREATED           PLATFORM       SIZE     BLOB SIZE
 clelange/cms-higgs-4l-full    latest    b8acbe80629d    20 seconds ago    linux/amd64    0.0 B    4.3 GiB
 ```
 - #### without the snapshotter:
 ```console
-$ nerdctl pull clelange/cms-higgs-4l-full:latest
+$ mikodctl pull clelange/cms-higgs-4l-full:latest
 docker.io/clelange/cms-higgs-4l-full:latest:                                      resolved       |++++++++++++++++++++++++++++++++++++++|
 manifest-sha256:b8acbe80629dd28d213c03cf1ffd3d46d39e573f54215a281fabce7494b3d546: exists         |++++++++++++++++++++++++++++++++++++++|
 config-sha256:89ef54b6c4fbbedeeeb29b1df2b9916b6d157c87cf1878ea882bff86a3093b5c:   exists         |++++++++++++++++++++++++++++++++++++++|
@@ -83,7 +83,7 @@ layer-sha256:a8850244786303e508b94bb31c8569310765e678c9c73bf1199310729209b803:  
 layer-sha256:32cdf5fc12485ac061347eb8b5c3b4a28505ce8564a7f3f83ac4241f03911176:    done           |++++++++++++++++++++++++++++++++++++++|
 elapsed: 181.8s                                                                   total:  4.3 Gi (24.2 MiB/s)
 
-$ nerdctl images
+$ mikodctl images
 REPOSITORY                    TAG       IMAGE ID        CREATED          PLATFORM       SIZE       BLOB SIZE
 clelange/cms-higgs-4l-full    latest    b8acbe80629d    4 minutes ago    linux/amd64    9.0 GiB    4.3 GiB
 ```

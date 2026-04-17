@@ -26,14 +26,14 @@ import (
 
 	"gotest.tools/v3/assert"
 
-	"github.com/containerd/nerdctl/mod/tigron/expect"
-	"github.com/containerd/nerdctl/mod/tigron/require"
-	"github.com/containerd/nerdctl/mod/tigron/test"
-	"github.com/containerd/nerdctl/mod/tigron/tig"
+	"github.com/localfont/mikodctl/mod/tigron/expect"
+	"github.com/localfont/mikodctl/mod/tigron/require"
+	"github.com/localfont/mikodctl/mod/tigron/test"
+	"github.com/localfont/mikodctl/mod/tigron/tig"
 
-	"github.com/containerd/nerdctl/v2/pkg/inspecttypes/dockercompat"
-	"github.com/containerd/nerdctl/v2/pkg/inspecttypes/native"
-	"github.com/containerd/nerdctl/v2/pkg/testutil"
+	"github.com/localfont/mikodctl/v2/pkg/inspecttypes/dockercompat"
+	"github.com/localfont/mikodctl/v2/pkg/inspecttypes/native"
+	"github.com/localfont/mikodctl/v2/pkg/testutil"
 )
 
 const (
@@ -208,7 +208,7 @@ func GenerateJWEKeyPair(data test.Data, helpers test.Helpers) (string, string) {
 	pri := data.Temp().Path(path, "mykey.pem")
 	pub := data.Temp().Path(path, "mypubkey.pem")
 
-	// Exec openssl commands to ensure that nerdctl is compatible with the output of openssl commands.
+	// Exec openssl commands to ensure that mikodctl is compatible with the output of openssl commands.
 	// Do NOT refactor this function to use "crypto/rsa" stdlib.
 	helpers.Custom("openssl", "genrsa", "-out", pri).Run(&test.Expected{})
 	helpers.Custom("openssl", "rsa", "-in", pri, "-pubout", "-out", pub).Run(&test.Expected{})

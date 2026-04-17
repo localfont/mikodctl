@@ -33,11 +33,11 @@ import (
 	"github.com/containerd/containerd/v2/core/snapshots"
 	"github.com/containerd/containerd/v2/pkg/oci"
 
-	"github.com/containerd/nerdctl/v2/pkg/api/types"
-	"github.com/containerd/nerdctl/v2/pkg/containerutil"
-	"github.com/containerd/nerdctl/v2/pkg/idutil/containerwalker"
-	"github.com/containerd/nerdctl/v2/pkg/imgutil"
-	"github.com/containerd/nerdctl/v2/pkg/netutil/nettype"
+	"github.com/localfont/mikodctl/v2/pkg/api/types"
+	"github.com/localfont/mikodctl/v2/pkg/containerutil"
+	"github.com/localfont/mikodctl/v2/pkg/idutil/containerwalker"
+	"github.com/localfont/mikodctl/v2/pkg/imgutil"
+	"github.com/localfont/mikodctl/v2/pkg/netutil/nettype"
 )
 
 // IDMap contains a single entry for user namespace range remapping. An array

@@ -22,8 +22,8 @@ import (
 
 	"github.com/containerd/log"
 
-	"github.com/containerd/nerdctl/v2/pkg/labels"
-	"github.com/containerd/nerdctl/v2/pkg/reflectutil"
+	"github.com/localfont/mikodctl/v2/pkg/labels"
+	"github.com/localfont/mikodctl/v2/pkg/reflectutil"
 )
 
 func (c *Composer) upNetwork(ctx context.Context, shortName string) error {
@@ -89,7 +89,7 @@ func (c *Composer) upNetwork(ctx context.Context, shortName string) error {
 			log.G(ctx).Debugf("Creating network args: %s", createArgs)
 		}
 
-		if err := c.runNerdctlCmd(ctx, append([]string{"network", "create"}, createArgs...)...); err != nil {
+		if err := c.runMikodctlCmd(ctx, append([]string{"network", "create"}, createArgs...)...); err != nil {
 			return err
 		}
 	}

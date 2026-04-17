@@ -25,9 +25,9 @@ import (
 	"github.com/containerd/log"
 	"github.com/containerd/stargz-snapshotter/fs/source"
 
-	"github.com/containerd/nerdctl/v2/pkg/api/types"
-	"github.com/containerd/nerdctl/v2/pkg/imgutil/pull"
-	"github.com/containerd/nerdctl/v2/pkg/snapshotterutil"
+	"github.com/localfont/mikodctl/v2/pkg/api/types"
+	"github.com/localfont/mikodctl/v2/pkg/imgutil/pull"
+	"github.com/localfont/mikodctl/v2/pkg/snapshotterutil"
 )
 
 const (
@@ -41,7 +41,7 @@ const (
 	prefetchSize = 10 * 1024 * 1024
 )
 
-// remote snapshotters explicitly handled by nerdctl
+// remote snapshotters explicitly handled by mikodctl
 var builtinRemoteSnapshotterOpts = map[string]snapshotterOpts{
 	snapshotterNameOverlaybd: &remoteSnapshotterOpts{snapshotter: "overlaybd"},
 	snapshotterNameStargz:    &remoteSnapshotterOpts{snapshotter: "stargz", extraLabels: stargzExtraLabels},

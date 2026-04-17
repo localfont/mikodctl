@@ -25,9 +25,9 @@ import (
 	"github.com/compose-spec/compose-go/v2/loader"
 	compose "github.com/compose-spec/compose-go/v2/types"
 
-	"github.com/containerd/nerdctl/mod/tigron/tig"
+	"github.com/localfont/mikodctl/mod/tigron/tig"
 
-	"github.com/containerd/nerdctl/v2/pkg/internal/filesystem"
+	"github.com/localfont/mikodctl/v2/pkg/internal/filesystem"
 )
 
 type ComposeDir struct {
@@ -60,7 +60,7 @@ func (cd *ComposeDir) CleanUp() {
 }
 
 func NewComposeDir(t tig.T, dockerComposeYAML string) *ComposeDir {
-	tmpDir, err := os.MkdirTemp("", "nerdctl-compose-test")
+	tmpDir, err := os.MkdirTemp("", "mikodctl-compose-test")
 	if err != nil {
 		t.Log(fmt.Sprintf("Failed to create temp dir: %v", err))
 		t.FailNow()

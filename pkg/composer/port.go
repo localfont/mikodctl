@@ -21,8 +21,8 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/containerd/nerdctl/v2/pkg/containerutil"
-	"github.com/containerd/nerdctl/v2/pkg/portutil"
+	"github.com/localfont/mikodctl/v2/pkg/containerutil"
+	"github.com/localfont/mikodctl/v2/pkg/portutil"
 )
 
 // PortOptions has args for getting the public port of a given private port/protocol

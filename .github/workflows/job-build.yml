@@ -1,4 +1,4 @@
-# This job just builds nerdctl for the golang versions we support (as a smoke test)
+# This job just builds mikodctl for the golang versions we support (as a smoke test)
 name: job-build
 
 on:

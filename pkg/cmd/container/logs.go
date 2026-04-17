@@ -30,13 +30,13 @@ import (
 	"github.com/containerd/errdefs"
 	"github.com/containerd/log"
 
-	"github.com/containerd/nerdctl/v2/pkg/api/types"
-	"github.com/containerd/nerdctl/v2/pkg/api/types/cri"
-	"github.com/containerd/nerdctl/v2/pkg/clientutil"
-	"github.com/containerd/nerdctl/v2/pkg/idutil/containerwalker"
-	"github.com/containerd/nerdctl/v2/pkg/labels"
-	"github.com/containerd/nerdctl/v2/pkg/labels/k8slabels"
-	"github.com/containerd/nerdctl/v2/pkg/logging"
+	"github.com/localfont/mikodctl/v2/pkg/api/types"
+	"github.com/localfont/mikodctl/v2/pkg/api/types/cri"
+	"github.com/localfont/mikodctl/v2/pkg/clientutil"
+	"github.com/localfont/mikodctl/v2/pkg/idutil/containerwalker"
+	"github.com/localfont/mikodctl/v2/pkg/labels"
+	"github.com/localfont/mikodctl/v2/pkg/labels/k8slabels"
+	"github.com/localfont/mikodctl/v2/pkg/logging"
 )
 
 func Logs(ctx context.Context, client *containerd.Client, container string, options types.ContainerLogsOptions) error {
@@ -47,7 +47,7 @@ func Logs(ctx context.Context, client *containerd.Client, container string, opti
 
 	switch options.GOptions.Namespace {
 	case "moby":
-		log.G(ctx).Warn("Currently, `nerdctl logs` only supports containers created with `nerdctl run -d` or CRI")
+		log.G(ctx).Warn("Currently, `mikodctl logs` only supports containers created with `mikodctl run -d` or CRI")
 	}
 
 	stopChannel := make(chan os.Signal, 1)
@@ -107,7 +107,7 @@ func Logs(ctx context.Context, client *containerd.Client, container string, opti
 
 			var detailPrefix string
 			if options.Details {
-				if logConfigJSON, ok := l["nerdctl/log-config"]; ok {
+				if logConfigJSON, ok := l["mikodctl/log-config"]; ok {
 					type logConfig struct {
 						Opts map[string]string `json:"opts"`
 					}

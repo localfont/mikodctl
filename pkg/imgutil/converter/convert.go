@@ -30,9 +30,9 @@ import (
 // This here is to workaround the bug, by manually creating the image first,
 // then converting it in place (which avoid the problematic code-path).
 // See containerd upstream discussion https://github.com/containerd/containerd/pull/11628 and
-// nerdctl issues:
-// https://github.com/containerd/nerdctl/issues/3509#issuecomment-2398236766
-// https://github.com/containerd/nerdctl/issues/3513
+// mikodctl issues:
+// https://github.com/localfont/mikodctl/issues/3509#issuecomment-2398236766
+// https://github.com/localfont/mikodctl/issues/3513
 // Note this should be remove if/when containerd merges in a fix.
 
 func Convert(ctx context.Context, client converter.Client, dstRef, srcRef string, opts ...converter.Opt) (*images.Image, error) {

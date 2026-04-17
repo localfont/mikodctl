@@ -24,10 +24,10 @@ import (
 	containerd "github.com/containerd/containerd/v2/client"
 	"github.com/containerd/log"
 
-	"github.com/containerd/nerdctl/v2/pkg/composer/serviceparser"
-	"github.com/containerd/nerdctl/v2/pkg/formatter"
-	"github.com/containerd/nerdctl/v2/pkg/labels"
-	"github.com/containerd/nerdctl/v2/pkg/strutil"
+	"github.com/localfont/mikodctl/v2/pkg/composer/serviceparser"
+	"github.com/localfont/mikodctl/v2/pkg/formatter"
+	"github.com/localfont/mikodctl/v2/pkg/labels"
+	"github.com/localfont/mikodctl/v2/pkg/strutil"
 )
 
 // RemoveOptions stores all options when removing compose containers:
@@ -86,7 +86,7 @@ func (c *Composer) removeContainers(ctx context.Context, containers []containerd
 			}
 
 			log.G(ctx).Infof("Removing container %s", info.Labels[labels.Name])
-			if err := c.runNerdctlCmd(ctx, append(args, container.ID())...); err != nil {
+			if err := c.runMikodctlCmd(ctx, append(args, container.ID())...); err != nil {
 				log.G(ctx).Warn(err)
 			}
 		}()
@@ -105,7 +105,7 @@ func (c *Composer) removeContainersFromParsedServices(ctx context.Context, conta
 		go func() {
 			defer rmWG.Done()
 			log.G(ctx).Infof("Removing container %s", container.Name)
-			if err := c.runNerdctlCmd(ctx, "rm", "-f", id); err != nil {
+			if err := c.runMikodctlCmd(ctx, "rm", "-f", id); err != nil {
 				log.G(ctx).Warn(err)
 			}
 		}()

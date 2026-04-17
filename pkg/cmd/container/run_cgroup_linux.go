@@ -30,10 +30,10 @@ import (
 	"github.com/containerd/containerd/v2/pkg/oci"
 	"github.com/containerd/log"
 
-	"github.com/containerd/nerdctl/v2/pkg/api/types"
-	"github.com/containerd/nerdctl/v2/pkg/infoutil"
-	"github.com/containerd/nerdctl/v2/pkg/inspecttypes/dockercompat"
-	"github.com/containerd/nerdctl/v2/pkg/rootlessutil"
+	"github.com/localfont/mikodctl/v2/pkg/api/types"
+	"github.com/localfont/mikodctl/v2/pkg/infoutil"
+	"github.com/localfont/mikodctl/v2/pkg/inspecttypes/dockercompat"
+	"github.com/localfont/mikodctl/v2/pkg/rootlessutil"
 )
 
 type customMemoryOptions struct {
@@ -232,7 +232,7 @@ func generateCgroupPath(id, cgroupManager, cgroupParent string) (string, error) 
 		path         string
 		usingSystemd = cgroupManager == "systemd"
 		slice        = "system.slice"
-		scopePrefix  = ":nerdctl:"
+		scopePrefix  = ":mikodctl:"
 	)
 	if rootlessutil.IsRootlessChild() {
 		slice = "user.slice"
@@ -250,7 +250,7 @@ func generateCgroupPath(id, cgroupManager, cgroupParent string) (string, error) 
 
 	// If the user asked for a cgroup parent, we will use systemd,
 	// Docker uses the following:
-	// parent + prefix (in our case, nerdctl) + containerID.
+	// parent + prefix (in our case, mikodctl) + containerID.
 	//
 	// In the non systemd case, it's just /parent/containerID
 	if usingSystemd {

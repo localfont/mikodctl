@@ -25,7 +25,7 @@ import (
 
 	"github.com/containerd/log"
 
-	"github.com/containerd/nerdctl/v2/pkg/labels/k8slabels"
+	"github.com/localfont/mikodctl/v2/pkg/labels/k8slabels"
 )
 
 // Type alias for functions which write out logs to the provided stdout/stderr Writers.
@@ -64,7 +64,7 @@ type LogViewOptions struct {
 	ContainerID string
 	Namespace   string
 
-	// Absolute path to the nerdctl datastore's root.
+	// Absolute path to the mikodctl datastore's root.
 	DatastoreRootPath string
 
 	// LogPath specify the log path for container created via CRI
@@ -138,7 +138,7 @@ func InitContainerLogViewer(containerLabels map[string]string, lvopts LogViewOpt
 	}
 
 	if lcfg.Driver == "cri" && !experimental {
-		return nil, fmt.Errorf("the `cri` log viewer requires nerdctl to be running in experimental mode")
+		return nil, fmt.Errorf("the `cri` log viewer requires mikodctl to be running in experimental mode")
 	}
 
 	if lcfg.Driver == "none" {

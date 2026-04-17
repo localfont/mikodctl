@@ -39,12 +39,12 @@ import (
 
 	"github.com/containerd/log"
 
-	"github.com/containerd/nerdctl/v2/pkg/internal/filesystem"
-	"github.com/containerd/nerdctl/v2/pkg/rootlessutil"
+	"github.com/localfont/mikodctl/v2/pkg/internal/filesystem"
+	"github.com/localfont/mikodctl/v2/pkg/rootlessutil"
 )
 
 const (
-	// DefaultDockerfileName is the Default filename, read by nerdctl build
+	// DefaultDockerfileName is the Default filename, read by mikodctl build
 	DefaultDockerfileName string = "Dockerfile"
 	ContainerfileName     string = "Containerfile"
 

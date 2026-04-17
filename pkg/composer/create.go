@@ -28,9 +28,9 @@ import (
 
 	"github.com/containerd/log"
 
-	"github.com/containerd/nerdctl/v2/pkg/composer/serviceparser"
-	"github.com/containerd/nerdctl/v2/pkg/internal/filesystem"
-	"github.com/containerd/nerdctl/v2/pkg/labels"
+	"github.com/localfont/mikodctl/v2/pkg/composer/serviceparser"
+	"github.com/localfont/mikodctl/v2/pkg/internal/filesystem"
+	"github.com/localfont/mikodctl/v2/pkg/labels"
 )
 
 // FYI: https://github.com/docker/compose/blob/v2.14.1/pkg/api/api.go#L423
@@ -46,7 +46,7 @@ const (
 	RecreateDiverged = "diverged"
 )
 
-// CreateOptions stores all option input from `nerdctl compose create`
+// CreateOptions stores all option input from `mikodctl compose create`
 type CreateOptions struct {
 	Build         bool
 	NoBuild       bool
@@ -171,7 +171,7 @@ func (c *Composer) createServiceContainer(ctx context.Context, service *servicep
 		}
 
 		log.G(ctx).Debugf("Container %q already exists and force-created is enabled, deleting", container.Name)
-		delCmd := c.createNerdctlCmd(ctx, "rm", "-f", container.Name)
+		delCmd := c.createMikodctlCmd(ctx, "rm", "-f", container.Name)
 		if err = delCmd.Run(); err != nil {
 			return "", fmt.Errorf("could not delete container %q: %w", container.Name, err)
 		}
@@ -199,7 +199,7 @@ func (c *Composer) createServiceContainer(ctx context.Context, service *servicep
 		fmt.Sprintf("-l=%s=%s", labels.ComposeConfigHash, currentHash),
 	}, container.RunArgs...)
 
-	cmd := c.createNerdctlCmd(ctx, append([]string{"create"}, container.RunArgs...)...)
+	cmd := c.createMikodctlCmd(ctx, append([]string{"create"}, container.RunArgs...)...)
 	if c.DebugPrintFull {
 		log.G(ctx).Debugf("Running %v", cmd.Args)
 	}

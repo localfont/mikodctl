@@ -31,9 +31,9 @@ import (
 	"github.com/containerd/errdefs"
 	"github.com/containerd/log"
 
-	"github.com/containerd/nerdctl/v2/pkg/api/types"
-	"github.com/containerd/nerdctl/v2/pkg/errutil"
-	"github.com/containerd/nerdctl/v2/pkg/imgutil/dockerconfigresolver"
+	"github.com/localfont/mikodctl/v2/pkg/api/types"
+	"github.com/localfont/mikodctl/v2/pkg/errutil"
+	"github.com/localfont/mikodctl/v2/pkg/imgutil/dockerconfigresolver"
 )
 
 const unencryptedPasswordWarning = `WARNING: Your password will be stored unencrypted in %s.
@@ -94,7 +94,7 @@ func Login(ctx context.Context, options types.LoginCommandOptions, stdout io.Wri
 
 	// When the port is the https default (443), other clients cannot be expected to necessarily lookup the variants with port
 	// so save it both with and without port.
-	// This is the case for at least buildctl: https://github.com/containerd/nerdctl/issues/3748
+	// This is the case for at least buildctl: https://github.com/localfont/mikodctl/issues/3748
 	if registryURL.Port() == dockerconfigresolver.StandardHTTPSPort {
 		registryURL.Host = registryURL.Hostname()
 		err = credStore.Store(registryURL, credentials)

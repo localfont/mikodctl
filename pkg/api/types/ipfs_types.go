@@ -20,7 +20,7 @@ import (
 	"time"
 )
 
-// IPFSRegistryServeOptions specifies options for `nerdctl ipfs registry serve`.
+// IPFSRegistryServeOptions specifies options for `mikodctl ipfs registry serve`.
 type IPFSRegistryServeOptions struct {
 	// ListenRegistry address to listen
 	ListenRegistry string

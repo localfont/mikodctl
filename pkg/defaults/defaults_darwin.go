@@ -41,7 +41,7 @@ func CNINetConfPath() string {
 }
 
 func DataRoot() string {
-	return "/var/lib/nerdctl"
+	return "/var/lib/mikodctl"
 }
 
 func CgroupManager() string {
@@ -52,8 +52,8 @@ func CgroupnsMode() string {
 	return ""
 }
 
-func NerdctlTOML() string {
-	return "/etc/nerdctl/nerdctl.toml"
+func MikodctlTOML() string {
+	return "/etc/mikodctl/mikodctl.toml"
 }
 
 func HostsDirs() []string {

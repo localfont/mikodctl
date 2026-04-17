@@ -26,13 +26,13 @@ import (
 	"github.com/containerd/containerd/v2/pkg/oci"
 	"github.com/containerd/log"
 
-	"github.com/containerd/nerdctl/v2/pkg/api/types"
-	"github.com/containerd/nerdctl/v2/pkg/clientutil"
-	"github.com/containerd/nerdctl/v2/pkg/dnsutil"
-	"github.com/containerd/nerdctl/v2/pkg/dnsutil/hostsstore"
-	"github.com/containerd/nerdctl/v2/pkg/netutil"
-	"github.com/containerd/nerdctl/v2/pkg/resolvconf"
-	"github.com/containerd/nerdctl/v2/pkg/rootlessutil"
+	"github.com/localfont/mikodctl/v2/pkg/api/types"
+	"github.com/localfont/mikodctl/v2/pkg/clientutil"
+	"github.com/localfont/mikodctl/v2/pkg/dnsutil"
+	"github.com/localfont/mikodctl/v2/pkg/dnsutil/hostsstore"
+	"github.com/localfont/mikodctl/v2/pkg/netutil"
+	"github.com/localfont/mikodctl/v2/pkg/resolvconf"
+	"github.com/localfont/mikodctl/v2/pkg/rootlessutil"
 )
 
 type cniNetworkManagerPlatform struct {

@@ -19,7 +19,7 @@ package apparmor
 import (
 	"github.com/containerd/log"
 
-	"github.com/containerd/nerdctl/v2/pkg/apparmorutil"
+	"github.com/localfont/mikodctl/v2/pkg/apparmorutil"
 )
 
 func Unload(target string) error {

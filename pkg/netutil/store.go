@@ -24,7 +24,7 @@ import (
 
 	"github.com/containerd/errdefs"
 
-	"github.com/containerd/nerdctl/v2/pkg/internal/filesystem"
+	"github.com/localfont/mikodctl/v2/pkg/internal/filesystem"
 )
 
 // NOTE: libcni is not safe to use concurrently - or at least delegates concurrency management to the consumer.
@@ -48,7 +48,7 @@ func fsRemove(e *CNIEnv, net *NetworkConfig) error {
 		}
 		return net.clean()
 	}
-	return filesystem.WithLock(filepath.Join(e.NetconfPath, ".nerdctl.lock"), fn)
+	return filesystem.WithLock(filepath.Join(e.NetconfPath, ".mikodctl.lock"), fn)
 }
 
 func fsExists(e *CNIEnv, name string) (bool, error) {
@@ -62,7 +62,7 @@ func fsWrite(e *CNIEnv, net *NetworkConfig) error {
 	// Concurrent access may independently first figure out that a given network is missing, and while the lock
 	// here will prevent concurrent writes, one of the routines will fail.
 	// Consuming code MUST account for that scenario.
-	return filesystem.WithLock(filepath.Join(e.NetconfPath, ".nerdctl.lock"), func() error {
+	return filesystem.WithLock(filepath.Join(e.NetconfPath, ".mikodctl.lock"), func() error {
 		if _, err := os.Stat(filename); err == nil {
 			return errdefs.ErrAlreadyExists
 		}
@@ -73,7 +73,7 @@ func fsWrite(e *CNIEnv, net *NetworkConfig) error {
 func fsRead(e *CNIEnv) ([]*NetworkConfig, error) {
 	var nc []*NetworkConfig
 	var err error
-	err = filesystem.WithReadOnlyLock(filepath.Join(e.NetconfPath, ".nerdctl.lock"), func() error {
+	err = filesystem.WithReadOnlyLock(filepath.Join(e.NetconfPath, ".mikodctl.lock"), func() error {
 		namespaced := []string{}
 		var common []string
 		common, err = libcni.ConfFiles(e.NetconfPath, []string{".conf", ".conflist", ".json"})
@@ -94,7 +94,7 @@ func fsRead(e *CNIEnv) ([]*NetworkConfig, error) {
 
 func getConfigPathForNetworkName(e *CNIEnv, netName string) string {
 	if netName == DefaultNetworkName || e.Namespace == "" {
-		return filepath.Join(e.NetconfPath, "nerdctl-"+netName+".conflist")
+		return filepath.Join(e.NetconfPath, "mikodctl-"+netName+".conflist")
 	}
-	return filepath.Join(e.NetconfPath, e.Namespace, "nerdctl-"+netName+".conflist")
+	return filepath.Join(e.NetconfPath, e.Namespace, "mikodctl-"+netName+".conflist")
 }

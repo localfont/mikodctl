@@ -28,8 +28,8 @@ import (
 
 	"github.com/containerd/log"
 
-	"github.com/containerd/nerdctl/v2/pkg/composer/serviceparser"
-	"github.com/containerd/nerdctl/v2/pkg/idgen"
+	"github.com/localfont/mikodctl/v2/pkg/composer/serviceparser"
+	"github.com/localfont/mikodctl/v2/pkg/idgen"
 )
 
 type RunOptions struct {
@@ -264,8 +264,8 @@ func (c *Composer) runServices(ctx context.Context, parsedServices []*servicepar
 		return nil
 	}
 
-	// TODO: fix it when `nerdctl logs` supports `nerdctl run` without detach
-	// https://github.com/containerd/nerdctl/blob/v0.22.2/pkg/taskutil/taskutil.go#L55
+	// TODO: fix it when `mikodctl logs` supports `mikodctl run` without detach
+	// https://github.com/localfont/mikodctl/blob/v0.22.2/pkg/taskutil/taskutil.go#L55
 	if !ro.Interactive && !ro.Tty {
 		log.G(ctx).Info("Attaching to logs")
 		lo := LogsOptions{

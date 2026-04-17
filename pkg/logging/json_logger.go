@@ -33,10 +33,10 @@ import (
 	"github.com/containerd/containerd/v2/core/runtime/v2/logging"
 	"github.com/containerd/log"
 
-	"github.com/containerd/nerdctl/v2/pkg/internal/filesystem"
-	"github.com/containerd/nerdctl/v2/pkg/logging/jsonfile"
-	"github.com/containerd/nerdctl/v2/pkg/logging/tail"
-	"github.com/containerd/nerdctl/v2/pkg/strutil"
+	"github.com/localfont/mikodctl/v2/pkg/internal/filesystem"
+	"github.com/localfont/mikodctl/v2/pkg/logging/jsonfile"
+	"github.com/localfont/mikodctl/v2/pkg/logging/tail"
+	"github.com/localfont/mikodctl/v2/pkg/strutil"
 )
 
 var JSONDriverLogOpts = []string{
@@ -62,7 +62,7 @@ func JSONFileLogOptsValidate(logOptMap map[string]string) error {
 }
 
 func (jsonLogger *JSONLogger) Init(dataStore, ns, id string) error {
-	// Initialize the log file (https://github.com/containerd/nerdctl/issues/1071)
+	// Initialize the log file (https://github.com/localfont/mikodctl/issues/1071)
 	var jsonFilePath string
 	if logPath, ok := jsonLogger.Opts[LogPath]; ok {
 		jsonFilePath = logPath
@@ -136,7 +136,7 @@ func viewLogsJSONFile(lvopts LogViewOptions, stdout, stderr io.Writer, stopChann
 	logFilePath := jsonfile.Path(lvopts.DatastoreRootPath, lvopts.Namespace, lvopts.ContainerID)
 	if _, err := os.Stat(logFilePath); err != nil {
 		// FIXME: this is a workaround for the actual issue, not a real solution
-		// https://github.com/containerd/nerdctl/issues/3187
+		// https://github.com/localfont/mikodctl/issues/3187
 		if errors.Is(err, os.ErrNotExist) {
 			log.L.Warnf("Racing log file creation. Pausing briefly.")
 			time.Sleep(200 * time.Millisecond)
@@ -236,7 +236,7 @@ func viewLogsJSONFileDirect(lvopts LogViewOptions, jsonLogFilePath string, stdou
 					if err != nil {
 						if errors.Is(err, os.ErrNotExist) {
 							//If the user application outputs logs too quickly,
-							//There is a slight possibility that nerdctl has just rotated the log file,
+							//There is a slight possibility that mikodctl has just rotated the log file,
 							//try opening it once more.
 							time.Sleep(10 * time.Millisecond)
 						}

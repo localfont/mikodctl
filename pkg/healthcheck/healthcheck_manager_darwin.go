@@ -21,11 +21,11 @@ import (
 
 	containerd "github.com/containerd/containerd/v2/client"
 
-	"github.com/containerd/nerdctl/v2/pkg/config"
+	"github.com/localfont/mikodctl/v2/pkg/config"
 )
 
 // CreateTimer sets up the transient systemd timer and service for healthchecks.
-func CreateTimer(ctx context.Context, container containerd.Container, cfg *config.Config, nerdctlCmd string, nerdctlArgs []string) error {
+func CreateTimer(ctx context.Context, container containerd.Container, cfg *config.Config, mikodctlCmd string, mikodctlArgs []string) error {
 	return nil
 }
 

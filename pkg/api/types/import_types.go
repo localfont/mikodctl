@@ -18,7 +18,7 @@ package types
 
 import "io"
 
-// ImageImportOptions specifies options for `nerdctl (image) import`.
+// ImageImportOptions specifies options for `mikodctl (image) import`.
 type ImageImportOptions struct {
 	Stdout   io.Writer
 	Stdin    io.Reader

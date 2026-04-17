@@ -2,10 +2,10 @@
 
 :whale:     = Docker compatible
 
-:nerd_face: = nerdctl specific
+:nerd_face: = mikodctl specific
 
 > [!NOTE]
-> - Unlisted `docker` CLI flags are unimplemented yet in `nerdctl` CLI.
+> - Unlisted `docker` CLI flags are unimplemented yet in `mikodctl` CLI.
 >   It does not necessarily mean that the corresponding features are missing in containerd.
 > - Some commands and flags are only available on Linux.
 
@@ -13,126 +13,126 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 - [Container management](#container-management)
-  - [:whale: nerdctl run](#whale-nerdctl-run)
-  - [:whale: nerdctl exec](#whale-nerdctl-exec)
-  - [:whale: nerdctl create](#whale-nerdctl-create)
-  - [:whale: nerdctl cp](#whale-nerdctl-cp)
-  - [:whale: nerdctl ps](#whale-nerdctl-ps)
-  - [:whale: nerdctl inspect](#whale-nerdctl-inspect)
-  - [:whale: nerdctl logs](#whale-nerdctl-logs)
-  - [:whale: nerdctl port](#whale-nerdctl-port)
-  - [:whale: nerdctl rm](#whale-nerdctl-rm)
-  - [:whale: nerdctl stop](#whale-nerdctl-stop)
-  - [:whale: nerdctl start](#whale-nerdctl-start)
-  - [:whale: nerdctl restart](#whale-nerdctl-restart)
-  - [:whale: nerdctl update](#whale-nerdctl-update)
-  - [:whale: nerdctl wait](#whale-nerdctl-wait)
-  - [:whale: nerdctl kill](#whale-nerdctl-kill)
-  - [:whale: nerdctl pause](#whale-nerdctl-pause)
-  - [:whale: nerdctl unpause](#whale-nerdctl-unpause)
-  - [:whale: nerdctl rename](#whale-nerdctl-rename)
-  - [:whale: nerdctl attach](#whale-nerdctl-attach)
-  - [:whale: nerdctl container prune](#whale-nerdctl-container-prune)
-  - [:whale: nerdctl diff](#whale-nerdctl-diff)
-  - [:whale: nerdctl export](#whale-nerdctl-export)
+  - [:whale: mikodctl run](#whale-mikodctl-run)
+  - [:whale: mikodctl exec](#whale-mikodctl-exec)
+  - [:whale: mikodctl create](#whale-mikodctl-create)
+  - [:whale: mikodctl cp](#whale-mikodctl-cp)
+  - [:whale: mikodctl ps](#whale-mikodctl-ps)
+  - [:whale: mikodctl inspect](#whale-mikodctl-inspect)
+  - [:whale: mikodctl logs](#whale-mikodctl-logs)
+  - [:whale: mikodctl port](#whale-mikodctl-port)
+  - [:whale: mikodctl rm](#whale-mikodctl-rm)
+  - [:whale: mikodctl stop](#whale-mikodctl-stop)
+  - [:whale: mikodctl start](#whale-mikodctl-start)
+  - [:whale: mikodctl restart](#whale-mikodctl-restart)
+  - [:whale: mikodctl update](#whale-mikodctl-update)
+  - [:whale: mikodctl wait](#whale-mikodctl-wait)
+  - [:whale: mikodctl kill](#whale-mikodctl-kill)
+  - [:whale: mikodctl pause](#whale-mikodctl-pause)
+  - [:whale: mikodctl unpause](#whale-mikodctl-unpause)
+  - [:whale: mikodctl rename](#whale-mikodctl-rename)
+  - [:whale: mikodctl attach](#whale-mikodctl-attach)
+  - [:whale: mikodctl container prune](#whale-mikodctl-container-prune)
+  - [:whale: mikodctl diff](#whale-mikodctl-diff)
+  - [:whale: mikodctl export](#whale-mikodctl-export)
 - [Build](#build)
-  - [:whale: nerdctl build](#whale-nerdctl-build)
-  - [:whale: nerdctl commit](#whale-nerdctl-commit)
+  - [:whale: mikodctl build](#whale-mikodctl-build)
+  - [:whale: mikodctl commit](#whale-mikodctl-commit)
 - [Image management](#image-management)
-  - [:whale: nerdctl images](#whale-nerdctl-images)
-  - [:whale: nerdctl pull](#whale-nerdctl-pull)
-  - [:whale: nerdctl push](#whale-nerdctl-push)
-  - [:whale: nerdctl load](#whale-nerdctl-load)
-  - [:whale: nerdctl save](#whale-nerdctl-save)
-  - [:whale: nerdctl import](#whale-nerdctl-import)
-  - [:whale: nerdctl tag](#whale-nerdctl-tag)
-  - [:whale: nerdctl rmi](#whale-nerdctl-rmi)
-  - [:whale: nerdctl image inspect](#whale-nerdctl-image-inspect)
-  - [:whale: nerdctl image history](#whale-nerdctl-image-history)
-  - [:whale: nerdctl image prune](#whale-nerdctl-image-prune)
-  - [:nerd_face: nerdctl image convert](#nerd_face-nerdctl-image-convert)
-  - [:nerd_face: nerdctl image encrypt](#nerd_face-nerdctl-image-encrypt)
-  - [:nerd_face: nerdctl image decrypt](#nerd_face-nerdctl-image-decrypt)
+  - [:whale: mikodctl images](#whale-mikodctl-images)
+  - [:whale: mikodctl pull](#whale-mikodctl-pull)
+  - [:whale: mikodctl push](#whale-mikodctl-push)
+  - [:whale: mikodctl load](#whale-mikodctl-load)
+  - [:whale: mikodctl save](#whale-mikodctl-save)
+  - [:whale: mikodctl import](#whale-mikodctl-import)
+  - [:whale: mikodctl tag](#whale-mikodctl-tag)
+  - [:whale: mikodctl rmi](#whale-mikodctl-rmi)
+  - [:whale: mikodctl image inspect](#whale-mikodctl-image-inspect)
+  - [:whale: mikodctl image history](#whale-mikodctl-image-history)
+  - [:whale: mikodctl image prune](#whale-mikodctl-image-prune)
+  - [:nerd_face: mikodctl image convert](#nerd_face-mikodctl-image-convert)
+  - [:nerd_face: mikodctl image encrypt](#nerd_face-mikodctl-image-encrypt)
+  - [:nerd_face: mikodctl image decrypt](#nerd_face-mikodctl-image-decrypt)
 - [Checkpoint management](#checkpoint-management)
-  - [:whale: nerdctl checkpoint create](#whale-nerdctl-checkpoint-create)
-  - [:whale: nerdctl checkpoint list](#whale-nerdctl-checkpoint-list)
-  - [:whale: nerdctl checkpoint remove](#whale-nerdctl-checkpoint-remove)
+  - [:whale: mikodctl checkpoint create](#whale-mikodctl-checkpoint-create)
+  - [:whale: mikodctl checkpoint list](#whale-mikodctl-checkpoint-list)
+  - [:whale: mikodctl checkpoint remove](#whale-mikodctl-checkpoint-remove)
 - [Manifest management](#manifest-management)
-  - [:whale: nerdctl manifest annotate](#whale-nerdctl-manifest-annotate)
-  - [:whale: nerdctl manifest create](#whale-nerdctl-manifest-create)
-  - [:whale: nerdctl manifest inspect](#whale-nerdctl-manifest-inspect)
-  - [:whale: nerdctl manifest push](#whale-nerdctl-manifest-push)
-  - [:whale: nerdctl manifest rm](#whale-nerdctl-manifest-rm)
+  - [:whale: mikodctl manifest annotate](#whale-mikodctl-manifest-annotate)
+  - [:whale: mikodctl manifest create](#whale-mikodctl-manifest-create)
+  - [:whale: mikodctl manifest inspect](#whale-mikodctl-manifest-inspect)
+  - [:whale: mikodctl manifest push](#whale-mikodctl-manifest-push)
+  - [:whale: mikodctl manifest rm](#whale-mikodctl-manifest-rm)
 - [Registry](#registry)
-  - [:whale: nerdctl login](#whale-nerdctl-login)
-  - [:whale: nerdctl logout](#whale-nerdctl-logout)
-  - [:whale: nerdctl search](#whale-nerdctl-search)
+  - [:whale: mikodctl login](#whale-mikodctl-login)
+  - [:whale: mikodctl logout](#whale-mikodctl-logout)
+  - [:whale: mikodctl search](#whale-mikodctl-search)
 - [Network management](#network-management)
-  - [:whale: nerdctl network create](#whale-nerdctl-network-create)
-  - [:whale: nerdctl network ls](#whale-nerdctl-network-ls)
-  - [:whale: nerdctl network inspect](#whale-nerdctl-network-inspect)
-  - [:whale: nerdctl network rm](#whale-nerdctl-network-rm)
-  - [:whale: nerdctl network prune](#whale-nerdctl-network-prune)
+  - [:whale: mikodctl network create](#whale-mikodctl-network-create)
+  - [:whale: mikodctl network ls](#whale-mikodctl-network-ls)
+  - [:whale: mikodctl network inspect](#whale-mikodctl-network-inspect)
+  - [:whale: mikodctl network rm](#whale-mikodctl-network-rm)
+  - [:whale: mikodctl network prune](#whale-mikodctl-network-prune)
 - [Volume management](#volume-management)
-  - [:whale: nerdctl volume create](#whale-nerdctl-volume-create)
-  - [:whale: nerdctl volume ls](#whale-nerdctl-volume-ls)
-  - [:whale: nerdctl volume inspect](#whale-nerdctl-volume-inspect)
-  - [:whale: nerdctl volume rm](#whale-nerdctl-volume-rm)
-  - [:whale: nerdctl volume prune](#whale-nerdctl-volume-prune)
+  - [:whale: mikodctl volume create](#whale-mikodctl-volume-create)
+  - [:whale: mikodctl volume ls](#whale-mikodctl-volume-ls)
+  - [:whale: mikodctl volume inspect](#whale-mikodctl-volume-inspect)
+  - [:whale: mikodctl volume rm](#whale-mikodctl-volume-rm)
+  - [:whale: mikodctl volume prune](#whale-mikodctl-volume-prune)
 - [Namespace management](#namespace-management)
-  - [:nerd_face: nerdctl namespace create](#nerd_face-nerdctl-namespace-create)
-  - [:nerd_face: nerdctl namespace inspect](#nerd_face-nerdctl-namespace-inspect)
-  - [:nerd_face: nerdctl namespace ls](#nerd_face-nerdctl-namespace-ls)
-  - [:nerd_face: nerdctl namespace remove](#nerd_face-nerdctl-namespace-remove)
-  - [:nerd_face: nerdctl namespace update](#nerd_face-nerdctl-namespace-update)
+  - [:nerd_face: mikodctl namespace create](#nerd_face-mikodctl-namespace-create)
+  - [:nerd_face: mikodctl namespace inspect](#nerd_face-mikodctl-namespace-inspect)
+  - [:nerd_face: mikodctl namespace ls](#nerd_face-mikodctl-namespace-ls)
+  - [:nerd_face: mikodctl namespace remove](#nerd_face-mikodctl-namespace-remove)
+  - [:nerd_face: mikodctl namespace update](#nerd_face-mikodctl-namespace-update)
 - [AppArmor profile management](#apparmor-profile-management)
-  - [:nerd_face: nerdctl apparmor inspect](#nerd_face-nerdctl-apparmor-inspect)
-  - [:nerd_face: nerdctl apparmor load](#nerd_face-nerdctl-apparmor-load)
-  - [:nerd_face: nerdctl apparmor ls](#nerd_face-nerdctl-apparmor-ls)
-  - [:nerd_face: nerdctl apparmor unload](#nerd_face-nerdctl-apparmor-unload)
+  - [:nerd_face: mikodctl apparmor inspect](#nerd_face-mikodctl-apparmor-inspect)
+  - [:nerd_face: mikodctl apparmor load](#nerd_face-mikodctl-apparmor-load)
+  - [:nerd_face: mikodctl apparmor ls](#nerd_face-mikodctl-apparmor-ls)
+  - [:nerd_face: mikodctl apparmor unload](#nerd_face-mikodctl-apparmor-unload)
 - [Builder management](#builder-management)
-  - [:whale: nerdctl builder prune](#whale-nerdctl-builder-prune)
-  - [:nerd_face: nerdctl builder debug](#nerd_face-nerdctl-builder-debug)
+  - [:whale: mikodctl builder prune](#whale-mikodctl-builder-prune)
+  - [:nerd_face: mikodctl builder debug](#nerd_face-mikodctl-builder-debug)
 - [System](#system)
-  - [:whale: nerdctl events](#whale-nerdctl-events)
-  - [:whale: nerdctl info](#whale-nerdctl-info)
-  - [:whale: nerdctl version](#whale-nerdctl-version)
-  - [:whale: nerdctl system prune](#whale-nerdctl-system-prune)
+  - [:whale: mikodctl events](#whale-mikodctl-events)
+  - [:whale: mikodctl info](#whale-mikodctl-info)
+  - [:whale: mikodctl version](#whale-mikodctl-version)
+  - [:whale: mikodctl system prune](#whale-mikodctl-system-prune)
 - [Stats](#stats)
-  - [:whale: nerdctl stats](#whale-nerdctl-stats)
-  - [:whale: nerdctl top](#whale-nerdctl-top)
+  - [:whale: mikodctl stats](#whale-mikodctl-stats)
+  - [:whale: mikodctl top](#whale-mikodctl-top)
 - [Shell completion](#shell-completion)
-  - [:nerd_face: nerdctl completion bash](#nerd_face-nerdctl-completion-bash)
-  - [:nerd_face: nerdctl completion zsh](#nerd_face-nerdctl-completion-zsh)
-  - [:nerd_face: nerdctl completion fish](#nerd_face-nerdctl-completion-fish)
-  - [:nerd_face: nerdctl completion powershell](#nerd_face-nerdctl-completion-powershell)
+  - [:nerd_face: mikodctl completion bash](#nerd_face-mikodctl-completion-bash)
+  - [:nerd_face: mikodctl completion zsh](#nerd_face-mikodctl-completion-zsh)
+  - [:nerd_face: mikodctl completion fish](#nerd_face-mikodctl-completion-fish)
+  - [:nerd_face: mikodctl completion powershell](#nerd_face-mikodctl-completion-powershell)
 - [Compose](#compose)
-  - [:whale: nerdctl compose](#whale-nerdctl-compose)
-  - [:whale: nerdctl compose up](#whale-nerdctl-compose-up)
-  - [:whale: nerdctl compose logs](#whale-nerdctl-compose-logs)
-  - [:whale: nerdctl compose build](#whale-nerdctl-compose-build)
-  - [:whale: nerdctl compose create](#whale-nerdctl-compose-create)
-  - [:whale: nerdctl compose exec](#whale-nerdctl-compose-exec)
-  - [:whale: nerdctl compose down](#whale-nerdctl-compose-down)
-  - [:whale: nerdctl compose images](#whale-nerdctl-compose-images)
-  - [:whale: nerdctl compose start](#whale-nerdctl-compose-start)
-  - [:whale: nerdctl compose stop](#whale-nerdctl-compose-stop)
-  - [:whale: nerdctl compose port](#whale-nerdctl-compose-port)
-  - [:whale: nerdctl compose ps](#whale-nerdctl-compose-ps)
-  - [:whale: nerdctl compose pull](#whale-nerdctl-compose-pull)
-  - [:whale: nerdctl compose push](#whale-nerdctl-compose-push)
-  - [:whale: nerdctl compose pause](#whale-nerdctl-compose-pause)
-  - [:whale: nerdctl compose unpause](#whale-nerdctl-compose-unpause)
-  - [:whale: nerdctl compose config](#whale-nerdctl-compose-config)
-  - [:whale: nerdctl compose cp](#whale-nerdctl-compose-cp)
-  - [:whale: nerdctl compose kill](#whale-nerdctl-compose-kill)
-  - [:whale: nerdctl compose restart](#whale-nerdctl-compose-restart)
-  - [:whale: nerdctl compose rm](#whale-nerdctl-compose-rm)
-  - [:whale: nerdctl compose run](#whale-nerdctl-compose-run)
-  - [:whale: nerdctl compose top](#whale-nerdctl-compose-top)
-  - [:whale: nerdctl compose version](#whale-nerdctl-compose-version)
+  - [:whale: mikodctl compose](#whale-mikodctl-compose)
+  - [:whale: mikodctl compose up](#whale-mikodctl-compose-up)
+  - [:whale: mikodctl compose logs](#whale-mikodctl-compose-logs)
+  - [:whale: mikodctl compose build](#whale-mikodctl-compose-build)
+  - [:whale: mikodctl compose create](#whale-mikodctl-compose-create)
+  - [:whale: mikodctl compose exec](#whale-mikodctl-compose-exec)
+  - [:whale: mikodctl compose down](#whale-mikodctl-compose-down)
+  - [:whale: mikodctl compose images](#whale-mikodctl-compose-images)
+  - [:whale: mikodctl compose start](#whale-mikodctl-compose-start)
+  - [:whale: mikodctl compose stop](#whale-mikodctl-compose-stop)
+  - [:whale: mikodctl compose port](#whale-mikodctl-compose-port)
+  - [:whale: mikodctl compose ps](#whale-mikodctl-compose-ps)
+  - [:whale: mikodctl compose pull](#whale-mikodctl-compose-pull)
+  - [:whale: mikodctl compose push](#whale-mikodctl-compose-push)
+  - [:whale: mikodctl compose pause](#whale-mikodctl-compose-pause)
+  - [:whale: mikodctl compose unpause](#whale-mikodctl-compose-unpause)
+  - [:whale: mikodctl compose config](#whale-mikodctl-compose-config)
+  - [:whale: mikodctl compose cp](#whale-mikodctl-compose-cp)
+  - [:whale: mikodctl compose kill](#whale-mikodctl-compose-kill)
+  - [:whale: mikodctl compose restart](#whale-mikodctl-compose-restart)
+  - [:whale: mikodctl compose rm](#whale-mikodctl-compose-rm)
+  - [:whale: mikodctl compose run](#whale-mikodctl-compose-run)
+  - [:whale: mikodctl compose top](#whale-mikodctl-compose-top)
+  - [:whale: mikodctl compose version](#whale-mikodctl-compose-version)
 - [IPFS management](#ipfs-management)
-  - [:nerd_face: nerdctl ipfs registry serve](#nerd_face-nerdctl-ipfs-registry-serve)
+  - [:nerd_face: mikodctl ipfs registry serve](#nerd_face-mikodctl-ipfs-registry-serve)
 - [Global flags](#global-flags)
 - [Unimplemented Docker commands](#unimplemented-docker-commands)
 
@@ -140,11 +140,11 @@
 
 ## Container management
 
-### :whale: nerdctl run
+### :whale: mikodctl run
 
 Run a command in a new container.
 
-Usage: `nerdctl run [OPTIONS] IMAGE [COMMAND] [ARG...]`
+Usage: `mikodctl run [OPTIONS] IMAGE [COMMAND] [ARG...]`
 
 :nerd_face: `ipfs://` prefix can be used for `IMAGE` to pull it from IPFS. See [`ipfs.md`](./ipfs.md) for details.
 :nerd_face: `oci-archive://` prefix can be used for `IMAGE` to specify a local file system path to an OCI formatted tarball.
@@ -201,8 +201,8 @@ Network flags:
 - :whale: `-h, --hostname`: Container host name
 - :whale: `--domainname`: Container domain name
 - :whale: `--add-host`: Add a custom host-to-IP mapping (host:ip). `ip` could be a special string `host-gateway`,
-- which will be resolved to the `host-gateway-ip` in nerdctl.toml or global flag.
-- :whale: `--ip`: Specific static IP address(es) to use. Note that unlike docker, nerdctl allows specifying it with the default bridge network.
+- which will be resolved to the `host-gateway-ip` in mikodctl.toml or global flag.
+- :whale: `--ip`: Specific static IP address(es) to use. Note that unlike docker, mikodctl allows specifying it with the default bridge network.
 - :whale: `--ip6`: Specific static IP6 address(es) to use. Should be used with user networks
 - :whale: `--mac-address`: Specific MAC address to use. Be aware that it does not
   check if manually specified MAC addresses are unique. Supports network
@@ -248,7 +248,7 @@ User flags:
 - :nerd_face: `--umask`: Set the umask inside the container. Defaults to 0022.
   Corresponds to Podman CLI.
 - :whale: `--group-add`: Add additional groups to join
-- :whale: `--userns`: Set it to `host` to disable user namespacing set in nerdctl.toml or in cli.
+- :whale: `--userns`: Set it to `host` to disable user namespacing set in mikodctl.toml or in cli.
 
 
 Security flags:
@@ -330,7 +330,7 @@ Env flags:
 Metadata flags:
 
 - :whale: `--name`: Assign a name to the container
-- :whale: `-l, --label`: Set meta data on a container (Not passed through the OCI runtime since nerdctl v2.0, with an exception for `nerdctl/bypass4netns`)
+- :whale: `-l, --label`: Set meta data on a container (Not passed through the OCI runtime since mikodctl v2.0, with an exception for `mikodctl/bypass4netns`)
 - :whale: `--label-file`: Read in a line delimited file of labels
 - :whale: `--annotation`: Add an annotation to the container (passed through to the OCI runtime)
 - :whale: `--cidfile`: Write the container ID to the file
@@ -348,13 +348,13 @@ Health check flags:
 Logging flags:
 
 - :whale: `--log-driver=(json-file|journald|fluentd|syslog|none)`: Logging driver for the container (default `json-file`).
-  - :whale: `--log-driver=json-file`: The logs are formatted as JSON. The default logging driver for nerdctl.
+  - :whale: `--log-driver=json-file`: The logs are formatted as JSON. The default logging driver for mikodctl.
     - The `json-file` logging driver supports the following logging options:
       - :whale: `--log-opt=max-size=<MAX-SIZE>`: The maximum size of the log before it is rolled. A positive integer plus a modifier representing the unit of measure (k, m, or g). Defaults to unlimited.
       - :whale: `--log-opt=max-file=<MAX-FILE>`: The maximum number of log files that can be present. If rolling the logs creates excess files, the oldest file is removed. Only effective when `max-size` is also set. A positive integer. Defaults to 1.
       - :nerd_face: `--log-opt=log-path=<LOG-PATH>`: The log path where the logs are written. The path will be created if it does not exist. If the log file exists, the old file will be renamed to `<LOG-PATH>.1`.
         - Default: `<data-root>/<containerd-socket-hash>/<namespace>/<container-id>/<container-id>-json.log`
-        - Example: `/var/lib/nerdctl/1935db59/containers/default/<container-id>/<container-id>-json.log`
+        - Example: `/var/lib/mikodctl/1935db59/containers/default/<container-id>/<container-id>-json.log`
       - :whale: `--log-opt labels=production_status,geo`: A comma-separated list of logging-related labels this daemon accepts.
       - :whale: `--log-opt env=os,customer`: A comma-separated list of logging-related environment variables this daemon accepts.
   - :whale: `--log-driver=journald`: Writes log messages to `journald`. The `journald` daemon must be running on the host machine.
@@ -400,10 +400,10 @@ Logging flags:
           `rfc5424micro` for RFC-5424 compatible format with microsecond
           timestamp resolution.
       - :whale: `--log-opt=tag=<VALUE>`: A string that is appended to the
-          `APP-NAME` in the `syslog` message. By default, nerdctl uses the first
+          `APP-NAME` in the `syslog` message. By default, mikodctl uses the first
           12 characters of the container ID to tag log messages.
   - :whale:  `--log-driver=none`: Disables logging for the container, preventing log output from being collected.
-  - :nerd_face: Accepts a LogURI which is a containerd shim logger. A scheme must be specified for the URI. Example: `nerdctl run -d --log-driver binary:///usr/bin/ctr-journald-shim docker.io/library/hello-world:latest`. An implementation of shim logger can be found at (<https://github.com/containerd/containerd/tree/dbef1d56d7ebc05bc4553d72c419ed5ce025b05d/runtime/v2#logging>)
+  - :nerd_face: Accepts a LogURI which is a containerd shim logger. A scheme must be specified for the URI. Example: `mikodctl run -d --log-driver binary:///usr/bin/ctr-journald-shim docker.io/library/hello-world:latest`. An implementation of shim logger can be found at (<https://github.com/containerd/containerd/tree/dbef1d56d7ebc05bc4553d72c419ed5ce025b05d/runtime/v2#logging>)
 
 Shared memory flags:
 
@@ -456,11 +456,11 @@ Unimplemented `docker run` flags:
     `--health-start-interval`, `--link*`, `--publish-all`, `--storage-opt`,
     `--volume-driver`
 
-### :whale: nerdctl exec
+### :whale: mikodctl exec
 
 Run a command in a running container.
 
-Usage: `nerdctl exec [OPTIONS] CONTAINER COMMAND [ARG...]`
+Usage: `mikodctl exec [OPTIONS] CONTAINER COMMAND [ARG...]`
 
 Flags:
 
@@ -476,30 +476,30 @@ Flags:
 
 Unimplemented `docker exec` flags: `--detach-keys`
 
-### :whale: nerdctl create
+### :whale: mikodctl create
 
 Create a new container.
 
-Usage: `nerdctl create [OPTIONS] IMAGE [COMMAND] [ARG...]`
+Usage: `mikodctl create [OPTIONS] IMAGE [COMMAND] [ARG...]`
 
 :nerd_face: `ipfs://` prefix can be used for `IMAGE` to pull it from IPFS. See [`ipfs.md`](./ipfs.md) for details.
 :nerd_face: `oci-archive://` prefix can be used for `IMAGE` to specify a local file system path to an OCI formatted tarball.
 
-The `nerdctl create` command similar to `nerdctl run -d` except the container is never started. You can then use the `nerdctl start <container_id>` command to start the container at any point.
+The `mikodctl create` command similar to `mikodctl run -d` except the container is never started. You can then use the `mikodctl start <container_id>` command to start the container at any point.
 
-### :whale: nerdctl cp
+### :whale: mikodctl cp
 
 Copy files/folders between a running container and the local filesystem
 
 Usage:
 
-- `nerdctl cp [OPTIONS] CONTAINER:SRC_PATH DEST_PATH|-`
-- `nerdctl cp [OPTIONS] SRC_PATH|- CONTAINER:DEST_PATH`
+- `mikodctl cp [OPTIONS] CONTAINER:SRC_PATH DEST_PATH|-`
+- `mikodctl cp [OPTIONS] SRC_PATH|- CONTAINER:DEST_PATH`
 
 Using `-` as the `SRC_PATH` streams the contents of `STDIN` as a tar archive. The command extracts the content of the tar to the `DEST_PATH` in container's filesystem. In this case, `DEST_PATH` must specify a directory. Using `-` as the `DEST_PATH` streams the contents of the resource as a tar archive to `STDOUT`.
 
-:warning: `nerdctl cp` is designed only for use with trusted, cooperating containers.
-Using `nerdctl cp` with untrusted or malicious containers is unsupported and may not provide protection against unexpected behavior.
+:warning: `mikodctl cp` is designed only for use with trusted, cooperating containers.
+Using `mikodctl cp` with untrusted or malicious containers is unsupported and may not provide protection against unexpected behavior.
 
 Flags:
 
@@ -507,11 +507,11 @@ Flags:
 
 Unimplemented `docker cp` flags: `--archive`
 
-### :whale: nerdctl ps
+### :whale: mikodctl ps
 
 List containers.
 
-Usage: `nerdctl ps [OPTIONS]`
+Usage: `mikodctl ps [OPTIONS]`
 
 Flags:
 
@@ -551,11 +551,11 @@ Following arguments for `--filter` are not supported yet:
 4. `--filter isolation=<value>`
 5. `--filter is-task=<value>`
 
-### :whale: nerdctl inspect
+### :whale: mikodctl inspect
 
 Display detailed information on one or more containers.
 
-Usage: `nerdctl inspect [OPTIONS] NAME|ID [NAME|ID...]`
+Usage: `mikodctl inspect [OPTIONS] NAME|ID [NAME|ID...]`
 
 Flags:
 
@@ -564,13 +564,13 @@ Flags:
 - :whale: `--type`: Return JSON for specified type
 - :whale: `--size`: Display total file sizes if the type is container
 
-### :whale: nerdctl logs
+### :whale: mikodctl logs
 
 Fetch the logs of a container.
 
-:warning: Currently, only containers created with `nerdctl run -d` are supported.
+:warning: Currently, only containers created with `mikodctl run -d` are supported.
 
-Usage: `nerdctl logs [OPTIONS] CONTAINER`
+Usage: `mikodctl logs [OPTIONS] CONTAINER`
 
 Flags:
 
@@ -581,17 +581,17 @@ Flags:
 - :whale: `-t, --timestamps`: Show timestamps
 - :whale: `-n, --tail`: Number of lines to show from the end of the logs (default "all")
 
-### :whale: nerdctl port
+### :whale: mikodctl port
 
 List port mappings or a specific mapping for the container.
 
-Usage: `nerdctl port CONTAINER [PRIVATE_PORT[/PROTO]]`
+Usage: `mikodctl port CONTAINER [PRIVATE_PORT[/PROTO]]`
 
-### :whale: nerdctl rm
+### :whale: mikodctl rm
 
 Remove one or more containers.
 
-Usage: `nerdctl rm [OPTIONS] CONTAINER [CONTAINER...]`
+Usage: `mikodctl rm [OPTIONS] CONTAINER [CONTAINER...]`
 
 Flags:
 
@@ -600,11 +600,11 @@ Flags:
 
 Unimplemented `docker rm` flags: `--link`
 
-### :whale: nerdctl stop
+### :whale: mikodctl stop
 
 Stop one or more running containers.
 
-Usage: `nerdctl stop [OPTIONS] CONTAINER [CONTAINER...]`
+Usage: `mikodctl stop [OPTIONS] CONTAINER [CONTAINER...]`
 
 Flags:
 
@@ -612,11 +612,11 @@ Flags:
   - Tips: If the init process in container is exited after receiving SIGTERM or exited before the time you specified, the container will be exited immediately
 - :whale: `-s, --signal=SIGNAL`: Signal to send to the container (e.g. SIGINT).
 
-### :whale: nerdctl start
+### :whale: mikodctl start
 
 Start one or more running containers.
 
-Usage: `nerdctl start [OPTIONS] CONTAINER [CONTAINER...]`
+Usage: `mikodctl start [OPTIONS] CONTAINER [CONTAINER...]`
 
 Flags:
 
@@ -625,11 +625,11 @@ Flags:
 - :whale: `--checkpoint`: checkpoint name
 - :whale: `--detach-keys`: checkpoint directory
 
-### :whale: nerdctl restart
+### :whale: mikodctl restart
 
 Restart one or more running containers.
 
-Usage: `nerdctl restart [OPTIONS] CONTAINER [CONTAINER...]`
+Usage: `mikodctl restart [OPTIONS] CONTAINER [CONTAINER...]`
 
 Flags:
 
@@ -637,11 +637,11 @@ Flags:
   - Tips: If the init process in container is exited after receiving SIGTERM or exited before the time you specified, the container will be exited immediately
 - :whale: `-s, --signal=SIGNAL`: Signal to send to the container (e.g. SIGINT).
 
-### :whale: nerdctl update
+### :whale: mikodctl update
 
 Update configuration of one or more containers.
 
-Usage: `nerdctl update [OPTIONS] CONTAINER [CONTAINER...]`
+Usage: `mikodctl update [OPTIONS] CONTAINER [CONTAINER...]`
 
 - :whale: `--cpus`: Number of CPUs
 - :whale: `--cpu-quota`: Limit the CPU CFS (Completely Fair Scheduler) quota
@@ -657,57 +657,57 @@ Usage: `nerdctl update [OPTIONS] CONTAINER [CONTAINER...]`
 - :whale: `--blkio-weight`: Block IO (relative weight), between 10 and 1000, or 0 to disable (default 0)
 - :whale: `--restart=(no|always|on-failure|unless-stopped)`: Restart policy to apply when a container exits
 
-### :whale: nerdctl wait
+### :whale: mikodctl wait
 
 Block until one or more containers stop, then print their exit codes.
 
-Usage: `nerdctl wait CONTAINER [CONTAINER...]`
+Usage: `mikodctl wait CONTAINER [CONTAINER...]`
 
-### :whale: nerdctl kill
+### :whale: mikodctl kill
 
 Kill one or more running containers.
 
-Usage: `nerdctl kill [OPTIONS] CONTAINER [CONTAINER...]`
+Usage: `mikodctl kill [OPTIONS] CONTAINER [CONTAINER...]`
 
 Flags:
 
 - :whale: `-s, --signal`: Signal to send to the container (default: "KILL")
 
-### :whale: nerdctl pause
+### :whale: mikodctl pause
 
 Pause all processes within one or more containers.
 
-Usage: `nerdctl pause CONTAINER [CONTAINER...]`
+Usage: `mikodctl pause CONTAINER [CONTAINER...]`
 
-### :whale: nerdctl unpause
+### :whale: mikodctl unpause
 
 Unpause all processes within one or more containers.
 
-Usage: `nerdctl unpause CONTAINER [CONTAINER...]`
+Usage: `mikodctl unpause CONTAINER [CONTAINER...]`
 
-### :whale: nerdctl rename
+### :whale: mikodctl rename
 
 Rename a container.
 
-Usage: `nerdctl rename CONTAINER NEW_NAME`
+Usage: `mikodctl rename CONTAINER NEW_NAME`
 
-### :whale: nerdctl attach
+### :whale: mikodctl attach
 
 Attach stdin, stdout, and stderr to a running container. For example:
 
-1. `nerdctl run -it --name test busybox` to start a container with a pty
+1. `mikodctl run -it --name test busybox` to start a container with a pty
 2. `ctrl-p ctrl-q` to detach from the container
-3. `nerdctl attach test` to attach to the container
+3. `mikodctl attach test` to attach to the container
 
 Caveats:
 
-- Currently only one attach session is allowed. When the second session tries to attach, currently no error will be returned from nerdctl.
+- Currently only one attach session is allowed. When the second session tries to attach, currently no error will be returned from mikodctl.
   However, since behind the scenes, there's only one FIFO for stdin, stdout, and stderr respectively,
   if there are multiple sessions, all the sessions will be reading from and writing to the same 3 FIFOs, which will result in mixed input and partial output.
 - Until dual logging (issue #1946) is implemented,
-  a container that is spun up by either `nerdctl run -d` or `nerdctl start` (without `--attach`) cannot be attached to.
+  a container that is spun up by either `mikodctl run -d` or `mikodctl start` (without `--attach`) cannot be attached to.
 
-Usage: `nerdctl attach CONTAINER`
+Usage: `mikodctl attach CONTAINER`
 
 Flags:
 
@@ -716,11 +716,11 @@ Flags:
 
 Unimplemented `docker attach` flags: `--sig-proxy`
 
-### :whale: nerdctl container prune
+### :whale: mikodctl container prune
 
 Remove all stopped containers.
 
-Usage: `nerdctl container prune [OPTIONS]`
+Usage: `mikodctl container prune [OPTIONS]`
 
 Flags:
 
@@ -728,27 +728,27 @@ Flags:
 
 Unimplemented `docker container prune` flags: `--filter`
 
-### :whale: nerdctl diff
+### :whale: mikodctl diff
 
 Inspect changes to files or directories on a container's filesystem
 
-Usage: `nerdctl diff CONTAINER`
+Usage: `mikodctl diff CONTAINER`
 
-### :whale: nerdctl export
+### :whale: mikodctl export
 
 Export a containers filesystem as a tar archive.
 
-Usage: `nerdctl export CONTAINER`
+Usage: `mikodctl export CONTAINER`
 
 ## Build
 
-### :whale: nerdctl build
+### :whale: mikodctl build
 
 Build an image from a Dockerfile.
 
-:information_source: Needs buildkitd to be running. See also [the document about setting up `nerdctl build` with BuildKit](./build.md).
+:information_source: Needs buildkitd to be running. See also [the document about setting up `mikodctl build` with BuildKit](./build.md).
 
-Usage: `nerdctl build [OPTIONS] PATH`
+Usage: `mikodctl build [OPTIONS] PATH`
 
 Flags:
 
@@ -787,15 +787,15 @@ Flags:
 
 Unimplemented `docker build` flags: `--squash`
 
-### :whale: nerdctl commit
+### :whale: mikodctl commit
 
 Create a new image from a container's changes
 
-Usage: `nerdctl commit [OPTIONS] CONTAINER [REPOSITORY[:TAG]]`
+Usage: `mikodctl commit [OPTIONS] CONTAINER [REPOSITORY[:TAG]]`
 
 Flags:
 
-- :whale: `-a, --author`: Author (e.g., "nerdctl contributor <nerdctl-dev@example.com>")
+- :whale: `-a, --author`: Author (e.g., "mikodctl contributor <mikodctl-dev@example.com>")
 - :whale: `-m, --message`: Commit message
 - :whale: `-c, --change`: Apply Dockerfile instruction to the created image (supported directives: [CMD, ENTRYPOINT])
 - :whale: `-p, --pause`: Pause container during commit (default: true)
@@ -812,13 +812,13 @@ support zstdchunked convert
 
 ## Image management
 
-### :whale: nerdctl images
+### :whale: mikodctl images
 
 List images
 
 :warning: The image ID is usually different from Docker image ID.
 
-Usage: `nerdctl images [OPTIONS] [REPOSITORY[:TAG]]`
+Usage: `mikodctl images [OPTIONS] [REPOSITORY[:TAG]]`
 
 Flags:
 
@@ -839,11 +839,11 @@ Flags:
   - :nerd_face: `--filter=reference=<image:tag>`: Filter images by reference (Matches both docker compatible wildcard pattern and regexp match)
 - :nerd_face: `--names`: Show image names
 
-### :whale: nerdctl pull
+### :whale: mikodctl pull
 
 Pull an image from a registry.
 
-Usage: `nerdctl pull [OPTIONS] NAME[:TAG|@DIGEST]`
+Usage: `mikodctl pull [OPTIONS] NAME[:TAG|@DIGEST]`
 
 :nerd_face: `ipfs://` prefix can be used for `NAME` to pull it from IPFS. See [`ipfs.md`](./ipfs.md) for details.
 
@@ -865,11 +865,11 @@ Flags:
 
 Unimplemented `docker pull` flags: `--all-tags`, `--disable-content-trust` (default true)
 
-### :whale: nerdctl push
+### :whale: mikodctl push
 
 Push an image to a registry.
 
-Usage: `nerdctl push [OPTIONS] NAME[:TAG]`
+Usage: `mikodctl push [OPTIONS] NAME[:TAG]`
 
 :nerd_face: `ipfs://` prefix can be used for `NAME` to push it to IPFS. See [`ipfs.md`](./ipfs.md) for details.
 
@@ -888,13 +888,13 @@ Flags:
 
 Unimplemented `docker push` flags: `--all-tags`, `--disable-content-trust` (default true)
 
-### :whale: nerdctl load
+### :whale: mikodctl load
 
 Load an image from a tar archive or STDIN.
 
 :nerd_face: Supports both Docker Image Spec v1.2 and OCI Image Spec v1.0.
 
-Usage: `nerdctl load [OPTIONS]`
+Usage: `mikodctl load [OPTIONS]`
 
 Flags:
 
@@ -903,13 +903,13 @@ Flags:
 - :nerd_face: `--platform=(amd64|arm64|...)`: Import content for a specific platform
 - :nerd_face: `--all-platforms`: Import content for all platforms
 
-### :whale: nerdctl save
+### :whale: mikodctl save
 
 Save one or more images to a tar archive (streamed to STDOUT by default)
 
 :nerd_face: The archive implements both Docker Image Spec v1.2 and OCI Image Spec v1.0.
 
-Usage: `nerdctl save [OPTIONS] IMAGE [IMAGE...]`
+Usage: `mikodctl save [OPTIONS] IMAGE [IMAGE...]`
 
 Flags:
 
@@ -917,11 +917,11 @@ Flags:
 - :nerd_face: `--platform=(amd64|arm64|...)`: Export content for a specific platform
 - :nerd_face: `--all-platforms`: Export content for all platforms
 
-### :whale: nerdctl import
+### :whale: mikodctl import
 
 Import the contents from a tarball to create a filesystem image.
 
-Usage: `nerdctl import [OPTIONS] file|URL|- [REPOSITORY[:TAG]]`
+Usage: `mikodctl import [OPTIONS] file|URL|- [REPOSITORY[:TAG]]`
 
 Flags:
 
@@ -930,17 +930,17 @@ Flags:
 
 Unimplemented `docker import` flags: `--change`
 
-### :whale: nerdctl tag
+### :whale: mikodctl tag
 
 Create a tag TARGET\_IMAGE that refers to SOURCE\_IMAGE.
 
-Usage: `nerdctl tag SOURCE_IMAGE[:TAG] TARGET_IMAGE[:TAG]`
+Usage: `mikodctl tag SOURCE_IMAGE[:TAG] TARGET_IMAGE[:TAG]`
 
-### :whale: nerdctl rmi
+### :whale: mikodctl rmi
 
 Remove one or more images
 
-Usage: `nerdctl rmi [OPTIONS] IMAGE [IMAGE...]`
+Usage: `mikodctl rmi [OPTIONS] IMAGE [IMAGE...]`
 
 Flags:
 
@@ -949,11 +949,11 @@ Flags:
 
 Unimplemented `docker rmi` flags: `--no-prune`
 
-### :whale: nerdctl image inspect
+### :whale: mikodctl image inspect
 
 Display detailed information on one or more images.
 
-Usage: `nerdctl image inspect [OPTIONS] NAME|ID [NAME|ID...]`
+Usage: `mikodctl image inspect [OPTIONS] NAME|ID [NAME|ID...]`
 
 Flags:
 
@@ -961,11 +961,11 @@ Flags:
 - :whale: `--format`: Format the output using the given Go template, e.g, `{{json .}}`
 - :nerd_face: `--platform=(amd64|arm64|...)`: Inspect a specific platform
 
-### :whale: nerdctl image history
+### :whale: mikodctl image history
 
 Show the history of an image.
 
-Usage: `nerdctl history [OPTIONS] IMAGE`
+Usage: `mikodctl history [OPTIONS] IMAGE`
 
 Flags:
 
@@ -974,11 +974,11 @@ Flags:
 - :whale: `--format`: Format the output using the given Go template, e.g, `{{json .}}`
 - :whale: `-H, --human`: Print sizes and dates in human readable format (default true)
 
-### :whale: nerdctl image prune
+### :whale: mikodctl image prune
 
 Remove unused images.
 
-Usage: `nerdctl image prune [OPTIONS]`
+Usage: `mikodctl image prune [OPTIONS]`
 
 Flags:
 
@@ -988,13 +988,13 @@ Flags:
   - :whale: `--filter=label<key>=<value>`: Matches images based on the presence of a label alone or a label and a value
 - :whale: `-f, --force`: Do not prompt for confirmation
 
-### :nerd_face: nerdctl image convert
+### :nerd_face: mikodctl image convert
 
 Convert an image format.
 
-e.g., `nerdctl image convert --estargz --oci example.com/foo:orig example.com/foo:esgz`
+e.g., `mikodctl image convert --estargz --oci example.com/foo:orig example.com/foo:esgz`
 
-Usage: `nerdctl image convert [OPTIONS] SOURCE_IMAGE[:TAG] TARGET_IMAGE[:TAG]`
+Usage: `mikodctl image convert [OPTIONS] SOURCE_IMAGE[:TAG] TARGET_IMAGE[:TAG]`
 
 Flags:
 
@@ -1021,23 +1021,23 @@ Flags:
 - `--soci-min-layer-size`: Minimum layer size in bytes to build zTOC for. Smaller layers won't have zTOC and not lazy pulled. Default is 10 MiB.
 
 
-### :nerd_face: nerdctl image encrypt
+### :nerd_face: mikodctl image encrypt
 
 Encrypt image layers. See [`./ocicrypt.md`](./ocicrypt.md).
 
-Usage: `nerdctl image encrypt [OPTIONS] SOURCE_IMAGE[:TAG] TARGET_IMAGE[:TAG]`
+Usage: `mikodctl image encrypt [OPTIONS] SOURCE_IMAGE[:TAG] TARGET_IMAGE[:TAG]`
 
 Example:
 
 ```bash
 openssl genrsa -out mykey.pem
 openssl rsa -in mykey.pem -pubout -out mypubkey.pem
-nerdctl image encrypt --recipient=jwe:mypubkey.pem --platform=linux/amd64,linux/arm64 foo example.com/foo:encrypted
-nerdctl push example.com/foo:encrypted
+mikodctl image encrypt --recipient=jwe:mypubkey.pem --platform=linux/amd64,linux/arm64 foo example.com/foo:encrypted
+mikodctl push example.com/foo:encrypted
 ```
 
 :warning: CAUTION: This command only encrypts image layers, but does NOT encrypt [container configuration such as `Env` and `Cmd`](https://github.com/opencontainers/image-spec/blob/v1.0.1/config.md#example).
-To see non-encrypted information, run `nerdctl image inspect --mode=native --platform=PLATFORM example.com/foo:encrypted` .
+To see non-encrypted information, run `mikodctl image inspect --mode=native --platform=PLATFORM example.com/foo:encrypted` .
 
 Flags:
 
@@ -1049,17 +1049,17 @@ Flags:
 - `--platform=<PLATFORM>`        : Convert content for a specific platform
 - `--all-platforms`              : Convert content for all platforms (default: false)
 
-### :nerd_face: nerdctl image decrypt
+### :nerd_face: mikodctl image decrypt
 
 Decrypt image layers. See [`./ocicrypt.md`](./ocicrypt.md).
 
-Usage: `nerdctl image decrypt [OPTIONS] SOURCE_IMAGE[:TAG] TARGET_IMAGE[:TAG]`
+Usage: `mikodctl image decrypt [OPTIONS] SOURCE_IMAGE[:TAG] TARGET_IMAGE[:TAG]`
 
 Example:
 
 ```bash
-nerdctl pull --unpack=false example.com/foo:encrypted
-nerdctl image decrypt --key=mykey.pem example.com/foo:encrypted foo:decrypted
+mikodctl pull --unpack=false example.com/foo:encrypted
+mikodctl image decrypt --key=mykey.pem example.com/foo:encrypted foo:decrypted
 ```
 
 Flags:
@@ -1073,41 +1073,41 @@ Flags:
 
 ## Checkpoint management
 
-### :whale: nerdctl checkpoint create
+### :whale: mikodctl checkpoint create
 
 Create a checkpoint from a running container.
 
-Usage: `nerdctl checkpoint create [OPTIONS] CONTAINER CHECKPOINT`
+Usage: `mikodctl checkpoint create [OPTIONS] CONTAINER CHECKPOINT`
 
 Flags:
 - :whale: `--leave-running`: Leave the container running after checkpoint
 - :whale: `checkpoint-dir`: Use a custom checkpoint storage directory
 
-### :whale: nerdctl checkpoint list
+### :whale: mikodctl checkpoint list
 
 List checkpoints for a container
 
-Usage: `nerdctl checkpoint list/ls [OPTIONS] CONTAINER`
+Usage: `mikodctl checkpoint list/ls [OPTIONS] CONTAINER`
 
 Flags:
 - :whale: `checkpoint-dir`: Use a custom checkpoint storage directory
 
-### :whale: nerdctl checkpoint remove
+### :whale: mikodctl checkpoint remove
 
 Remove a checkpoint for a container
 
-Usage: `nerdctl checkpoint remove/rm [OPTIONS] CONTAINER CHECKPOINT`
+Usage: `mikodctl checkpoint remove/rm [OPTIONS] CONTAINER CHECKPOINT`
 
 Flags:
 - :whale: `checkpoint-dir`: Use a custom checkpoint storage directory
 
 ## Manifest management
 
-### :whale: nerdctl manifest annotate
+### :whale: mikodctl manifest annotate
 
 Add additional information to a local image manifest.
 
-Usage: `nerdctl manifest annotate [OPTIONS] INDEX/MANIFESTLIST MANIFEST`
+Usage: `mikodctl manifest annotate [OPTIONS] INDEX/MANIFESTLIST MANIFEST`
 
 Flags:
 
@@ -1120,15 +1120,15 @@ Flags:
 Examples:
 
 ```bash
-nerdctl manifest annotate myapp:latest alpine@sha256:eafc1edb577d2e9b458664a15f23ea1c370214193226069eb22921169fc7e43f \
+mikodctl manifest annotate myapp:latest alpine@sha256:eafc1edb577d2e9b458664a15f23ea1c370214193226069eb22921169fc7e43f \
   --os linux --arch arm --variant v7 --os-features feature1,feature2
 ```
 
-### :whale: nerdctl manifest create
+### :whale: mikodctl manifest create
 
 Create a local index/manifest list.
 
-Usage: `nerdctl manifest create [OPTIONS] INDEX/MANIFESTLIST MANIFEST [MANIFEST...]`
+Usage: `mikodctl manifest create [OPTIONS] INDEX/MANIFESTLIST MANIFEST [MANIFEST...]`
 
 Flags:
 
@@ -1138,14 +1138,14 @@ Flags:
 Example:
 
 ```bash
-nerdctl manifest create myapp:latest alpine@sha256:eafc1edb577d2e9b458664a15f23ea1c370214193226069eb22921169fc7e43f
+mikodctl manifest create myapp:latest alpine@sha256:eafc1edb577d2e9b458664a15f23ea1c370214193226069eb22921169fc7e43f
 ```
 
-### :whale: nerdctl manifest inspect
+### :whale: mikodctl manifest inspect
 
 Display the contents of a manifest list or manifest.
 
-Usage: `nerdctl manifest inspect [OPTIONS] MANIFEST`
+Usage: `mikodctl manifest inspect [OPTIONS] MANIFEST`
 
 #### Input formats
 
@@ -1160,15 +1160,15 @@ Flags:
 Example:
 
 ```bash
-nerdctl manifest inspect alpine:3.22.1
-nerdctl manifest inspect alpine@sha256:eafc1edb577d2e9b458664a15f23ea1c370214193226069eb22921169fc7e43f
+mikodctl manifest inspect alpine:3.22.1
+mikodctl manifest inspect alpine@sha256:eafc1edb577d2e9b458664a15f23ea1c370214193226069eb22921169fc7e43f
 ```
 
-### :whale: nerdctl manifest push
+### :whale: mikodctl manifest push
 
 Push a manifest list to a registry.
 
-Usage: `nerdctl manifest push [OPTIONS] INDEX/MANIFESTLIST`
+Usage: `mikodctl manifest push [OPTIONS] INDEX/MANIFESTLIST`
 
 Flags:
 
@@ -1179,28 +1179,28 @@ Examples:
 
 ```bash
 # Push a manifest list to a registry
-nerdctl manifest push myapp:latest
+mikodctl manifest push myapp:latest
 ```
 
-### :whale: nerdctl manifest rm
+### :whale: mikodctl manifest rm
 
 Remove one or more index/manifest lists.
 
-Usage: `nerdctl manifest rm INDEX/MANIFESTLIST [INDEX/MANIFESTLIST...]`
+Usage: `mikodctl manifest rm INDEX/MANIFESTLIST [INDEX/MANIFESTLIST...]`
 
 Example:
 
 ```bash
-nerdctl manifest rm alpine:3.22.1 alpine:3.22.2
+mikodctl manifest rm alpine:3.22.1 alpine:3.22.2
 ```
 
 ## Registry
 
-### :whale: nerdctl login
+### :whale: mikodctl login
 
 Log in to a container registry.
 
-Usage: `nerdctl login [OPTIONS] [SERVER]`
+Usage: `mikodctl login [OPTIONS] [SERVER]`
 
 Flags:
 
@@ -1208,17 +1208,17 @@ Flags:
 - :whale: `-p, --password`:   Password
 - :whale: `--password-stdin`: Take the password from stdin
 
-### :whale: nerdctl logout
+### :whale: mikodctl logout
 
 Log out from a container registry
 
-Usage: `nerdctl logout [SERVER]`
+Usage: `mikodctl logout [SERVER]`
 
-### :whale: nerdctl search
+### :whale: mikodctl search
 
 Search Docker Hub or a registry for images
 
-Usage: `nerdctl search [OPTIONS] TERM`
+Usage: `mikodctl search [OPTIONS] TERM`
 
 Flags:
 
@@ -1229,13 +1229,13 @@ Flags:
 
 ## Network management
 
-### :whale: nerdctl network create
+### :whale: mikodctl network create
 
 Create a network
 
 :information_source: To isolate CNI bridge, CNI plugins v1.1.0 or later needs to be installed.
 
-Usage: `nerdctl network create [OPTIONS] NETWORK`
+Usage: `mikodctl network create [OPTIONS] NETWORK`
 
 Flags:
 
@@ -1267,11 +1267,11 @@ Flags:
 
 Unimplemented `docker network create` flags: `--attachable`, `--aux-address`, `--config-from`, `--config-only`, `--ingress`, `--scope`
 
-### :whale: nerdctl network ls
+### :whale: mikodctl network ls
 
 List networks
 
-Usage: `nerdctl network ls [OPTIONS]`
+Usage: `mikodctl network ls [OPTIONS]`
 
 Flags:
 
@@ -1284,11 +1284,11 @@ Flags:
 
 Unimplemented `docker network ls` flags: `--no-trunc`
 
-### :whale: nerdctl network inspect
+### :whale: mikodctl network inspect
 
 Display detailed information on one or more networks
 
-Usage: `nerdctl network inspect [OPTIONS] NETWORK [NETWORK...]`
+Usage: `mikodctl network inspect [OPTIONS] NETWORK [NETWORK...]`
 
 Flags:
 
@@ -1297,19 +1297,19 @@ Flags:
 
 Unimplemented `docker network inspect` flags: `--verbose`
 
-### :whale: nerdctl network rm
+### :whale: mikodctl network rm
 
 Remove one or more networks by name or identifier
 
 :warning network removal will fail if there are containers attached to it.
 
-Usage: `nerdctl network rm NETWORK [NETWORK...]`
+Usage: `mikodctl network rm NETWORK [NETWORK...]`
 
-### :whale: nerdctl network prune
+### :whale: mikodctl network prune
 
 Remove all unused networks
 
-Usage: `nerdctl network prune [OPTIONS]`
+Usage: `mikodctl network prune [OPTIONS]`
 
 Flags:
 
@@ -1319,11 +1319,11 @@ Unimplemented `docker network prune` flags: `--filter`
 
 ## Volume management
 
-### :whale: nerdctl volume create
+### :whale: mikodctl volume create
 
 Create a volume
 
-Usage: `nerdctl volume create [OPTIONS] [VOLUME]`
+Usage: `mikodctl volume create [OPTIONS] [VOLUME]`
 
 Flags:
 
@@ -1331,11 +1331,11 @@ Flags:
 
 Unimplemented `docker volume create` flags: `--driver`, `--opt`
 
-### :whale: nerdctl volume ls
+### :whale: mikodctl volume ls
 
 List volumes
 
-Usage: `nerdctl volume ls [OPTIONS]`
+Usage: `mikodctl volume ls [OPTIONS]`
 
 Flags:
 
@@ -1362,30 +1362,30 @@ Following arguments for `--filter` are not supported yet:
 1. `--filter=dangling=true`: Filter volumes by dangling
 2. `--filter=driver=local`: Filter volumes by driver
 
-### :whale: nerdctl volume inspect
+### :whale: mikodctl volume inspect
 
 Display detailed information on one or more volumes
 
-Usage: `nerdctl volume inspect [OPTIONS] VOLUME [VOLUME...]`
+Usage: `mikodctl volume inspect [OPTIONS] VOLUME [VOLUME...]`
 
 Flags:
 
 - :whale: `--format`: Format the output using the given Go template, e.g, `{{json .}}`
 - :nerd_face: `--size`: Displays disk usage of volume
 
-### :whale: nerdctl volume rm
+### :whale: mikodctl volume rm
 
 Remove one or more volumes
 
-Usage: `nerdctl volume rm [OPTIONS] VOLUME [VOLUME...]`
+Usage: `mikodctl volume rm [OPTIONS] VOLUME [VOLUME...]`
 
 - :whale: `-f, --force`: Force the removal of one or more volumes
 
-### :whale: nerdctl volume prune
+### :whale: mikodctl volume prune
 
 Remove all unused local volumes
 
-Usage: `nerdctl volume prune [OPTIONS]`
+Usage: `mikodctl volume prune [OPTIONS]`
 
 Flags:
 
@@ -1395,47 +1395,47 @@ Unimplemented `docker volume prune` flags: `--filter`
 
 ## Namespace management
 
-### :nerd_face: nerdctl namespace create
+### :nerd_face: mikodctl namespace create
 
 Create a new namespace.
 
-Usage: `nerdctl namespace create NAMESPACE`
+Usage: `mikodctl namespace create NAMESPACE`
 Flags:
 
 - `--label`: Set labels for a namespace
 
-### :nerd_face: nerdctl namespace inspect
+### :nerd_face: mikodctl namespace inspect
 
 Inspect a namespace.
 
-Usage: `nerdctl namespace inspect NAMESPACE`
+Usage: `mikodctl namespace inspect NAMESPACE`
 
-### :nerd_face: nerdctl namespace ls
+### :nerd_face: mikodctl namespace ls
 
 List containerd namespaces such as "default", "moby", or "k8s.io".
 
-Usage: `nerdctl namespace ls [OPTIONS]`
+Usage: `mikodctl namespace ls [OPTIONS]`
 
 Flags:
 
 - `-q, --quiet`: Only display namespace names
 - `-f, --format`: Format the output using the given Go template, e.g, `{{json .}}`
 
-### :nerd_face: nerdctl namespace remove
+### :nerd_face: mikodctl namespace remove
 
 Remove one or more namespaces.
 
-Usage: `nerdctl namespace remove [OPTIONS] NAMESPACE [NAMESPACE...]`
+Usage: `mikodctl namespace remove [OPTIONS] NAMESPACE [NAMESPACE...]`
 
 Flags:
 
 - `-c, --cgroup`: delete the namespace's cgroup
 
-### :nerd_face: nerdctl namespace update
+### :nerd_face: mikodctl namespace update
 
 Update labels for a namespace.
 
-Usage: `nerdctl namespace update NAMESPACE`
+Usage: `mikodctl namespace update NAMESPACE`
 
 Flags:
 
@@ -1443,44 +1443,44 @@ Flags:
 
 ## AppArmor profile management
 
-### :nerd_face: nerdctl apparmor inspect
+### :nerd_face: mikodctl apparmor inspect
 
-Display the default AppArmor profile "nerdctl-default". Other profiles cannot be displayed with this command.
+Display the default AppArmor profile "mikodctl-default". Other profiles cannot be displayed with this command.
 
-Usage: `nerdctl apparmor inspect`
+Usage: `mikodctl apparmor inspect`
 
-### :nerd_face: nerdctl apparmor load
+### :nerd_face: mikodctl apparmor load
 
-Load the default AppArmor profile "nerdctl-default". Requires root.
+Load the default AppArmor profile "mikodctl-default". Requires root.
 
-Usage: `nerdctl apparmor load`
+Usage: `mikodctl apparmor load`
 
-### :nerd_face: nerdctl apparmor ls
+### :nerd_face: mikodctl apparmor ls
 
 List the loaded AppArmor profile
 
-Usage: `nerdctl apparmor ls [OPTIONS]`
+Usage: `mikodctl apparmor ls [OPTIONS]`
 
 Flags:
 
 - `-q, --quiet`: Only display volume names
 - `--format`: Format the output using the given Go template, e.g, `{{json .}}`
 
-### :nerd_face: nerdctl apparmor unload
+### :nerd_face: mikodctl apparmor unload
 
-Unload an AppArmor profile. The target profile name defaults to "nerdctl-default". Requires root.
+Unload an AppArmor profile. The target profile name defaults to "mikodctl-default". Requires root.
 
-Usage: `nerdctl apparmor unload [PROFILE]`
+Usage: `mikodctl apparmor unload [PROFILE]`
 
 ## Builder management
 
-### :whale: nerdctl builder prune
+### :whale: mikodctl builder prune
 
 Clean up BuildKit build cache.
 
 :warning: The output format is not compatible with Docker.
 
-Usage: `nerdctl builder prune`
+Usage: `mikodctl builder prune`
 
 Flags:
 
@@ -1490,7 +1490,7 @@ Flags:
 
 Unimplemented `docker builder prune` flags: `--filter`, `--keep-storage`
 
-### :nerd_face: nerdctl builder debug
+### :nerd_face: mikodctl builder debug
 
 Interactive debugging of Dockerfile using [buildg](https://github.com/ktock/buildg).
 Please refer to [`./builder-debug.md`](./builder-debug.md) for details.
@@ -1500,7 +1500,7 @@ This is an [experimental](./experimental.md) feature.
 
 :warning: This command is currently incompatible with `docker buildx debug`.
 
-Usage: `nerdctl builder debug PATH`
+Usage: `mikodctl builder debug PATH`
 
 Flags:
 
@@ -1511,13 +1511,13 @@ Flags:
 
 ## System
 
-### :whale: nerdctl events
+### :whale: mikodctl events
 
 Get real time events from the server.
 
 :warning: The output format is not compatible with Docker.
 
-Usage: `nerdctl events [OPTIONS]`
+Usage: `mikodctl events [OPTIONS]`
 
 Flags:
 
@@ -1527,32 +1527,32 @@ Flags:
 
 Unimplemented `docker events` flags: `--since`, `--until`
 
-### :whale: nerdctl info
+### :whale: mikodctl info
 
 Display system-wide information
 
-Usage: `nerdctl info [OPTIONS]`
+Usage: `mikodctl info [OPTIONS]`
 
 Flags:
 
 - :whale: `-f, --format`: Format the output using the given Go template, e.g, `{{json .}}`
 - :nerd_face: `--mode=(dockercompat|native)`: Information mode. "native" produces more information.
 
-### :whale: nerdctl version
+### :whale: mikodctl version
 
-Show the nerdctl version information
+Show the mikodctl version information
 
-Usage: `nerdctl version [OPTIONS]`
+Usage: `mikodctl version [OPTIONS]`
 
 Flags:
 
 - :whale: `-f, --format`: Format the output using the given Go template, e.g, `{{json .}}`
 
-### :whale: nerdctl system prune
+### :whale: mikodctl system prune
 
 Remove unused data
 
-Usage: `nerdctl system prune [OPTIONS]`
+Usage: `mikodctl system prune [OPTIONS]`
 
 Flags:
 
@@ -1564,11 +1564,11 @@ Unimplemented `docker system prune` flags: `--filter`
 
 ## Stats
 
-### :whale: nerdctl stats
+### :whale: mikodctl stats
 
 Display a live stream of container(s) resource usage statistics.
 
-Usage: `nerdctl stats [OPTIONS]`
+Usage: `mikodctl stats [OPTIONS]`
 
 Flags:
 
@@ -1577,51 +1577,51 @@ Flags:
 - :whale: `--no-stream`: Disable streaming stats and only pull the first result
 - :whale: `--no-trunc`: Do not truncate output
 
-### :whale: nerdctl top
+### :whale: mikodctl top
 
 Display the running processes of a container.
 
-Usage: `nerdctl top CONTAINER [ps OPTIONS]`
+Usage: `mikodctl top CONTAINER [ps OPTIONS]`
 
 ## Shell completion
 
-### :nerd_face: nerdctl completion bash
+### :nerd_face: mikodctl completion bash
 
 Generate the autocompletion script for bash.
 
 Usage: add the following line to `~/.bash_profile`:
 
 ```bash
-source <(nerdctl completion bash)
+source <(mikodctl completion bash)
 ```
 
-Or run `nerdctl completion bash > /etc/bash_completion.d/nerdctl` as the root.
+Or run `mikodctl completion bash > /etc/bash_completion.d/mikodctl` as the root.
 
-### :nerd_face: nerdctl completion zsh
+### :nerd_face: mikodctl completion zsh
 
 Generate the autocompletion script for zsh.
 
-Usage: see `nerdctl completion zsh --help`
+Usage: see `mikodctl completion zsh --help`
 
-### :nerd_face: nerdctl completion fish
+### :nerd_face: mikodctl completion fish
 
 Generate the autocompletion script for fish.
 
-Usage: see `nerdctl completion fish --help`
+Usage: see `mikodctl completion fish --help`
 
-### :nerd_face: nerdctl completion powershell
+### :nerd_face: mikodctl completion powershell
 
 Generate the autocompletion script for powershell.
 
-Usage: see `nerdctl completion powershell --help`
+Usage: see `mikodctl completion powershell --help`
 
 ## Compose
 
-### :whale: nerdctl compose
+### :whale: mikodctl compose
 
 Compose
 
-Usage: `nerdctl compose [OPTIONS] [COMMAND]`
+Usage: `mikodctl compose [OPTIONS] [COMMAND]`
 
 Flags:
 
@@ -1632,11 +1632,11 @@ Flags:
 - :whale: `--profile: Specify a profile to enable
 - :whale: `--env-file` : Specify an alternate environment file
 
-### :whale: nerdctl compose up
+### :whale: mikodctl compose up
 
 Create and start containers
 
-Usage: `nerdctl compose up [OPTIONS] [SERVICE...]`
+Usage: `mikodctl compose up [OPTIONS] [SERVICE...]`
 
 Flags:
 
@@ -1659,11 +1659,11 @@ Unimplemented `docker-compose up` (V1) flags: `--no-deps`, `--always-recreate-de
 
 Unimplemented `docker compose up` (V2) flags: `--environment`
 
-### :whale: nerdctl compose logs
+### :whale: mikodctl compose logs
 
 Show logs of running containers
 
-Usage: `nerdctl compose logs [OPTIONS] [SERVICE...]`
+Usage: `mikodctl compose logs [OPTIONS] [SERVICE...]`
 
 Flags:
 
@@ -1675,11 +1675,11 @@ Flags:
 
 Unimplemented `docker compose logs` (V2) flags:  `--since`, `--until`
 
-### :whale: nerdctl compose build
+### :whale: mikodctl compose build
 
 Build or rebuild services.
 
-Usage: `nerdctl compose build [OPTIONS] [SERVICE...]`
+Usage: `mikodctl compose build [OPTIONS] [SERVICE...]`
 
 Flags:
 
@@ -1690,11 +1690,11 @@ Flags:
 
 Unimplemented `docker-compose build` (V1) flags:  `--compress`, `--force-rm`, `--memory`, `--no-rm`, `--parallel`, `--pull`, `--quiet`
 
-### :whale: nerdctl compose create
+### :whale: mikodctl compose create
 
 Creates containers for one or more services.
 
-Usage: `nerdctl compose create [OPTIONS] [SERVICE...]`
+Usage: `mikodctl compose create [OPTIONS] [SERVICE...]`
 
 Flags:
 
@@ -1704,11 +1704,11 @@ Flags:
 - :whale: `--no-recreate`: Don't recreate containers if they exist, conflict with `--force-recreate`
 - :whale: `--pull`: Pull images before running. (support always|missing|never) (default "missing")
 
-### :whale: nerdctl compose exec
+### :whale: mikodctl compose exec
 
 Execute a command on a running container of the service.
 
-Usage: `nerdctl compose exec [OPTIONS] SERVICE COMMAND [ARGS...]`
+Usage: `mikodctl compose exec [OPTIONS] SERVICE COMMAND [ARGS...]`
 
 Flags:
 
@@ -1718,15 +1718,15 @@ Flags:
 - :whale: `-i, --interactive`: Keep STDIN open even if not attached (default true)
 - :whale: `--privileged`: Give extended privileges to the command
 - :whale: `-t, --tty`: Allocate a pseudo-TTY
-- :whale: `-T, --no-TTY`: Disable pseudo-TTY allocation. By default nerdctl compose exec allocates a TTY.
+- :whale: `-T, --no-TTY`: Disable pseudo-TTY allocation. By default mikodctl compose exec allocates a TTY.
 - :whale: `-u, --user`: Username or UID (format: `<name|uid>[:<group|gid>]`)
 - :whale: `-w, --workdir`: Working directory inside the container
 
-### :whale: nerdctl compose down
+### :whale: mikodctl compose down
 
 Remove containers and associated resources
 
-Usage: `nerdctl compose down [OPTIONS]`
+Usage: `mikodctl compose down [OPTIONS]`
 
 Flags:
 
@@ -1735,49 +1735,49 @@ Flags:
 
 Unimplemented `docker-compose down` (V1) flags: `--rmi`, `--timeout`
 
-### :whale: nerdctl compose images
+### :whale: mikodctl compose images
 
 List images used by created containers in services
 
-Usage: `nerdctl compose images [OPTIONS] [SERVICE...]`
+Usage: `mikodctl compose images [OPTIONS] [SERVICE...]`
 
 Flags:
 
 - :whale: `-q, --quiet`: Only show numeric image IDs
 - :whale: `--format`: Format the output. Supported values: [json]
 
-### :whale: nerdctl compose start
+### :whale: mikodctl compose start
 
 Start existing containers for service(s)
 
-Usage: `nerdctl compose start [SERVICE...]`
+Usage: `mikodctl compose start [SERVICE...]`
 
-### :whale: nerdctl compose stop
+### :whale: mikodctl compose stop
 
 Stop containers in services without removing them.
 
-Usage: `nerdctl compose stop [OPTIONS] [SERVICE...]`
+Usage: `mikodctl compose stop [OPTIONS] [SERVICE...]`
 
 Flags:
 
 - :whale: `-t, --timeout`: Seconds to wait for stop before killing it (default 10)
 
-### :whale: nerdctl compose port
+### :whale: mikodctl compose port
 
 Print the public port for a port binding of a service container
 
-Usage: `nerdctl compose port [OPTIONS] SERVICE PRIVATE_PORT`
+Usage: `mikodctl compose port [OPTIONS] SERVICE PRIVATE_PORT`
 
 Flags:
 
 - :whale: `--index`: Index of the container if the service has multiple instances. (default 1)
 - :whale: `--protocol`: Protocol of the port (tcp|udp) (default "tcp")
 
-### :whale: nerdctl compose ps
+### :whale: mikodctl compose ps
 
 List containers of services
 
-Usage: `nerdctl compose ps [OPTIONS] [SERVICE...]`
+Usage: `mikodctl compose ps [OPTIONS] [SERVICE...]`
 
 - :whale: `-a, --all`: Show all containers (default shows just running)
 - :whale: `-q, --quiet`: Only display container IDs
@@ -1791,11 +1791,11 @@ Usage: `nerdctl compose ps [OPTIONS] [SERVICE...]`
 - :whale: `--services`: Print the service names, one per line
 - :whale: `--status`: Filter containers by status. Values: [paused | restarting | running | created | exited | pausing | unknown]
 
-### :whale: nerdctl compose pull
+### :whale: mikodctl compose pull
 
 Pull service images
 
-Usage: `nerdctl compose pull [OPTIONS] [SERVICE...]`
+Usage: `mikodctl compose pull [OPTIONS] [SERVICE...]`
 
 Flags:
 
@@ -1803,31 +1803,31 @@ Flags:
 
 Unimplemented `docker-compose pull` (V1) flags: `--ignore-pull-failures`, `--parallel`, `--no-parallel`, `include-deps`
 
-### :whale: nerdctl compose push
+### :whale: mikodctl compose push
 
 Push service images
 
-Usage: `nerdctl compose push [OPTIONS] [SERVICE...]`
+Usage: `mikodctl compose push [OPTIONS] [SERVICE...]`
 
 Unimplemented `docker-compose push` (V1) flags: `--ignore-push-failures`
 
-### :whale: nerdctl compose pause
+### :whale: mikodctl compose pause
 
-Pause all processes within containers of service(s). They can be unpaused with `nerdctl compose unpause`
+Pause all processes within containers of service(s). They can be unpaused with `mikodctl compose unpause`
 
-Usage: `nerdctl compose pause [SERVICE...]`
+Usage: `mikodctl compose pause [SERVICE...]`
 
-### :whale: nerdctl compose unpause
+### :whale: mikodctl compose unpause
 
 Unpause all processes within containers of service(s)
 
-Usage: `nerdctl compose unpause [SERVICE...]`
+Usage: `mikodctl compose unpause [SERVICE...]`
 
-### :whale: nerdctl compose config
+### :whale: mikodctl compose config
 
 Validate and view the Compose file
 
-Usage: `nerdctl compose config`
+Usage: `mikodctl compose config`
 
 Flags:
 
@@ -1840,14 +1840,14 @@ Unimplemented `docker-compose config` (V1) flags: `--resolve-image-digests`, `--
 
 Unimplemented `docker compose config` (V2) flags: `--resolve-image-digests`, `--no-interpolate`, `--format`, `--output`, `--profiles`
 
-### :whale: nerdctl compose cp
+### :whale: mikodctl compose cp
 
 Copy files/folders between a service container and the local filesystem
 
 Usage:
 ```
-nerdctl compose cp [OPTIONS] SERVICE:SRC_PATH DEST_PATH|-
-nerdctl compose cp [OPTIONS] SRC_PATH|- SERVICE:DEST_PATH [flags]
+mikodctl compose cp [OPTIONS] SERVICE:SRC_PATH DEST_PATH|-
+mikodctl compose cp [OPTIONS] SRC_PATH|- SERVICE:DEST_PATH [flags]
 ```
 
 Flags:
@@ -1857,43 +1857,43 @@ Flags:
 
 Unimplemented `docker compose cp` flags: `--archive`
 
-### :whale: nerdctl compose kill
+### :whale: mikodctl compose kill
 
 Force stop service containers
 
-Usage: `nerdctl compose kill [OPTIONS] [SERVICE...]`
+Usage: `mikodctl compose kill [OPTIONS] [SERVICE...]`
 
 Flags:
 
 - :whale: `-s, --signal`: SIGNAL to send to the container (default: "SIGKILL")
 
-### :whale: nerdctl compose restart
+### :whale: mikodctl compose restart
 
 Restart containers of given (or all) services
 
-Usage: `nerdctl compose restart [OPTIONS] [SERVICE...]`
+Usage: `mikodctl compose restart [OPTIONS] [SERVICE...]`
 
 Flags:
 
 - :whale: `-t, --timeout`: Seconds to wait before restarting it (default 10)
 
-### :whale: nerdctl compose rm
+### :whale: mikodctl compose rm
 
 Remove stopped service containers
 
-Usage: `nerdctl compose rm [OPTIONS] [SERVICE...]`
+Usage: `mikodctl compose rm [OPTIONS] [SERVICE...]`
 
 Flags:
 
-- :whale: `-f, --force`: Don't prompt for confirmation (different with `-f` in `nerdctl rm` which means force deletion).
+- :whale: `-f, --force`: Don't prompt for confirmation (different with `-f` in `mikodctl rm` which means force deletion).
 - :whale: `-s, --stop`: Stop containers before removing.
 - :whale: `-v, --volumes`: Remove anonymous volumes associated with the container.
 
-### :whale: nerdctl compose run
+### :whale: mikodctl compose run
 
 Run a one-off command on a service
 
-Usage: `nerdctl compose run [OPTIONS] SERVICE [COMMAND] [ARGS...]`
+Usage: `mikodctl compose run [OPTIONS] SERVICE [COMMAND] [ARGS...]`
 
 Flags:
 
@@ -1921,17 +1921,17 @@ Unimplemented `docker-compose run` (V1) flags: `--use-aliases`, `--no-TTY`
 
 Unimplemented `docker compose run` (V2) flags: `--use-aliases`, `--no-TTY`, `--tty`
 
-### :whale: nerdctl compose top
+### :whale: mikodctl compose top
 
 Display the running processes of service containers
 
-Usage: `nerdctl compose top [SERVICES...]`
+Usage: `mikodctl compose top [SERVICES...]`
 
-### :whale: nerdctl compose version
+### :whale: mikodctl compose version
 
-Show the Compose version information (which is the nerdctl version)
+Show the Compose version information (which is the mikodctl version)
 
-Usage: `nerdctl compose version`
+Usage: `mikodctl compose version`
 
 Flags:
 
@@ -1942,16 +1942,16 @@ Flags:
 
 P2P image distribution (IPFS) is completely optional. Your host is NOT connected to any P2P network, unless you opt in to [install and run IPFS daemon](https://docs.ipfs.io/install/).
 
-### :nerd_face: nerdctl ipfs registry serve
+### :nerd_face: mikodctl ipfs registry serve
 
 Serve read-only registry backed by IPFS on localhost.
-This is needed to run `nerdctl build` with pulling base images from IPFS.
-Other commands (e.g. `nerdctl push ipfs://<image-name>` and `nerdctl pull ipfs://<CID>`) don't require this.
+This is needed to run `mikodctl build` with pulling base images from IPFS.
+Other commands (e.g. `mikodctl push ipfs://<image-name>` and `mikodctl pull ipfs://<CID>`) don't require this.
 
 You need to install `ipfs` command on the host.
 See [`ipfs.md`](./ipfs.md) for details.
 
-Usage: `nerdctl ipfs registry serve [OPTIONS]`
+Usage: `mikodctl ipfs registry serve [OPTIONS]`
 
 Flags:
 
@@ -1970,7 +1970,7 @@ Flags:
 - :nerd_face: `--storage-driver`: deprecated alias of `--snapshotter`
 - :nerd_face: `--cni-path`: CNI binary path (default: `/opt/cni/bin`) [`$CNI_PATH`]
 - :nerd_face: `--cni-netconfpath`: CNI netconf path (default: `/etc/cni/net.d`) [`$NETCONFPATH`]
-- :nerd_face: `--data-root`: nerdctl data root, e.g. "/var/lib/nerdctl"
+- :nerd_face: `--data-root`: mikodctl data root, e.g. "/var/lib/mikodctl"
 - :nerd_face: `--cgroup-manager=(cgroupfs|systemd|none)`: cgroup manager
   - Default: "systemd" on cgroup v2 (rootful & rootless), "cgroupfs" on v1 rootful, "none" on v1 rootless
 - :nerd_face: `--insecure-registry`: skips verifying HTTPS certs, and allows falling back to plain HTTP
@@ -1978,14 +1978,14 @@ Flags:
   - Default: the IP address of the host
 - :nerd_face: `--userns-remap=<username>:<groupname>`: Support idmapping of containers. This options is only supported on rootful linux for container create and run if a user name and optionally group name is passed, it does idmapping based on the uidmap and gidmap ranges specified in /etc/subuid and /etc/subgid respectively. Note: `--userns-remap` is not supported for building containers. Nerdctl Build doesn't support userns-remap feature. (format: <name|uid>[:<group|gid>])
 
-The global flags can be also specified in `/etc/nerdctl/nerdctl.toml` (rootful) and `~/.config/nerdctl/nerdctl.toml` (rootless).
+The global flags can be also specified in `/etc/mikodctl/mikodctl.toml` (rootful) and `~/.config/mikodctl/mikodctl.toml` (rootless).
 See [`./config.md`](./config.md).
 
 ## Unimplemented Docker commands
 
 Image:
 
-- `docker trust *` (Instead, nerdctl supports `nerdctl pull --verify=cosign|notation` and `nerdctl push --sign=cosign|notation`. See [`./cosign.md`](./cosign.md) and [`./notation.md`](./notation.md).)
+- `docker trust *` (Instead, mikodctl supports `mikodctl pull --verify=cosign|notation` and `mikodctl push --sign=cosign|notation`. See [`./cosign.md`](./cosign.md) and [`./notation.md`](./notation.md).)
 
 Network management:
 

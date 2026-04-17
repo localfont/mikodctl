@@ -21,10 +21,10 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/containerd/nerdctl/v2/pkg/api/types"
-	"github.com/containerd/nerdctl/v2/pkg/manifeststore"
-	"github.com/containerd/nerdctl/v2/pkg/manifestutil"
-	"github.com/containerd/nerdctl/v2/pkg/referenceutil"
+	"github.com/localfont/mikodctl/v2/pkg/api/types"
+	"github.com/localfont/mikodctl/v2/pkg/manifeststore"
+	"github.com/localfont/mikodctl/v2/pkg/manifestutil"
+	"github.com/localfont/mikodctl/v2/pkg/referenceutil"
 )
 
 func Remove(ctx context.Context, ref string, options types.GlobalCommandOptions) error {

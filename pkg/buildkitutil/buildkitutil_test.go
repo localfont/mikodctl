@@ -30,7 +30,7 @@ import (
 
 	"gotest.tools/v3/assert"
 
-	"github.com/containerd/nerdctl/v2/pkg/internal/filesystem"
+	"github.com/localfont/mikodctl/v2/pkg/internal/filesystem"
 )
 
 func TestBuildKitFile(t *testing.T) {

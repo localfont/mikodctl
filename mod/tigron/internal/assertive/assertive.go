@@ -27,8 +27,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/containerd/nerdctl/mod/tigron/internal/formatter"
-	"github.com/containerd/nerdctl/mod/tigron/tig"
+	"github.com/localfont/mikodctl/mod/tigron/internal/formatter"
+	"github.com/localfont/mikodctl/mod/tigron/tig"
 )
 
 const (

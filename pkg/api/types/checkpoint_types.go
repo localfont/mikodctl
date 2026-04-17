@@ -18,7 +18,7 @@ package types
 
 import "io"
 
-// CheckpointCreateOptions specifies options for `nerdctl checkpoint create`.
+// CheckpointCreateOptions specifies options for `mikodctl checkpoint create`.
 type CheckpointCreateOptions struct {
 	Stdout   io.Writer
 	GOptions GlobalCommandOptions
@@ -35,7 +35,7 @@ type CheckpointListOptions struct {
 	CheckpointDir string
 }
 
-// CheckpointRemoveOptions specifies options for `nerdctl checkpoint rm`.
+// CheckpointRemoveOptions specifies options for `mikodctl checkpoint rm`.
 type CheckpointRemoveOptions struct {
 	Stdout   io.Writer
 	GOptions GlobalCommandOptions

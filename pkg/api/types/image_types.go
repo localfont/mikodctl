@@ -22,7 +22,7 @@ import (
 	ocispec "github.com/opencontainers/image-spec/specs-go/v1"
 )
 
-// ImageListOptions specifies options for `nerdctl image list`.
+// ImageListOptions specifies options for `mikodctl image list`.
 type ImageListOptions struct {
 	Stdout io.Writer
 	// GOptions is the global options
@@ -45,7 +45,7 @@ type ImageListOptions struct {
 	All bool
 }
 
-// ImageConvertOptions specifies options for `nerdctl image convert`.
+// ImageConvertOptions specifies options for `mikodctl image convert`.
 type ImageConvertOptions struct {
 	Stdout         io.Writer
 	ProgressOutput io.Writer
@@ -123,7 +123,7 @@ type NydusOptions struct {
 	Nydus bool
 	// NydusBuilderPath the nydus-image binary path, if unset, search in PATH environment
 	NydusBuilderPath string
-	// NydusWorkDir work directory path for image conversion, default is the nerdctl data root directory
+	// NydusWorkDir work directory path for image conversion, default is the mikodctl data root directory
 	NydusWorkDir string
 	// NydusPrefetchPatterns the file path pattern list want to prefetch
 	NydusPrefetchPatterns string
@@ -150,7 +150,7 @@ type SociConvertOptions struct {
 	// #endregion
 }
 
-// ImageCryptOptions specifies options for `nerdctl image encrypt` and `nerdctl image decrypt`.
+// ImageCryptOptions specifies options for `mikodctl image encrypt` and `mikodctl image decrypt`.
 type ImageCryptOptions struct {
 	Stdout   io.Writer
 	GOptions GlobalCommandOptions
@@ -170,7 +170,7 @@ type ImageCryptOptions struct {
 	Recipients []string
 }
 
-// ImageInspectOptions specifies options for `nerdctl image inspect`.
+// ImageInspectOptions specifies options for `mikodctl image inspect`.
 type ImageInspectOptions struct {
 	Stdout   io.Writer
 	GOptions GlobalCommandOptions
@@ -182,7 +182,7 @@ type ImageInspectOptions struct {
 	Platform string
 }
 
-// ImagePushOptions specifies options for `nerdctl (image) push`.
+// ImagePushOptions specifies options for `mikodctl (image) push`.
 type ImagePushOptions struct {
 	Stdout      io.Writer
 	GOptions    GlobalCommandOptions
@@ -211,7 +211,7 @@ type RemoteSnapshotterFlags struct {
 	SociIndexDigest string
 }
 
-// ImagePullOptions specifies options for `nerdctl (image) pull`.
+// ImagePullOptions specifies options for `mikodctl (image) pull`.
 type ImagePullOptions struct {
 	Stdout io.Writer
 	Stderr io.Writer
@@ -235,7 +235,7 @@ type ImagePullOptions struct {
 	RFlags RemoteSnapshotterFlags
 }
 
-// ImageTagOptions specifies options for `nerdctl (image) tag`.
+// ImageTagOptions specifies options for `mikodctl (image) tag`.
 type ImageTagOptions struct {
 	// GOptions is the global options
 	GOptions GlobalCommandOptions
@@ -245,7 +245,7 @@ type ImageTagOptions struct {
 	Target string
 }
 
-// ImageRemoveOptions specifies options for `nerdctl rmi` and `nerdctl image rm`.
+// ImageRemoveOptions specifies options for `mikodctl rmi` and `mikodctl image rm`.
 type ImageRemoveOptions struct {
 	Stdout io.Writer
 	// GOptions is the global options
@@ -256,7 +256,7 @@ type ImageRemoveOptions struct {
 	Async bool
 }
 
-// ImagePruneOptions specifies options for `nerdctl image prune` and `nerdctl image rm`.
+// ImagePruneOptions specifies options for `mikodctl image prune` and `mikodctl image rm`.
 type ImagePruneOptions struct {
 	Stdout io.Writer
 	// GOptions is the global options.
@@ -269,7 +269,7 @@ type ImagePruneOptions struct {
 	Force bool
 }
 
-// ImageSaveOptions specifies options for `nerdctl (image) save`.
+// ImageSaveOptions specifies options for `mikodctl (image) save`.
 type ImageSaveOptions struct {
 	Stdout   io.Writer
 	GOptions GlobalCommandOptions

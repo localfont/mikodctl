@@ -29,10 +29,10 @@ import (
 
 	"gotest.tools/v3/assert"
 
-	ncdefaults "github.com/containerd/nerdctl/v2/pkg/defaults"
-	"github.com/containerd/nerdctl/v2/pkg/internal/filesystem"
-	"github.com/containerd/nerdctl/v2/pkg/labels"
-	"github.com/containerd/nerdctl/v2/pkg/testutil"
+	ncdefaults "github.com/localfont/mikodctl/v2/pkg/defaults"
+	"github.com/localfont/mikodctl/v2/pkg/internal/filesystem"
+	"github.com/localfont/mikodctl/v2/pkg/labels"
+	"github.com/localfont/mikodctl/v2/pkg/testutil"
 )
 
 const testBridgeIP = "10.42.100.1/24" // nolint:unused
@@ -133,7 +133,7 @@ func TestParseIPAMRange(t *testing.T) {
 	}
 }
 
-// Tests whether nerdctl properly creates the default network when required.
+// Tests whether mikodctl properly creates the default network when required.
 // Note that this test will require a CNI driver bearing the same name as
 // the type of the default network. (denoted by netutil.DefaultNetworkName,
 // which is used as both the name of the default network and its Driver)
@@ -178,8 +178,8 @@ func testDefaultNetworkCreation(t *testing.T) {
 	firstConfigModTime := stat.ModTime()
 
 	// Check default network label present.
-	assert.Assert(t, defaultNetConf.NerdctlLabels != nil)
-	lstr, ok := (*defaultNetConf.NerdctlLabels)[labels.NerdctlDefaultNetwork]
+	assert.Assert(t, defaultNetConf.MikodctlLabels != nil)
+	lstr, ok := (*defaultNetConf.MikodctlLabels)[labels.MikodctlDefaultNetwork]
 	assert.Assert(t, ok)
 	boolv, err := strconv.ParseBool(lstr)
 	assert.NilError(t, err)
@@ -202,7 +202,7 @@ func testDefaultNetworkCreation(t *testing.T) {
 	assert.Assert(t, firstConfigModTime.Equal(files[2].ModTime()))
 }
 
-// Tests whether nerdctl properly creates the default network
+// Tests whether mikodctl properly creates the default network
 // with a custom bridge IP and subnet.
 // nolint:unused
 func testDefaultNetworkCreationWithBridgeIP(t *testing.T) {
@@ -245,8 +245,8 @@ func testDefaultNetworkCreationWithBridgeIP(t *testing.T) {
 	firstConfigModTime := stat.ModTime()
 
 	// Check default network label present.
-	assert.Assert(t, defaultNetConf.NerdctlLabels != nil)
-	lstr, ok := (*defaultNetConf.NerdctlLabels)[labels.NerdctlDefaultNetwork]
+	assert.Assert(t, defaultNetConf.MikodctlLabels != nil)
+	lstr, ok := (*defaultNetConf.MikodctlLabels)[labels.MikodctlDefaultNetwork]
 	assert.Assert(t, ok)
 	boolv, err := strconv.ParseBool(lstr)
 	assert.NilError(t, err)
@@ -301,9 +301,9 @@ func testDefaultNetworkCreationWithBridgeIP(t *testing.T) {
 	assert.Assert(t, firstConfigModTime.Equal(files[2].ModTime()))
 }
 
-// Tests whether nerdctl skips the creation of the default network if a
+// Tests whether mikodctl skips the creation of the default network if a
 // network bearing the default network name already exists in a
-// non-nerdctl-managed network config file.
+// non-mikodctl-managed network config file.
 func TestNetworkWithDefaultNameAlreadyExists(t *testing.T) {
 	// We create a tempdir for the CNI conf path to ensure an empty env for this test.
 	cniConfTestDir := t.TempDir()
@@ -328,7 +328,7 @@ func TestNetworkWithDefaultNameAlreadyExists(t *testing.T) {
 	buf := &bytes.Buffer{}
 	assert.NilError(t, tpl.ExecuteTemplate(buf, "test", values))
 
-	// Filename is irrelevant as long as it's not nerdctl's.
+	// Filename is irrelevant as long as it's not mikodctl's.
 	testConfFile := filepath.Join(cniConfTestDir, fmt.Sprintf("%s.conf", testutil.Identifier(t)))
 	err = filesystem.WriteFile(testConfFile, buf.Bytes(), 0600)
 	assert.NilError(t, err)

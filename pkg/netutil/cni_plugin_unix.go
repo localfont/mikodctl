@@ -18,7 +18,7 @@
 
 package netutil
 
-import "github.com/containerd/nerdctl/v2/pkg/rootlessutil"
+import "github.com/localfont/mikodctl/v2/pkg/rootlessutil"
 
 // bridgeConfig describes the bridge plugin
 type bridgeConfig struct {
@@ -109,7 +109,7 @@ func newFirewallPlugin(ingressPolicy string) *firewallConfig {
 		IngressPolicy: ingressPolicy,
 	}
 	if rootlessutil.IsRootless() {
-		// https://github.com/containerd/nerdctl/issues/2818
+		// https://github.com/localfont/mikodctl/issues/2818
 		c.Backend = "iptables"
 	}
 	return c

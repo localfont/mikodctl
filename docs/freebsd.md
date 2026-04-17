@@ -4,7 +4,7 @@
 | :zap:        FreeBSD runtimes are at the very early stage of development |
 |--------------------------------------------------------------------------|
 
-nerdctl provides experimental support for running FreeBSD jails on FreeBSD hosts.
+mikodctl provides experimental support for running FreeBSD jails on FreeBSD hosts.
 
 ## Installation
 
@@ -17,13 +17,13 @@ instructions in the respective repositories.
 You can use the `dougrabson/freebsd13.2-small` image to run a FreeBSD 13 jail:
 
 ```sh
-nerdctl run --net none -it dougrabson/freebsd13.2-small
+mikodctl run --net none -it dougrabson/freebsd13.2-small
 ```
 
 Alternatively use `--platform` parameter to run linux containers
 
 ```sh
-nerdctl run --platform linux --net none -it amazonlinux:2
+mikodctl run --platform linux --net none -it amazonlinux:2
 ```
 
 

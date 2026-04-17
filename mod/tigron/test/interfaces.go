@@ -21,7 +21,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/containerd/nerdctl/mod/tigron/tig"
+	"github.com/localfont/mikodctl/mod/tigron/tig"
 )
 
 // DataLabels holds key-value test information set by the test authors.

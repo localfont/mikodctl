@@ -21,10 +21,10 @@ import (
 
 	"gotest.tools/v3/assert"
 
-	"github.com/containerd/nerdctl/mod/tigron/test"
-	"github.com/containerd/nerdctl/mod/tigron/utils/testca"
+	"github.com/localfont/mikodctl/mod/tigron/test"
+	"github.com/localfont/mikodctl/mod/tigron/utils/testca"
 
-	"github.com/containerd/nerdctl/v2/pkg/testutil/nerdtest/registry"
+	"github.com/localfont/mikodctl/v2/pkg/testutil/nerdtest/registry"
 )
 
 func BuildCtlCommand(helpers test.Helpers, args ...string) test.TestableCommand {
@@ -39,7 +39,7 @@ func BuildCtlCommand(helpers test.Helpers, args ...string) test.TestableCommand 
 func KubeCtlCommand(helpers test.Helpers, args ...string) test.TestableCommand {
 	kubectl, _ := exec.LookPath("kubectl")
 	cmd := helpers.Custom(kubectl)
-	cmd.WithArgs("--namespace=nerdctl-test-k8s")
+	cmd.WithArgs("--namespace=mikodctl-test-k8s")
 	cmd.WithArgs(args...)
 	return cmd
 }

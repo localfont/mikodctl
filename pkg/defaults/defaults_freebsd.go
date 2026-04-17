@@ -27,7 +27,7 @@ const (
 )
 
 func DataRoot() string {
-	return "/var/lib/nerdctl"
+	return "/var/lib/mikodctl"
 }
 
 func CNIPath() string {
@@ -51,8 +51,8 @@ func CgroupnsMode() string {
 	return ""
 }
 
-func NerdctlTOML() string {
-	return "/etc/nerdctl/nerdctl.toml"
+func MikodctlTOML() string {
+	return "/etc/mikodctl/mikodctl.toml"
 }
 
 func HostsDirs() []string {

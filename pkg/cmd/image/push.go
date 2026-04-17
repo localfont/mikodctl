@@ -42,19 +42,19 @@ import (
 	"github.com/containerd/stargz-snapshotter/estargz/zstdchunked"
 	estargzconvert "github.com/containerd/stargz-snapshotter/nativeconverter/estargz"
 
-	"github.com/containerd/nerdctl/v2/pkg/api/types"
-	"github.com/containerd/nerdctl/v2/pkg/containerdutil"
-	"github.com/containerd/nerdctl/v2/pkg/errutil"
-	"github.com/containerd/nerdctl/v2/pkg/imgutil"
-	nerdconverter "github.com/containerd/nerdctl/v2/pkg/imgutil/converter"
-	"github.com/containerd/nerdctl/v2/pkg/imgutil/dockerconfigresolver"
-	"github.com/containerd/nerdctl/v2/pkg/imgutil/push"
-	"github.com/containerd/nerdctl/v2/pkg/internal/filesystem"
-	"github.com/containerd/nerdctl/v2/pkg/ipfs"
-	"github.com/containerd/nerdctl/v2/pkg/platformutil"
-	"github.com/containerd/nerdctl/v2/pkg/referenceutil"
-	"github.com/containerd/nerdctl/v2/pkg/signutil"
-	"github.com/containerd/nerdctl/v2/pkg/snapshotterutil"
+	"github.com/localfont/mikodctl/v2/pkg/api/types"
+	"github.com/localfont/mikodctl/v2/pkg/containerdutil"
+	"github.com/localfont/mikodctl/v2/pkg/errutil"
+	"github.com/localfont/mikodctl/v2/pkg/imgutil"
+	nerdconverter "github.com/localfont/mikodctl/v2/pkg/imgutil/converter"
+	"github.com/localfont/mikodctl/v2/pkg/imgutil/dockerconfigresolver"
+	"github.com/localfont/mikodctl/v2/pkg/imgutil/push"
+	"github.com/localfont/mikodctl/v2/pkg/internal/filesystem"
+	"github.com/localfont/mikodctl/v2/pkg/ipfs"
+	"github.com/localfont/mikodctl/v2/pkg/platformutil"
+	"github.com/localfont/mikodctl/v2/pkg/referenceutil"
+	"github.com/localfont/mikodctl/v2/pkg/signutil"
+	"github.com/localfont/mikodctl/v2/pkg/snapshotterutil"
 )
 
 // Push pushes an image specified by `rawRef`.
@@ -70,7 +70,7 @@ func Push(ctx context.Context, client *containerd.Client, rawRef string, options
 		}
 		log.G(ctx).Infof("pushing image %q to IPFS", parsedReference)
 
-		// Ensure all the layers are here: https://github.com/containerd/nerdctl/issues/3489
+		// Ensure all the layers are here: https://github.com/localfont/mikodctl/issues/3489
 		// XXX what if the image is a CID, or only otherwise available on ipfs?
 		platMC, err := platformutil.NewMatchComparer(options.AllPlatforms, options.Platforms)
 		if err != nil {
@@ -123,7 +123,7 @@ func Push(ctx context.Context, client *containerd.Client, rawRef string, options
 		pushRef = ref + "-tmp-reduced-platform"
 		// Push fails with "400 Bad Request" when the manifest is multi-platform but we do not locally have multi-platform blobs.
 		// So we create a tmp reduced-platform image to avoid the error.
-		// Ensure all the layers are here: https://github.com/containerd/nerdctl/issues/3425
+		// Ensure all the layers are here: https://github.com/localfont/mikodctl/issues/3425
 		err = EnsureAllContent(ctx, client, ref, platMC, options.GOptions)
 		if err != nil {
 			return err

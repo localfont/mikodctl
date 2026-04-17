@@ -25,7 +25,7 @@ import (
 
 	"github.com/containerd/log"
 
-	"github.com/containerd/nerdctl/v2/pkg/composer/serviceparser"
+	"github.com/localfont/mikodctl/v2/pkg/composer/serviceparser"
 )
 
 type BuildOptions struct {
@@ -82,7 +82,7 @@ func (c *Composer) buildServiceImage(ctx context.Context, image string, b *servi
 
 	args = append(args, b.BuildArgs...)
 
-	cmd := c.createNerdctlCmd(ctx, append([]string{"build"}, args...)...)
+	cmd := c.createMikodctlCmd(ctx, append([]string{"build"}, args...)...)
 	if c.DebugPrintFull {
 		log.G(ctx).Debugf("Running %v", cmd.Args)
 	}

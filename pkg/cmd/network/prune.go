@@ -23,9 +23,9 @@ import (
 	containerd "github.com/containerd/containerd/v2/client"
 	"github.com/containerd/log"
 
-	"github.com/containerd/nerdctl/v2/pkg/api/types"
-	"github.com/containerd/nerdctl/v2/pkg/netutil"
-	"github.com/containerd/nerdctl/v2/pkg/strutil"
+	"github.com/localfont/mikodctl/v2/pkg/api/types"
+	"github.com/localfont/mikodctl/v2/pkg/netutil"
+	"github.com/localfont/mikodctl/v2/pkg/strutil"
 )
 
 func Prune(ctx context.Context, client *containerd.Client, options types.NetworkPruneOptions) error {
@@ -49,7 +49,7 @@ func Prune(ctx context.Context, client *containerd.Client, options types.Network
 		if strutil.InStringSlice(options.NetworkDriversToKeep, net.Name) {
 			continue
 		}
-		if net.NerdctlID == nil || net.File == "" {
+		if net.MikodctlID == nil || net.File == "" {
 			continue
 		}
 		if _, ok := usedNetworks[net.Name]; ok {

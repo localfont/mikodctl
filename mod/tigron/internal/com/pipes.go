@@ -26,8 +26,8 @@ import (
 	"golang.org/x/sync/errgroup"
 	"golang.org/x/term"
 
-	"github.com/containerd/nerdctl/mod/tigron/internal/logger"
-	"github.com/containerd/nerdctl/mod/tigron/internal/pty"
+	"github.com/localfont/mikodctl/mod/tigron/internal/logger"
+	"github.com/localfont/mikodctl/mod/tigron/internal/pty"
 )
 
 var (

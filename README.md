@@ -1,21 +1,21 @@
-[[⬇️ **Download]**](https://github.com/containerd/nerdctl/releases)
+[[⬇️ **Download]**](https://github.com/localfont/mikodctl/releases)
 [[📖 **Command reference]**](./docs/command-reference.md)
 [[❓**FAQs & Troubleshooting]**](./docs/faq.md)
 [[📚 **Additional documents]**](#additional-documents)
 
-# nerdctl: Docker-compatible CLI for containerd
+# mikodctl: Docker-compatible CLI for containerd
 
 <picture>
-  <source media="(prefers-color-scheme: light)" srcset="docs/images/nerdctl.svg">
-  <source media="(prefers-color-scheme: dark)" srcset="docs/images/nerdctl-white.svg">
-  <img alt="logo" src="docs/images/nerdctl.svg">
+  <source media="(prefers-color-scheme: light)" srcset="docs/images/mikodctl.svg">
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/mikodctl-white.svg">
+  <img alt="logo" src="docs/images/mikodctl.svg">
 </picture>
 
-`nerdctl` is a Docker-compatible CLI for [contai**nerd**](https://containerd.io).
+`mikodctl` is a Docker-compatible CLI for [contai**nerd**](https://containerd.io).
 
  ✅ Same UI/UX as `docker`
 
- ✅ Supports Docker Compose (`nerdctl compose up`)
+ ✅ Supports Docker Compose (`mikodctl compose up`)
 
  ✅ [Optional] Supports [rootless mode, without slirp overhead (bypass4netns)](./docs/rootless.md)
 
@@ -27,7 +27,7 @@
 
  ✅ [Optional] Supports [container image signing and verifying (cosign)](./docs/cosign.md)
 
-nerdctl is a **non-core** sub-project of containerd.
+mikodctl is a **non-core** sub-project of containerd.
 
 \*1: P2P image distribution (IPFS) is completely optional. Your host is NOT connected to any P2P network, unless you opt in to [install and run IPFS daemon](https://docs.ipfs.io/install/).
 
@@ -38,26 +38,26 @@ nerdctl is a **non-core** sub-project of containerd.
 To run a container with the default `bridge` CNI network (10.4.0.0/24):
 
 ```console
-# nerdctl run -it --rm alpine
+# mikodctl run -it --rm alpine
 ```
 
 To build an image using BuildKit:
 
 ```console
-# nerdctl build -t foo /some-dockerfile-directory
-# nerdctl run -it --rm foo
+# mikodctl build -t foo /some-dockerfile-directory
+# mikodctl run -it --rm foo
 ```
 
 To build and send output to a local directory using BuildKit:
 
 ```console
-# nerdctl build -o type=local,dest=. /some-dockerfile-directory
+# mikodctl build -o type=local,dest=. /some-dockerfile-directory
 ```
 
 To run containers from `docker-compose.yaml`:
 
 ```console
-# nerdctl compose -f ./examples/compose-wordpress/docker-compose.yaml up
+# mikodctl compose -f ./examples/compose-wordpress/docker-compose.yaml up
 ```
 
 See also [`./examples/compose-wordpress`](./examples/compose-wordpress).
@@ -67,13 +67,13 @@ See also [`./examples/compose-wordpress`](./examples/compose-wordpress).
 To list local Kubernetes containers:
 
 ```console
-# nerdctl --namespace k8s.io ps -a
+# mikodctl --namespace k8s.io ps -a
 ```
 
 To build an image for local Kubernetes without using registry:
 
 ```console
-# nerdctl --namespace k8s.io build -t foo /some-dockerfile-directory
+# mikodctl --namespace k8s.io build -t foo /some-dockerfile-directory
 # kubectl apply -f - <<EOF
 apiVersion: v1
 kind: Pod
@@ -90,18 +90,18 @@ EOF
 To load an image archive (`docker save` format or OCI format) into local Kubernetes:
 
 ```console
-# nerdctl --namespace k8s.io load < /path/to/image.tar
+# mikodctl --namespace k8s.io load < /path/to/image.tar
 ```
 
 To read logs (experimental):
 ```console
-# nerdctl --namespace=k8s.io ps -a
+# mikodctl --namespace=k8s.io ps -a
 CONTAINER ID    IMAGE                                                      COMMAND                   CREATED          STATUS    PORTS    NAMES
 ...
 e8793b8cca8b    registry.k8s.io/coredns/coredns:v1.9.3                     "/coredns -conf /etc…"    2 minutes ago    Up                 k8s://kube-system/coredns-787d4945fb-mfx6b/coredns
 ...
 
-# nerdctl --namespace=k8s.io logs -f e8793b8cca8b
+# mikodctl --namespace=k8s.io logs -f e8793b8cca8b
 [INFO] plugin/reload: Running configuration SHA512 = 591cf328cccc12bc490481273e738df59329c62c0b729d94e8b61db9961c2fa5f046dd37f1cf888b953814040d180f52594972691cd6ff41be96639138a43908
 CoreDNS-1.9.3
 linux/amd64, go1.18.2, 45b0a11
@@ -119,44 +119,44 @@ $ containerd-rootless-setuptool.sh install
 To run a container with rootless containerd:
 
 ```console
-$ nerdctl run -d -p 8080:80 --name nginx nginx:alpine
+$ mikodctl run -d -p 8080:80 --name nginx nginx:alpine
 ```
 
 See [`./docs/rootless.md`](./docs/rootless.md).
 
 ## Install
 
-Binaries are available here: <https://github.com/containerd/nerdctl/releases>
+Binaries are available here: <https://github.com/localfont/mikodctl/releases>
 
 In addition to containerd, the following components should be installed:
 
-- [CNI plugins](https://github.com/containernetworking/plugins): for using `nerdctl run`.
+- [CNI plugins](https://github.com/containernetworking/plugins): for using `mikodctl run`.
   - v1.1.0 or later is highly recommended.
-- [BuildKit](https://github.com/moby/buildkit) (OPTIONAL): for using `nerdctl build`. BuildKit daemon (`buildkitd`) needs to be running. See also [the document about setting up BuildKit](./docs/build.md).
-  - v0.11.0 or later is highly recommended. Some features, such as pruning caches with `nerdctl system prune`, do not work with older versions.
+- [BuildKit](https://github.com/moby/buildkit) (OPTIONAL): for using `mikodctl build`. BuildKit daemon (`buildkitd`) needs to be running. See also [the document about setting up BuildKit](./docs/build.md).
+  - v0.11.0 or later is highly recommended. Some features, such as pruning caches with `mikodctl system prune`, do not work with older versions.
 - [RootlessKit](https://github.com/rootless-containers/rootlesskit) (OPTIONAL): for [Rootless mode](./docs/rootless.md)
   - RootlessKit needs to be v0.10.0 or later. v3.0.0 or later is recommended.
 
-These dependencies are included in `nerdctl-full-<VERSION>-<OS>-<ARCH>.tar.gz`, but not included in `nerdctl-<VERSION>-<OS>-<ARCH>.tar.gz`.
+These dependencies are included in `mikodctl-full-<VERSION>-<OS>-<ARCH>.tar.gz`, but not included in `mikodctl-<VERSION>-<OS>-<ARCH>.tar.gz`.
 
 ### Brew
 
-On Linux systems you can install nerdctl via [brew](https://brew.sh):
+On Linux systems you can install mikodctl via [brew](https://brew.sh):
 
 ```bash
-brew install nerdctl
+brew install mikodctl
 ```
 
 This is currently not supported for macOS. The section below shows how to install on macOS using brew.
 
 ### macOS
 
-[Lima](https://github.com/lima-vm/lima) project provides Linux virtual machines for macOS, with built-in integration for nerdctl.
+[Lima](https://github.com/lima-vm/lima) project provides Linux virtual machines for macOS, with built-in integration for mikodctl.
 
 ```console
 $ brew install lima
 $ limactl start
-$ lima nerdctl run -d --name nginx -p 127.0.0.1:8080:80 nginx:alpine
+$ lima mikodctl run -d --name nginx -p 127.0.0.1:8080:80 nginx:alpine
 ```
 
 ### FreeBSD
@@ -170,65 +170,65 @@ See [`./docs/freebsd.md`](docs/freebsd.md).
 
 ### Docker
 
-To run containerd and nerdctl inside Docker:
+To run containerd and mikodctl inside Docker:
 
 ```bash
-docker build -t nerdctl .
-docker run -it --rm --privileged nerdctl
+docker build -t mikodctl .
+docker run -it --rm --privileged mikodctl
 ```
 
 ## Motivation
 
-The goal of `nerdctl` is to facilitate experimenting the cutting-edge features of containerd that are not present in Docker (see below).
+The goal of `mikodctl` is to facilitate experimenting the cutting-edge features of containerd that are not present in Docker (see below).
 
-Note that competing with Docker is _not_ the goal of `nerdctl`. Those cutting-edge features are expected to be eventually available in Docker as well.
+Note that competing with Docker is _not_ the goal of `mikodctl`. Those cutting-edge features are expected to be eventually available in Docker as well.
 
-Also, `nerdctl` might be potentially useful for debugging Kubernetes clusters, but it is not the primary goal.
+Also, `mikodctl` might be potentially useful for debugging Kubernetes clusters, but it is not the primary goal.
 
-## Features present in `nerdctl` but not present in Docker
+## Features present in `mikodctl` but not present in Docker
 
 Major:
 
-- On-demand image pulling (lazy-pulling) using [Stargz](./docs/stargz.md)/[Nydus](./docs/nydus.md)/[OverlayBD](./docs/overlaybd.md)/[SOCI](./docs/soci.md) Snapshotter: `nerdctl --snapshotter=stargz|nydus|overlaybd|soci run IMAGE` .
-- [Image encryption and decryption using ocicrypt (imgcrypt)](./docs/ocicrypt.md): `nerdctl image (encrypt|decrypt) SRC DST`
-- [P2P image distribution using IPFS](./docs/ipfs.md): `nerdctl run ipfs://CID` .
+- On-demand image pulling (lazy-pulling) using [Stargz](./docs/stargz.md)/[Nydus](./docs/nydus.md)/[OverlayBD](./docs/overlaybd.md)/[SOCI](./docs/soci.md) Snapshotter: `mikodctl --snapshotter=stargz|nydus|overlaybd|soci run IMAGE` .
+- [Image encryption and decryption using ocicrypt (imgcrypt)](./docs/ocicrypt.md): `mikodctl image (encrypt|decrypt) SRC DST`
+- [P2P image distribution using IPFS](./docs/ipfs.md): `mikodctl run ipfs://CID` .
   P2P image distribution (IPFS) is completely optional. Your host is NOT connected to any P2P network, unless you opt in to [install and run IPFS daemon](https://docs.ipfs.io/install/).
-- [Cosign integration](./docs/cosign.md): `nerdctl pull --verify=cosign` and `nerdctl push --sign=cosign`, and [in Compose](./docs/cosign.md#cosign-in-compose)
-- [Accelerated rootless containers using bypass4netns](./docs/rootless.md): `nerdctl run --annotation nerdctl/bypass4netns=true`
+- [Cosign integration](./docs/cosign.md): `mikodctl pull --verify=cosign` and `mikodctl push --sign=cosign`, and [in Compose](./docs/cosign.md#cosign-in-compose)
+- [Accelerated rootless containers using bypass4netns](./docs/rootless.md): `mikodctl run --annotation mikodctl/bypass4netns=true`
 
 Minor:
 
-- Namespacing: `nerdctl --namespace=<NS> ps` .
+- Namespacing: `mikodctl --namespace=<NS> ps` .
   (NOTE: All Kubernetes containers are in the `k8s.io` containerd namespace regardless to Kubernetes namespaces)
-- Exporting Docker/OCI dual-format archives: `nerdctl save` .
-- Importing OCI archives as well as Docker archives: `nerdctl load` .
-- Specifying a non-image rootfs: `nerdctl run -it --rootfs <ROOTFS> /bin/sh` . The CLI syntax conforms to Podman convention.
-- Connecting a container to multiple networks at once: `nerdctl run --net foo --net bar`
+- Exporting Docker/OCI dual-format archives: `mikodctl save` .
+- Importing OCI archives as well as Docker archives: `mikodctl load` .
+- Specifying a non-image rootfs: `mikodctl run -it --rootfs <ROOTFS> /bin/sh` . The CLI syntax conforms to Podman convention.
+- Connecting a container to multiple networks at once: `mikodctl run --net foo --net bar`
 - Running [FreeBSD jails](./docs/freebsd.md).
-- Better multi-platform support, e.g., `nerdctl pull --all-platforms IMAGE`
-- Applying an (existing) AppArmor profile to rootless containers: `nerdctl run --security-opt apparmor=<PROFILE>`.
-  Use `sudo nerdctl apparmor load` to load the `nerdctl-default` profile.
-- Systemd compatibility support: `nerdctl run --systemd=always`
+- Better multi-platform support, e.g., `mikodctl pull --all-platforms IMAGE`
+- Applying an (existing) AppArmor profile to rootless containers: `mikodctl run --security-opt apparmor=<PROFILE>`.
+  Use `sudo mikodctl apparmor load` to load the `mikodctl-default` profile.
+- Systemd compatibility support: `mikodctl run --systemd=always`
 
 Trivial:
 
-- Inspecting raw OCI config: `nerdctl container inspect --mode=native` .
+- Inspecting raw OCI config: `mikodctl container inspect --mode=native` .
 
-## Features implemented in `nerdctl` ahead of Docker
+## Features implemented in `mikodctl` ahead of Docker
 
-- Recursive read-only (RRO) bind-mount: `nerdctl run -v /mnt:/mnt:rro` (make children such as `/mnt/usb` to be read-only, too).
+- Recursive read-only (RRO) bind-mount: `mikodctl run -v /mnt:/mnt:rro` (make children such as `/mnt/usb` to be read-only, too).
   Requires kernel >= 5.12.
-The same feature was later introduced in Docker v25 with a different syntax. nerdctl will support Docker v25 syntax too in the future.
+The same feature was later introduced in Docker v25 with a different syntax. mikodctl will support Docker v25 syntax too in the future.
 ## Similar tools
 
 - [`ctr`](https://github.com/containerd/containerd/tree/main/cmd/ctr): incompatible with Docker CLI, and not friendly to users.
-  Notably, `ctr` lacks the equivalents of the following nerdctl commands:
-  - `nerdctl run -p <PORT>`
-  - `nerdctl run --restart=always --net=bridge`
-  - `nerdctl pull` with `~/.docker/config.json` and credential helper binaries such as `docker-credential-ecr-login`
-  - `nerdctl logs`
-  - `nerdctl build`
-  - `nerdctl compose up`
+  Notably, `ctr` lacks the equivalents of the following mikodctl commands:
+  - `mikodctl run -p <PORT>`
+  - `mikodctl run --restart=always --net=bridge`
+  - `mikodctl pull` with `~/.docker/config.json` and credential helper binaries such as `docker-credential-ecr-login`
+  - `mikodctl logs`
+  - `mikodctl build`
+  - `mikodctl compose up`
 
 - [`crictl`](https://github.com/kubernetes-sigs/cri-tools): incompatible with Docker CLI, not friendly to users, and does not support non-CRI features
 - [k3c v0.2 (abandoned)](https://github.com/rancher/k3c/tree/v0.2.1): needs an extra daemon, and does not support non-CRI features
@@ -237,7 +237,7 @@ The same feature was later introduced in Docker v25 with a different syntax. ner
 
 ## Developer guide
 
-nerdctl is a containerd **non-core** sub-project, licensed under the [Apache 2.0 license](./LICENSE).
+mikodctl is a containerd **non-core** sub-project, licensed under the [Apache 2.0 license](./LICENSE).
 As a containerd non-core sub-project, you will find the:
 
 - [Project governance](https://github.com/containerd/project/blob/main/GOVERNANCE.md),
@@ -246,19 +246,19 @@ As a containerd non-core sub-project, you will find the:
 
 information in our [`containerd/project`](https://github.com/containerd/project) repository.
 
-### Compiling nerdctl from source
+### Compiling mikodctl from source
 
 Run `make && sudo make install`.
 
 See the header of [`go.mod`](./go.mod) for the minimum supported version of Go.
 
-Using `go install github.com/containerd/nerdctl/v2/cmd/nerdctl` is possible, but unrecommended because it does not fill version strings printed in `nerdctl version`
+Using `go install github.com/localfont/mikodctl/v2/cmd/mikodctl` is possible, but unrecommended because it does not fill version strings printed in `mikodctl version`
 
 ### Testing
 
-See [testing nerdctl](docs/testing/README.md).
+See [testing mikodctl](docs/testing/README.md).
 
-### Contributing to nerdctl
+### Contributing to mikodctl
 
 Lots of commands and flags are currently missing. Pull requests are highly welcome.
 
@@ -272,7 +272,7 @@ Moved to [`./docs/command-reference.md`](./docs/command-reference.md)
 
 Configuration guide:
 
-- [`./docs/config.md`](./docs/config.md): Configuration (`/etc/nerdctl/nerdctl.toml`, `~/.config/nerdctl/nerdctl.toml`)
+- [`./docs/config.md`](./docs/config.md): Configuration (`/etc/mikodctl/mikodctl.toml`, `~/.config/mikodctl/mikodctl.toml`)
 - [`./docs/registry.md`](./docs/registry.md): Registry authentication (`~/.docker/config.json`)
 
 Basic features:
@@ -280,7 +280,7 @@ Basic features:
 - [`./docs/compose.md`](./docs/compose.md):   Compose
 - [`./docs/rootless.md`](./docs/rootless.md): Rootless mode
 - [`./docs/cni.md`](./docs/cni.md): CNI for containers network
-- [`./docs/build.md`](./docs/build.md): `nerdctl build` with BuildKit
+- [`./docs/build.md`](./docs/build.md): `mikodctl build` with BuildKit
 
 Advanced features:
 
@@ -301,7 +301,7 @@ Experimental features:
 
 Implementation details:
 
-- [`./docs/dir.md`](./docs/dir.md):           Directory layout (`/var/lib/nerdctl`)
+- [`./docs/dir.md`](./docs/dir.md):           Directory layout (`/var/lib/mikodctl`)
 
 Misc:
 

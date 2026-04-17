@@ -27,9 +27,9 @@ import (
 	"github.com/containerd/go-cni"
 	"github.com/containerd/log"
 
-	"github.com/containerd/nerdctl/v2/pkg/labels"
-	"github.com/containerd/nerdctl/v2/pkg/netutil/networkstore"
-	"github.com/containerd/nerdctl/v2/pkg/rootlessutil"
+	"github.com/localfont/mikodctl/v2/pkg/labels"
+	"github.com/localfont/mikodctl/v2/pkg/netutil/networkstore"
+	"github.com/localfont/mikodctl/v2/pkg/rootlessutil"
 )
 
 // return respectively ip, hostPort, containerPort
@@ -169,6 +169,6 @@ func LoadPortMappings(dataStore, namespace, id string, containerLabels map[strin
 	if err := json.Unmarshal([]byte(portsJSON), &ports); err != nil {
 		return ports, fmt.Errorf("failed to parse label %q=%q: %s", labels.Ports, portsJSON, err.Error())
 	}
-	log.L.Warnf("container %s (%s) is using legacy port mapping configuration. To ensure compatibility with the new port mapping logic, please recreate this container. For more details, see: https://github.com/containerd/nerdctl/pull/4290", containerLabels[labels.Name], id[:12])
+	log.L.Warnf("container %s (%s) is using legacy port mapping configuration. To ensure compatibility with the new port mapping logic, please recreate this container. For more details, see: https://github.com/localfont/mikodctl/pull/4290", containerLabels[labels.Name], id[:12])
 	return ports, nil
 }

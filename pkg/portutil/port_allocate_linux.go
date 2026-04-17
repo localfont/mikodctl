@@ -22,8 +22,8 @@ import (
 	"net"
 	"os"
 
-	"github.com/containerd/nerdctl/v2/pkg/portutil/iptable"
-	"github.com/containerd/nerdctl/v2/pkg/portutil/procnet"
+	"github.com/localfont/mikodctl/v2/pkg/portutil/iptable"
+	"github.com/localfont/mikodctl/v2/pkg/portutil/procnet"
 )
 
 const (

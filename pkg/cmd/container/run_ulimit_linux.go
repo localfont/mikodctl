@@ -26,7 +26,7 @@ import (
 	"github.com/containerd/containerd/v2/core/containers"
 	"github.com/containerd/containerd/v2/pkg/oci"
 
-	"github.com/containerd/nerdctl/v2/pkg/strutil"
+	"github.com/localfont/mikodctl/v2/pkg/strutil"
 )
 
 func generateUlimitsOpts(ulimits []string) ([]oci.SpecOpts, error) {

@@ -29,14 +29,14 @@ import (
 	containerd "github.com/containerd/containerd/v2/client"
 	"github.com/containerd/log"
 
-	"github.com/containerd/nerdctl/v2/pkg/config"
-	"github.com/containerd/nerdctl/v2/pkg/defaults"
-	"github.com/containerd/nerdctl/v2/pkg/labels"
-	"github.com/containerd/nerdctl/v2/pkg/rootlessutil"
+	"github.com/localfont/mikodctl/v2/pkg/config"
+	"github.com/localfont/mikodctl/v2/pkg/defaults"
+	"github.com/localfont/mikodctl/v2/pkg/labels"
+	"github.com/localfont/mikodctl/v2/pkg/rootlessutil"
 )
 
 // CreateTimer sets up the transient systemd timer and service for healthchecks.
-func CreateTimer(ctx context.Context, container containerd.Container, cfg *config.Config, nerdctlCmd string, nerdctlArgs []string) error {
+func CreateTimer(ctx context.Context, container containerd.Container, cfg *config.Config, mikodctlCmd string, mikodctlArgs []string) error {
 	hc := extractHealthcheck(ctx, container)
 	if hc == nil {
 		return nil
@@ -48,14 +48,14 @@ func CreateTimer(ctx context.Context, container containerd.Container, cfg *confi
 	containerID := container.ID()
 	log.G(ctx).Debugf("Creating healthcheck timer unit: %s", containerID)
 
-	// Set all environment variables so that they are available for the nerdctl commands run via the systemd service file
+	// Set all environment variables so that they are available for the mikodctl commands run via the systemd service file
 	cmdOpts := []string{}
 	if path := os.Getenv("PATH"); path != "" {
 		cmdOpts = append(cmdOpts, "--setenv=PATH="+path)
 	}
 
-	if nerdctlToml := os.Getenv("NERDCTL_TOML"); nerdctlToml != "" {
-		cmdOpts = append(cmdOpts, "--setenv=NERDCTL_TOML="+nerdctlToml)
+	if mikodctlToml := os.Getenv("NERDCTL_TOML"); mikodctlToml != "" {
+		cmdOpts = append(cmdOpts, "--setenv=NERDCTL_TOML="+mikodctlToml)
 	}
 
 	if buildKitHost := os.Getenv("BUILDKIT_HOST"); buildKitHost != "" {
@@ -65,8 +65,8 @@ func CreateTimer(ctx context.Context, container containerd.Container, cfg *confi
 	// Always use health-interval for timer frequency
 	cmdOpts = append(cmdOpts, "--unit", containerID, "--on-unit-inactive="+hc.Interval.String(), "--timer-property=AccuracySec=1s")
 
-	cmdOpts = append(cmdOpts, nerdctlCmd)
-	cmdOpts = append(cmdOpts, nerdctlArgs...)
+	cmdOpts = append(cmdOpts, mikodctlCmd)
+	cmdOpts = append(cmdOpts, mikodctlArgs...)
 	cmdOpts = append(cmdOpts, "container", "healthcheck", containerID)
 
 	log.G(ctx).Debugf("creating healthcheck timer with: systemd-run %s", strings.Join(cmdOpts, " "))

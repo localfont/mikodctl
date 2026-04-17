@@ -29,9 +29,9 @@ import (
 	containerd "github.com/containerd/containerd/v2/client"
 	"github.com/containerd/containerd/v2/pkg/oci"
 
-	"github.com/containerd/nerdctl/v2/pkg/ipcutil"
-	"github.com/containerd/nerdctl/v2/pkg/labels"
-	"github.com/containerd/nerdctl/v2/pkg/netutil/nettype"
+	"github.com/localfont/mikodctl/v2/pkg/ipcutil"
+	"github.com/localfont/mikodctl/v2/pkg/labels"
+	"github.com/localfont/mikodctl/v2/pkg/netutil/nettype"
 )
 
 // ReconfigNetContainer reconfigures the container's network namespace path.

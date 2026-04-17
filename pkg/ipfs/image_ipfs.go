@@ -35,10 +35,10 @@ import (
 	"github.com/containerd/stargz-snapshotter/ipfs"
 	ipfsclient "github.com/containerd/stargz-snapshotter/ipfs/client"
 
-	"github.com/containerd/nerdctl/v2/pkg/api/types"
-	"github.com/containerd/nerdctl/v2/pkg/idutil/imagewalker"
-	"github.com/containerd/nerdctl/v2/pkg/imgutil"
-	"github.com/containerd/nerdctl/v2/pkg/platformutil"
+	"github.com/localfont/mikodctl/v2/pkg/api/types"
+	"github.com/localfont/mikodctl/v2/pkg/idutil/imagewalker"
+	"github.com/localfont/mikodctl/v2/pkg/imgutil"
+	"github.com/localfont/mikodctl/v2/pkg/platformutil"
 )
 
 const ipfsPathEnv = "IPFS_PATH"

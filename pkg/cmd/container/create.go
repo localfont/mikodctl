@@ -40,33 +40,33 @@ import (
 	"github.com/containerd/containerd/v2/pkg/oci"
 	"github.com/containerd/log"
 
-	"github.com/containerd/nerdctl/v2/pkg/annotations"
-	"github.com/containerd/nerdctl/v2/pkg/api/types"
-	"github.com/containerd/nerdctl/v2/pkg/clientutil"
-	"github.com/containerd/nerdctl/v2/pkg/cmd/image"
-	"github.com/containerd/nerdctl/v2/pkg/cmd/volume"
-	"github.com/containerd/nerdctl/v2/pkg/containerutil"
-	"github.com/containerd/nerdctl/v2/pkg/dnsutil/hostsstore"
-	"github.com/containerd/nerdctl/v2/pkg/flagutil"
-	"github.com/containerd/nerdctl/v2/pkg/healthcheck"
-	"github.com/containerd/nerdctl/v2/pkg/idgen"
-	"github.com/containerd/nerdctl/v2/pkg/imgutil"
-	"github.com/containerd/nerdctl/v2/pkg/imgutil/load"
-	"github.com/containerd/nerdctl/v2/pkg/inspecttypes/dockercompat"
-	"github.com/containerd/nerdctl/v2/pkg/internal/filesystem"
-	"github.com/containerd/nerdctl/v2/pkg/ipcutil"
-	"github.com/containerd/nerdctl/v2/pkg/labels"
-	"github.com/containerd/nerdctl/v2/pkg/logging"
-	"github.com/containerd/nerdctl/v2/pkg/maputil"
-	"github.com/containerd/nerdctl/v2/pkg/mountutil"
-	"github.com/containerd/nerdctl/v2/pkg/namestore"
-	"github.com/containerd/nerdctl/v2/pkg/netutil/networkstore"
-	"github.com/containerd/nerdctl/v2/pkg/platformutil"
-	"github.com/containerd/nerdctl/v2/pkg/portutil"
-	"github.com/containerd/nerdctl/v2/pkg/referenceutil"
-	"github.com/containerd/nerdctl/v2/pkg/rootlessutil"
-	"github.com/containerd/nerdctl/v2/pkg/store"
-	"github.com/containerd/nerdctl/v2/pkg/strutil"
+	"github.com/localfont/mikodctl/v2/pkg/annotations"
+	"github.com/localfont/mikodctl/v2/pkg/api/types"
+	"github.com/localfont/mikodctl/v2/pkg/clientutil"
+	"github.com/localfont/mikodctl/v2/pkg/cmd/image"
+	"github.com/localfont/mikodctl/v2/pkg/cmd/volume"
+	"github.com/localfont/mikodctl/v2/pkg/containerutil"
+	"github.com/localfont/mikodctl/v2/pkg/dnsutil/hostsstore"
+	"github.com/localfont/mikodctl/v2/pkg/flagutil"
+	"github.com/localfont/mikodctl/v2/pkg/healthcheck"
+	"github.com/localfont/mikodctl/v2/pkg/idgen"
+	"github.com/localfont/mikodctl/v2/pkg/imgutil"
+	"github.com/localfont/mikodctl/v2/pkg/imgutil/load"
+	"github.com/localfont/mikodctl/v2/pkg/inspecttypes/dockercompat"
+	"github.com/localfont/mikodctl/v2/pkg/internal/filesystem"
+	"github.com/localfont/mikodctl/v2/pkg/ipcutil"
+	"github.com/localfont/mikodctl/v2/pkg/labels"
+	"github.com/localfont/mikodctl/v2/pkg/logging"
+	"github.com/localfont/mikodctl/v2/pkg/maputil"
+	"github.com/localfont/mikodctl/v2/pkg/mountutil"
+	"github.com/localfont/mikodctl/v2/pkg/namestore"
+	"github.com/localfont/mikodctl/v2/pkg/netutil/networkstore"
+	"github.com/localfont/mikodctl/v2/pkg/platformutil"
+	"github.com/localfont/mikodctl/v2/pkg/portutil"
+	"github.com/localfont/mikodctl/v2/pkg/referenceutil"
+	"github.com/localfont/mikodctl/v2/pkg/rootlessutil"
+	"github.com/localfont/mikodctl/v2/pkg/store"
+	"github.com/localfont/mikodctl/v2/pkg/strutil"
 )
 
 // Create will create a container.
@@ -267,9 +267,9 @@ func Create(ctx context.Context, client *containerd.Client, args []string, netMa
 	// Always set internalLabels.logURI
 	// to support restart the container that run with "-it", like
 	//
-	// 1, nerdctl run --name demo -it imagename
+	// 1, mikodctl run --name demo -it imagename
 	// 2, ctrl + c to stop demo container
-	// 3, nerdctl start/restart demo
+	// 3, mikodctl start/restart demo
 	logConfig, err := generateLogConfig(dataStore, id, options.LogDriver, options.LogOpt, options.GOptions.Namespace, options.GOptions.Address)
 	if err != nil {
 		return nil, generateRemoveStateDirFunc(ctx, id, internalLabels), err
@@ -310,9 +310,9 @@ func Create(ctx context.Context, client *containerd.Client, args []string, netMa
 	// NOTE: OCI hooks are currently not supported on Windows so we skip setting them altogether.
 	// The OCI hooks we define (whose logic can be found in pkg/ocihook) primarily
 	// perform network setup and teardown when using CNI networking.
-	// On Windows, we are forced to set up and tear down the networking from within nerdctl.
+	// On Windows, we are forced to set up and tear down the networking from within mikodctl.
 	if runtime.GOOS != "windows" {
-		hookOpt, err := withNerdctlOCIHook(options.NerdctlCmd, options.NerdctlArgs)
+		hookOpt, err := withMikodctlOCIHook(options.MikodctlCmd, options.MikodctlArgs)
 		if err != nil {
 			return nil, generateRemoveOrphanedDirsFunc(ctx, id, dataStore, internalLabels), err
 		}
@@ -601,7 +601,7 @@ func withDefaultUnprivilegedPortSysctl() oci.SpecOpts {
 	}
 }
 
-func withNerdctlOCIHook(cmd string, args []string) (oci.SpecOpts, error) {
+func withMikodctlOCIHook(cmd string, args []string) (oci.SpecOpts, error) {
 	if rootlessutil.IsRootless() {
 		detachedNetNS, err := rootlessutil.DetachedNetNS()
 		if err != nil {
@@ -611,11 +611,11 @@ func withNerdctlOCIHook(cmd string, args []string) (oci.SpecOpts, error) {
 			// Rewrite {cmd, args} if RootlessKit is running with --detach-netns, so that the hook can gain
 			// CAP_NET_ADMIN in the namespaces.
 			//   - Old:
-			//     - cmd:  "/usr/local/bin/nerdctl"
+			//     - cmd:  "/usr/local/bin/mikodctl"
 			//     - args: {"--data-root=/foo", "internal", "oci-hook"}
 			//   - New:
 			//     - cmd:  "/usr/bin/nsenter"
-			//     - args: {"-n/run/user/1000/containerd-rootless/netns", "-F", "--", "/usr/local/bin/nerdctl", "--data-root=/foo", "internal", "oci-hook"}
+			//     - args: {"-n/run/user/1000/containerd-rootless/netns", "-F", "--", "/usr/local/bin/mikodctl", "--data-root=/foo", "internal", "oci-hook"}
 			oldCmd, oldArgs := cmd, args
 			cmd, err = exec.LookPath("nsenter")
 			if err != nil {
@@ -626,7 +626,7 @@ func withNerdctlOCIHook(cmd string, args []string) (oci.SpecOpts, error) {
 	}
 
 	args = append([]string{cmd}, append(args, "internal", "oci-hook")...)
-	// sbin is appended for iptables https://github.com/containerd/nerdctl/discussions/1536
+	// sbin is appended for iptables https://github.com/localfont/mikodctl/discussions/1536
 	env := append(os.Environ(), "PATH="+os.Getenv("PATH")+":/usr/sbin:/sbin")
 	return func(_ context.Context, _ oci.Client, _ *containers.Container, s *specs.Spec) error {
 		if s.Hooks == nil {

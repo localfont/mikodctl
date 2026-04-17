@@ -21,7 +21,7 @@ import (
 	"os/exec"
 	"runtime"
 
-	"github.com/containerd/nerdctl/mod/tigron/test"
+	"github.com/localfont/mikodctl/mod/tigron/test"
 )
 
 // Binary requires a certain binary to be present in the PATH.

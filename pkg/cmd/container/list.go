@@ -31,14 +31,14 @@ import (
 	"github.com/containerd/errdefs"
 	"github.com/containerd/log"
 
-	"github.com/containerd/nerdctl/v2/pkg/api/types"
-	"github.com/containerd/nerdctl/v2/pkg/clientutil"
-	"github.com/containerd/nerdctl/v2/pkg/containerdutil"
-	"github.com/containerd/nerdctl/v2/pkg/containerutil"
-	"github.com/containerd/nerdctl/v2/pkg/formatter"
-	"github.com/containerd/nerdctl/v2/pkg/imgutil"
-	"github.com/containerd/nerdctl/v2/pkg/labels"
-	"github.com/containerd/nerdctl/v2/pkg/portutil"
+	"github.com/localfont/mikodctl/v2/pkg/api/types"
+	"github.com/localfont/mikodctl/v2/pkg/clientutil"
+	"github.com/localfont/mikodctl/v2/pkg/containerdutil"
+	"github.com/localfont/mikodctl/v2/pkg/containerutil"
+	"github.com/localfont/mikodctl/v2/pkg/formatter"
+	"github.com/localfont/mikodctl/v2/pkg/imgutil"
+	"github.com/localfont/mikodctl/v2/pkg/labels"
+	"github.com/localfont/mikodctl/v2/pkg/portutil"
 )
 
 // List prints containers according to `options`.
@@ -52,7 +52,7 @@ func List(ctx context.Context, client *containerd.Client, options types.Containe
 
 // filterContainers returns containers matching the filters.
 //
-//   - Supported filters: https://github.com/containerd/nerdctl/blob/main/docs/command-reference.md#whale-blue_square-nerdctl-ps
+//   - Supported filters: https://github.com/localfont/mikodctl/blob/main/docs/command-reference.md#whale-blue_square-mikodctl-ps
 //   - all means showing all containers (default shows just running).
 //   - lastN means only showing n last created containers (includes all states). Non-positive values are ignored.
 //     In other words, if lastN is positive, all will be set to true.
@@ -118,11 +118,11 @@ type ListItem struct {
 	CreatedAt time.Time
 	ID        string
 	Image     string
-	Platform  string // nerdctl extension
+	Platform  string // mikodctl extension
 	Names     string
 	Ports     string
 	Status    string
-	Runtime   string // nerdctl extension
+	Runtime   string // mikodctl extension
 	Size      string
 	Labels    string
 	LabelsMap map[string]string `json:"-"`

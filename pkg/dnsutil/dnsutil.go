@@ -22,7 +22,7 @@ import (
 	"net"
 	"strings"
 
-	"github.com/containerd/nerdctl/v2/pkg/rootlessutil"
+	"github.com/localfont/mikodctl/v2/pkg/rootlessutil"
 )
 
 func GetSlirp4netnsDNS() ([]string, error) {

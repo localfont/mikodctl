@@ -26,8 +26,8 @@ import (
 
 	containerd "github.com/containerd/containerd/v2/client"
 
-	"github.com/containerd/nerdctl/v2/pkg/containerutil"
-	"github.com/containerd/nerdctl/v2/pkg/labels"
+	"github.com/localfont/mikodctl/v2/pkg/containerutil"
+	"github.com/localfont/mikodctl/v2/pkg/labels"
 )
 
 // Pause pauses service containers belonging to `services`.
@@ -83,7 +83,7 @@ func (c *Composer) Unpause(ctx context.Context, services []string, writer io.Wri
 	for _, container := range containers {
 		container := container
 		eg.Go(func() error {
-			if err := containerutil.Unpause(ctx, c.client, container.ID(), c.config, c.NerdctlCmd, c.NerdctlArgs); err != nil {
+			if err := containerutil.Unpause(ctx, c.client, container.ID(), c.config, c.MikodctlCmd, c.MikodctlArgs); err != nil {
 				return err
 			}
 			info, err := container.Info(ctx, containerd.WithoutRefreshedMetadata)

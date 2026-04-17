@@ -28,8 +28,8 @@ import (
 	"github.com/containerd/errdefs"
 	"github.com/containerd/log"
 
-	"github.com/containerd/nerdctl/v2/pkg/identifiers"
-	"github.com/containerd/nerdctl/v2/pkg/reflectutil"
+	"github.com/localfont/mikodctl/v2/pkg/identifiers"
+	"github.com/localfont/mikodctl/v2/pkg/reflectutil"
 )
 
 func parseBuildConfig(c *types.BuildConfig, project *types.Project, imageName string) (*Build, error) {

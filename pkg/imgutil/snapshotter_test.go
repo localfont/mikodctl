@@ -28,8 +28,8 @@ import (
 	containerd "github.com/containerd/containerd/v2/client"
 	ctdsnapshotters "github.com/containerd/containerd/v2/pkg/snapshotters"
 
-	"github.com/containerd/nerdctl/v2/pkg/api/types"
-	"github.com/containerd/nerdctl/v2/pkg/imgutil/pull"
+	"github.com/localfont/mikodctl/v2/pkg/api/types"
+	"github.com/localfont/mikodctl/v2/pkg/imgutil/pull"
 )
 
 const (

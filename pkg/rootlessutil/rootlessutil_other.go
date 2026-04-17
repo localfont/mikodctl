@@ -19,7 +19,7 @@
 // On non-Linux platforms, the rootlessutil package always denies
 // rootlessness and errors out, since RootlessKit only works on Linux
 // and none of the Windows containerd runtimes can be considered rootless.
-// https://github.com/containerd/nerdctl/issues/2115
+// https://github.com/localfont/mikodctl/issues/2115
 package rootlessutil
 
 import (

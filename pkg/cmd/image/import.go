@@ -43,9 +43,9 @@ import (
 	"github.com/containerd/errdefs"
 	"github.com/containerd/platforms"
 
-	"github.com/containerd/nerdctl/v2/pkg/api/types"
-	"github.com/containerd/nerdctl/v2/pkg/referenceutil"
-	"github.com/containerd/nerdctl/v2/pkg/transferutil"
+	"github.com/localfont/mikodctl/v2/pkg/api/types"
+	"github.com/localfont/mikodctl/v2/pkg/referenceutil"
+	"github.com/localfont/mikodctl/v2/pkg/transferutil"
 )
 
 func Import(ctx context.Context, client *containerd.Client, options types.ImageImportOptions) (string, error) {

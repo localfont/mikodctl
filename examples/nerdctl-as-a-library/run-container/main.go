@@ -22,13 +22,13 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/containerd/nerdctl/v2/pkg/api/types"
-	"github.com/containerd/nerdctl/v2/pkg/clientutil"
-	nerdctl "github.com/containerd/nerdctl/v2/pkg/cmd/container"
-	"github.com/containerd/nerdctl/v2/pkg/config"
-	"github.com/containerd/nerdctl/v2/pkg/containerutil"
-	"github.com/containerd/nerdctl/v2/pkg/logging"
-	"github.com/containerd/nerdctl/v2/pkg/rootlessutil"
+	"github.com/localfont/mikodctl/v2/pkg/api/types"
+	"github.com/localfont/mikodctl/v2/pkg/clientutil"
+	mikodctl "github.com/localfont/mikodctl/v2/pkg/cmd/container"
+	"github.com/localfont/mikodctl/v2/pkg/config"
+	"github.com/localfont/mikodctl/v2/pkg/containerutil"
+	"github.com/localfont/mikodctl/v2/pkg/logging"
+	"github.com/localfont/mikodctl/v2/pkg/rootlessutil"
 )
 
 func main() {
@@ -54,8 +54,8 @@ func main() {
 	// Create container options
 	createOpt := types.ContainerCreateOptions{
 		GOptions: globalOpt,
-		// TODO: this example should implement oci-hook as well instead of relying on nerdctl
-		NerdctlCmd:  "/usr/local/bin/nerdctl",
+		// TODO: this example should implement oci-hook as well instead of relying on mikodctl
+		MikodctlCmd:  "/usr/local/bin/mikodctl",
 		Name:        "my-container",
 		Label:       []string{},
 		Cgroupns:    "private",
@@ -87,14 +87,14 @@ func main() {
 	}
 
 	// Create container
-	container, _, err := nerdctl.Create(ctx, client, []string{"debian"}, networkManager, createOpt)
+	container, _, err := mikodctl.Create(ctx, client, []string{"debian"}, networkManager, createOpt)
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 
 	// Start container
-	err = nerdctl.Start(ctx, client, []string{"my-container"}, types.ContainerStartOptions{
+	err = mikodctl.Start(ctx, client, []string{"my-container"}, types.ContainerStartOptions{
 		Attach: true,
 		Stdout: os.Stdout,
 	})

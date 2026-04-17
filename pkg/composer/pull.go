@@ -25,7 +25,7 @@ import (
 
 	"github.com/containerd/log"
 
-	"github.com/containerd/nerdctl/v2/pkg/composer/serviceparser"
+	"github.com/localfont/mikodctl/v2/pkg/composer/serviceparser"
 )
 
 type PullOptions struct {
@@ -77,7 +77,7 @@ func (c *Composer) pullServiceImage(ctx context.Context, image string, platform 
 
 	args = append(args, image)
 
-	cmd := c.createNerdctlCmd(ctx, append([]string{"pull"}, args...)...)
+	cmd := c.createMikodctlCmd(ctx, append([]string{"pull"}, args...)...)
 	if c.DebugPrintFull {
 		log.G(ctx).Debugf("Running %v", cmd.Args)
 	}

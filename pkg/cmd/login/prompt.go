@@ -26,7 +26,7 @@ import (
 
 	"golang.org/x/term"
 
-	"github.com/containerd/nerdctl/v2/pkg/imgutil/dockerconfigresolver"
+	"github.com/localfont/mikodctl/v2/pkg/imgutil/dockerconfigresolver"
 )
 
 var (
@@ -37,7 +37,7 @@ var (
 	// System errors - not a terminal, failure to read, etc
 	ErrReadingUsername        = errors.New("unable to read username")
 	ErrReadingPassword        = errors.New("unable to read password")
-	ErrNotATerminal           = errors.New("stdin is not a terminal (Hint: use `nerdctl login --username=USERNAME --password-stdin`)")
+	ErrNotATerminal           = errors.New("stdin is not a terminal (Hint: use `mikodctl login --username=USERNAME --password-stdin`)")
 	ErrCannotAllocateTerminal = errors.New("error allocating terminal")
 )
 

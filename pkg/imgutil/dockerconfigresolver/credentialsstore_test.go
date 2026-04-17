@@ -26,8 +26,8 @@ import (
 
 	"gotest.tools/v3/assert"
 
-	"github.com/containerd/nerdctl/v2/pkg/internal/filesystem"
-	"github.com/containerd/nerdctl/v2/pkg/rootlessutil"
+	"github.com/localfont/mikodctl/v2/pkg/internal/filesystem"
+	"github.com/localfont/mikodctl/v2/pkg/rootlessutil"
 )
 
 func createTempDir(t *testing.T, mode os.FileMode) string {
@@ -183,7 +183,7 @@ func TestBrokenCredentialsStore(t *testing.T) {
 		for _, testCase := range testCases {
 			tc := testCase
 			t.Run(tc.description, func(tt *testing.T) {
-				// See https://github.com/containerd/nerdctl/issues/3413
+				// See https://github.com/localfont/mikodctl/issues/3413
 				var oldpwd string
 				directory := tc.setup()
 				oldpwd, err = os.Getwd()
@@ -379,7 +379,7 @@ func TestWorkingCredentialsStore(t *testing.T) {
 
 		content := `{
 				"auths": {
-					"nerdctl-experimental://namespace.example:443/host/host.example:443/path": {
+					"mikodctl-experimental://namespace.example:443/host/host.example:443/path": {
 						"username": "username"
 					}
 				}

@@ -24,12 +24,12 @@ import (
 
 	"gotest.tools/v3/assert"
 
-	"github.com/containerd/nerdctl/mod/tigron/test"
-	"github.com/containerd/nerdctl/mod/tigron/utils/testca"
+	"github.com/localfont/mikodctl/mod/tigron/test"
+	"github.com/localfont/mikodctl/mod/tigron/utils/testca"
 
-	"github.com/containerd/nerdctl/v2/pkg/testutil/nerdtest/platform"
-	"github.com/containerd/nerdctl/v2/pkg/testutil/nettestutil"
-	"github.com/containerd/nerdctl/v2/pkg/testutil/portlock"
+	"github.com/localfont/mikodctl/v2/pkg/testutil/nerdtest/platform"
+	"github.com/localfont/mikodctl/v2/pkg/testutil/nettestutil"
+	"github.com/localfont/mikodctl/v2/pkg/testutil/portlock"
 )
 
 func NewKuboRegistry(data test.Data, helpers test.Helpers, t *testing.T, currentCA *testca.Cert, port int, auth Auth) *Server {

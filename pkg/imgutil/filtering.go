@@ -28,7 +28,7 @@ import (
 	"github.com/containerd/containerd/v2/core/images"
 	"github.com/containerd/log"
 
-	"github.com/containerd/nerdctl/v2/pkg/referenceutil"
+	"github.com/localfont/mikodctl/v2/pkg/referenceutil"
 )
 
 // Filter types supported to filter images.
@@ -250,7 +250,7 @@ func FilterByLabel(ctx context.Context, client *containerd.Client, labels map[st
 			imageCfg, _, err := ReadImageConfig(ctx, clientImage)
 			if err != nil {
 				// Stop-gap measure. Do not hard error if some images config cannot be read.
-				// See https://github.com/containerd/nerdctl/issues/3516
+				// See https://github.com/localfont/mikodctl/issues/3516
 				log.G(ctx).WithError(err).Errorf("failed reading image config for %s (%s)", clientImage.Name(), clientImage.Platform())
 				return false, nil
 			}
@@ -323,7 +323,7 @@ func matchesAllLabels(imageCfgLabels map[string]string, filterLabels map[string]
 func matchesReferences(image images.Image, referencePatterns []string) (bool, error) {
 	var matches int
 
-	// Containerd returns ":" for dangling untagged images - see https://github.com/containerd/nerdctl/issues/3852
+	// Containerd returns ":" for dangling untagged images - see https://github.com/localfont/mikodctl/issues/3852
 	if image.Name == ":" {
 		return false, nil
 	}

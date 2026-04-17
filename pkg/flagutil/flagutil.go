@@ -23,7 +23,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/containerd/nerdctl/v2/pkg/strutil"
+	"github.com/localfont/mikodctl/v2/pkg/strutil"
 )
 
 // ReplaceOrAppendEnvValues returns the defaults with the overrides either

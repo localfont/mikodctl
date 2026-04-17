@@ -28,7 +28,7 @@ const (
 )
 
 func DataRoot() string {
-	return filepath.Join(os.Getenv("ProgramData"), "nerdctl")
+	return filepath.Join(os.Getenv("ProgramData"), "mikodctl")
 }
 
 func CNIPath() string {
@@ -55,12 +55,12 @@ func CgroupnsMode() string {
 	return ""
 }
 
-func NerdctlTOML() string {
+func MikodctlTOML() string {
 	ucd, err := os.UserConfigDir()
 	if err != nil {
 		panic(err)
 	}
-	return filepath.Join(ucd, "nerdctl\\nerdctl.toml")
+	return filepath.Join(ucd, "mikodctl\\mikodctl.toml")
 }
 
 func HostsDirs() []string {

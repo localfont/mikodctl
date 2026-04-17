@@ -28,10 +28,10 @@ import (
 	"github.com/containerd/containerd/v2/core/images"
 	"github.com/containerd/containerd/v2/core/remotes"
 
-	"github.com/containerd/nerdctl/v2/pkg/api/types"
-	"github.com/containerd/nerdctl/v2/pkg/imgutil/dockerconfigresolver"
-	"github.com/containerd/nerdctl/v2/pkg/manifesttypes"
-	"github.com/containerd/nerdctl/v2/pkg/referenceutil"
+	"github.com/localfont/mikodctl/v2/pkg/api/types"
+	"github.com/localfont/mikodctl/v2/pkg/imgutil/dockerconfigresolver"
+	"github.com/localfont/mikodctl/v2/pkg/manifesttypes"
+	"github.com/localfont/mikodctl/v2/pkg/referenceutil"
 )
 
 // manifestParser defines a function type for parsing manifest data
